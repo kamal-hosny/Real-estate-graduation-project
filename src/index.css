@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    :root {
+        /* Tailwind variables Light */
+        --main-color-background: 255, 255, 255;
+        --section-color: 244, 247, 250;
+        --main-color: 23, 23, 23;
+        --main-color-hover: 46, 46, 46;
+        --color-text-1: 10, 10, 10;
+        --color-text-2: 115, 115, 115;
+        --color-hover-text-2: 23, 23, 23;
+        --color-border: 229, 229, 229;
+
+        --button-color: 23, 23, 23;
+        --button-hover-color: 46, 46, 46;
+    }
+}
+
+:root {
+    /* CSS variables Light */
+    --main-color-background-css: rgb(255, 255, 255);    
+    --section-color-css: rgb(244, 247, 250);
+    --main-color-css: rgb(23, 23, 23);
+    --main-color-hover-css: rgb(46, 46, 46);
+    --color-text-1-css: rgb(10, 10, 10);
+    --color-text-2-css: rgb(115, 115, 115);
+    --color-hover-text-2-css: rgb(23, 23, 23);
+    --color-border-css: rgb(229, 229, 229);
+
+    --button-color-css: rgb(23, 23, 23);
+    --button-hover-color-css: rgb(46, 46, 46);
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+    background: var(--main-color-background-css);
+    transition: 0.15s;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+body.dark {
+    /* Tailwind variables Dark */
+    --main-color-background: 10, 10, 10;
+    --section-color: 30, 30, 30;
+    --main-color: 245, 245, 245;
+    --main-color-hover: 200, 200, 200;
+
+    --color-text-1: 250, 250, 250;
+    --color-text-2: 107, 114, 128;
+    --color-hover-text-2: 250, 250, 250;
+    --color-border: 38, 38, 38;
+
+    --button-color: 250, 250, 250;
+    --button-hover-color: 226, 226, 226;
+
+    /* CSS variables Dark */
+    --main-color-background-css: rgb(10, 10, 10);
+    --section-color-css: rgb(30, 30, 30);
+    --main-color-css: rgb(245, 245, 245);
+    --main-color-hover-css: rgb(200, 200, 200);
+    
+    --color-text-1-css: rgb(250, 250, 250);
+    --color-text-2-css: rgb(107, 114, 128);
+    --color-hover-text-2-css: rgb(250, 250, 250);
+    --color-border-css: rgb(38, 38, 38);
+
+    --button-color-css: rgb(250, 250, 250);
+    --button-hover-color-css: rgb(226, 226, 226);
+}
+
+
+
+body{
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+
+body {
+  --sb-track-color: #0a0a0a;
+  --sb-thumb-color: #1e1e1e;
+  --sb-size: 10px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--main-color-background-css);
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 3px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--section-color-css)
+                     var(--main-color-background-css);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* Custom fraction pagination styles */
+ .custom-pagination .swiper-pagination-fraction {
+    background: var(--main-color-background-css); /* تقليل الشفافية إلى 80% */
+
+    color: var(--color-text-1-css);
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 0; 
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(2px);
+  }
+
+  .custom-pagination .swiper-pagination-current,
+  .custom-pagination .swiper-pagination-total {
+    font-size: 1.1rem;
+
+    color: var(--color-text-1-css);
+    font-family: 'Tajawal', sans-serif; /* Arabic font */
+  }
+  
+  
+
+  .custom-pagination .swiper-pagination-current::after {
+    content: "/";
+    font-size: 0.8rem;
+    margin: 0 4px;
+    color: var(--color-text-1-css);
+    font-weight: 400;
+  }
+
+  /* RTL adjustments */
+  html[dir="rtl"] .custom-pagination .swiper-pagination-fraction {
+    flex-direction: row-reverse;
+  }
