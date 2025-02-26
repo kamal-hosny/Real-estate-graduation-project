@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 @layer base {
     :root {
         /* Tailwind variables Light */
@@ -42,6 +43,7 @@ body {
     transition: 0.15s;
     overflow-x: hidden;
     height: 100%;
+    text-align: start;
 }
 
 body.dark {
@@ -112,7 +114,13 @@ body::-webkit-scrollbar-thumb {
 
 
 
+[dir="rtl"] {
+  direction: rtl;
+}
 
+[dir="ltr"] {
+  direction: ltr;
+}
 
 
 

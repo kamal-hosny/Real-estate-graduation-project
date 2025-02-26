@@ -1,10 +1,11 @@
-import { ChevronDown, ChevronUp, Heart, HousePlus, LogOut, User, UserRound } from "lucide-react";
+import { ChevronDown, ChevronUp, Heart, HousePlus, Languages, LogOut, User, UserRound } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authLogout } from "../../../../../store/auth/authSlice";
 import { useAppSelector } from "../../../../../store/hooks";
 import Button from "../../../../ui/Button";
+import i18n from "../../../../../language";
 
 const MenuNavAuth = () => {
     const dispatch = useDispatch()
@@ -12,6 +13,9 @@ const MenuNavAuth = () => {
   const [open, setOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
+
+  const [direction, setDirection] = useState(document.dir || "ltr");
+
 
   const wishlist =
     useAppSelector((state) => state.wishlist?.items?.length) || 0;
@@ -65,6 +69,19 @@ const MenuNavAuth = () => {
 const handleGotoProfile = () => {
   navigate("/Profile")
 }
+
+useEffect(() => {
+  const observer = new MutationObserver(() => {
+    setDirection(document.dir || "ltr");
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["dir"],
+  });
+
+  return () => observer.disconnect();
+}, []);
 
   return (
     <div className="relative">
@@ -148,6 +165,24 @@ const handleGotoProfile = () => {
             </div>
             <span>My Favorites</span>
           </li>
+{direction === "rtl" ? (
+  <li    onClick={() => i18n.changeLanguage("en")} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
+          <Languages size={20} />
+          <span>تحويل اللغة إلي الانجليزية</span>
+          </li>
+
+) : (
+
+  <li   onClick={() => i18n.changeLanguage("ar")} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
+  <Languages size={20} />
+  <span>Converting the language to Arabic</span>
+  </li>
+)}
+         
+          
+
+
+
           <li onClick={()=>{navigate("/advertise-property")}} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
           <HousePlus size={20} />
           <span>Advertise your property</span>
