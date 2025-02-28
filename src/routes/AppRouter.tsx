@@ -12,6 +12,9 @@ import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk
 
 import AdvertiseProperty from "../pages/AdvertiseProperty";
 import Profile from "../pages/Profile";
+import ContactUs from "../pages/ContactUs";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsOfService from "../pages/TermsOfService";
 
 // pages
 const Home = lazy(() => import("../pages/Home"));
@@ -98,6 +101,30 @@ const AppRouter = () => {
           element: (
             <PageSuspenseFallback>
               <About />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "contact",
+          element: (
+            <PageSuspenseFallback>
+              <ContactUs />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "terms-of-service",
+          element: (
+            <PageSuspenseFallback>
+              <TermsOfService />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "privacy-policy",
+          element: (
+            <PageSuspenseFallback>
+              <PrivacyPolicy />
             </PageSuspenseFallback>
           ),
         },
