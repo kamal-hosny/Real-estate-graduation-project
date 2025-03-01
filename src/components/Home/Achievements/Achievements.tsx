@@ -1,5 +1,6 @@
 import { Award, Building2, TrendingUp, Users } from "lucide-react";
 import CountUp from "react-countup";
+import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer"; 
 
 const AchievementsCards = [
@@ -7,37 +8,39 @@ const AchievementsCards = [
     id: 1,
     icon: <TrendingUp size={35} />,
     counter: 500,
-    title: "Successful Deals",
-    description: "Transactions completed",
+    title: "successfulDeals",
+    description: "transactionsCompleted",
     plus: true,
   },
   {
     id: 2,
     icon: <Building2 size={35} />,
     counter: 25,
-    title: "Years Experience",
-    description: "In business brokerage",
+    title: "yearsExperience",
+    description: "businessBrokerage",
     plus: true,
   },
   {
     id: 3,
     icon: <Users size={35} />,
     counter: 1000,
-    title: "Happy Clients",
-    description: "Satisfied customers",
+    title: "happyClients",
+    description: "satisfiedCustomers",
     plus: true,
   },
   {
     id: 4,
     icon: <Award size={35} />,
     counter: 15,
-    title: "Industry Awards",
-    description: "Recognition of excellence",
+    title: "industryAwards",
+    description: "recognitionExcellence",
     plus: false,
   },
 ];
 
 const Achievements = () => {
+  const { t } = useTranslation();
+  
   const { ref, inView } = useInView({
     triggerOnce: true, 
     threshold: 0.5, 
@@ -63,8 +66,8 @@ const Achievements = () => {
                 )}
                 {x.plus ? "+" : ""}
               </div>
-              <p className="text-color-text-1 font-medium">{x.title}</p>
-              <p className="text-color-text-2">{x.description}</p>
+              <p className="text-color-text-1 font-medium">  {t(`achievements.${x.title}`)}</p>
+              <p className="text-color-text-2"> {t(`achievements.${x.description}`)}</p>
             </div>
           ))}
         </div>

@@ -1,22 +1,18 @@
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   const links = [
     {
-      title: "Quick Links",
-      items: [
-        { label: "Properties", to: "/properties" },
-        { label: "About Us", to: "/about" },
-        { label: "Contact Us", to: "/contact" },
-      ],
+      key: "quickLinks",
+      items: ["properties", "about", "contact"]
     },
     {
-      title: "Legal",
-      items: [
-        { label: "Privacy Policy", to: "/privacy-policy" },
-        { label: "Terms of Service", to: "/terms-of-service" },
-      ],
-    },
+      key: "legal",
+      items: ["privacy", "terms"]
+    }
   ];
 
   return (
@@ -26,23 +22,25 @@ const Footer = () => {
         <div className="logo flex flex-col gap-2 max-md:w-full">
           <div className="title font-bold text-2xl text-color-text-1">Aqarek</div>
           <p className="description max-md:text-center w-full text-color-text-2">
-          Your go-to destination for finding the best properties quickly and easily.
+            {t("footer.description")}
           </p>
         </div>
 
         {/* Dynamic Links */}
         {links.map((section) => (
-          <div key={section.title} className="flex flex-col gap-2">
-            <p className="font-bold text-color-text-1">{section.title}</p>
+          <div key={section.key} className="flex flex-col gap-2">
+            <p className="font-bold text-color-text-1">
+              {t(`footer.sections.${section.key}.title`)}
+            </p>
             <ul className="flex flex-col gap-1">
               {section.items.map((item) => (
-                <li key={item.to}>
+                <li key={item}>
                   <NavLink
-                    to={item.to}
+                    to={`/${item}`}
                     className="text-color-text-2 hover:text-color-hover-text-2"
-                    aria-label={item.label}
+                    aria-label={t(`footer.sections.${section.key}.items.${item}`)}
                   >
-                    {item.label}
+                    {t(`footer.sections.${section.key}.items.${item}`)}
                   </NavLink>
                 </li>
               ))}
@@ -52,21 +50,24 @@ const Footer = () => {
 
         {/* Contact */}
         <div className="contact flex flex-col gap-2">
-          <p className="font-bold text-color-text-1">Contact</p>
+          <p className="font-bold text-color-text-1">
+            {t("footer.sections.contact.title")}
+          </p>
           <ul className="flex flex-col gap-1">
             <li>
               <address className="not-italic text-color-text-2 hover:text-color-hover-text-2">
-                123 Business Ave <br /> Houston, TX 77001
+                {t("footer.sections.contact.address")}<br />
+                {t("footer.sections.contact.city")}
               </address>
             </li>
             <li>
               <a href="tel:1234567890" className="text-color-text-2 hover:text-color-hover-text-2">
-                (123) 456-7890
+                {t("footer.sections.contact.phone")}
               </a>
             </li>
             <li>
               <a href="mailto:info@Aqarek.com" className="text-color-text-2 hover:text-color-hover-text-2">
-                info@Aqarek.com
+                {t("footer.sections.contact.email")}
               </a>
             </li>
           </ul>
@@ -75,7 +76,7 @@ const Footer = () => {
 
       {/* Footer  */}
       <div className="text-color-text-2 text-sm p-8 text-center">
-        {new Date().getFullYear()} &copy; Aqarek. All rights reserved.
+        {t("footer.copyright", {  year: new Date().getFullYear() })}
       </div>
     </footer>
   );

@@ -10,10 +10,11 @@ import ProductCardSkeleton from "../../SkeletonsUi/ProductCardSkeleton";
 import { Link } from "react-router-dom";
 
 import { sampleProperties } from "../../../data/data";
+import { useTranslation } from "react-i18next";
 
 const OurProducts = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
-
+  const { t } = useTranslation();
   const products = sampleProperties.data.data
 
   const totalSlides = products.length;
@@ -40,10 +41,12 @@ const OurProducts = () => {
     <div className="OurProducts py-8 bg-main-color-background">
       <div className="container mx-auto px-4 space-y-6">
         <div className="head flex justify-between items-center">
-          <p className="main-title text-2xl font-bold text-color-text-1">Featured Property</p>
+        <p className="main-title text-2xl font-bold text-color-text-1">
+    {t("ourProducts.featuredProperty")}
+  </p>
           <Link to="/products">
             <Button className="border-button-color border-2 text-color-text-1 hover:bg-button-hover-color hover:text-main-color-background">
-              View All
+            {t("ourProducts.viewAll")}
             </Button>
           </Link>
         </div>

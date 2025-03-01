@@ -6,6 +6,7 @@ import { authLogout } from "../../../../../store/auth/authSlice";
 import { useAppSelector } from "../../../../../store/hooks";
 import Button from "../../../../ui/Button";
 import i18n from "../../../../../language";
+import { useTranslation } from "react-i18next";
 
 const MenuNavAuth = () => {
     const dispatch = useDispatch()
@@ -13,6 +14,8 @@ const MenuNavAuth = () => {
   const [open, setOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
+
+  const { t } = useTranslation();
 
   const [direction, setDirection] = useState(document.dir || "ltr");
 
@@ -111,9 +114,9 @@ useEffect(() => {
         }`}
       >
         <div className="head">
-          <p className="text-color-text-1 text-lg font-medium">Sign In</p>
+          {token ? (<><p className="text-color-text-1 text-lg font-medium">  {t("auth_menu.profile")}</p></>) : (<><p className="text-color-text-1 text-lg font-medium">  {t("auth_menu.sign_in")}</p></>) }
           <p className="text-color-text-2 text-sm">
-            Favorites - Manage your account
+            {t("auth_menu.description")}
           </p>
         </div>
         <div>{token && (
@@ -122,11 +125,11 @@ useEffect(() => {
             >
             <li onClick={handleGotoProfile} className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4">
                 <User size={20} />
-                <p>Profile</p>
+                <p>{t("auth_menu.profile")}</p>
             </li>
             <li onClick={handleLogout} className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4">
                 <LogOut size={20} />
-                <p>Sign out</p>
+                <p>{t("auth_menu.sign_out")}</p>
             </li>
             </ul>
         )}</div>
@@ -136,20 +139,20 @@ useEffect(() => {
               onClick={handleLogin}
               className="bg-transparent hover:bg-section-color border-border border-2 w-full !text-color-text-1"
             >
-              Login
+            {t("auth_menu.login")}
             </Button>
             <Button
               onClick={handleRegister}
               className="bg-button-color hover:bg-button-hover-color border-border border-2 w-full text-main-color-background"
             >
-              Register
+   {t("auth_menu.register")}
             </Button>
           </div>
         )}
 
         <span className="inline-block bg-color-text-2 w-full h-[1px]"></span>
 
-        <p className="text-color-text-2 text-sm font-medium ">My Activities</p>
+        <p className="text-color-text-2 text-sm font-medium ">{t("auth_menu.my_activities")}</p>
         <ul className="p-1 text-color-text-1">
           <li
             onClick={handleWishlist}
@@ -163,7 +166,7 @@ useEffect(() => {
                 </span>
               )}
             </div>
-            <span>My Favorites</span>
+            <span>{t("auth_menu.my_favorites")}</span>
           </li>
 {direction === "rtl" ? (
   <li    onClick={() => i18n.changeLanguage("en")} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
@@ -185,7 +188,7 @@ useEffect(() => {
 
           <li onClick={()=>{navigate("/advertise-property")}} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
           <HousePlus size={20} />
-          <span>Advertise your property</span>
+          <span>{t("auth_menu.advertise_property")}</span>
           </li>
         </ul>
       </div>

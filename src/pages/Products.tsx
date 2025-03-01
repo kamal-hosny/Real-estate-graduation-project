@@ -16,6 +16,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
 import { Mail, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type TransactionType = "sale" | "rent";
 type PropertyType =
@@ -73,6 +74,8 @@ const Products = () => {
   const products = sampleProperties.data.data;
   const meta = sampleProperties.meta;
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -116,11 +119,10 @@ const Products = () => {
           <div className="title">
             <div className="flex justify-center items-center gap-4 flex-col translate-y-6">
               <p className="text-5xl max-sm:text-3xl text-white font-bold">
-                Discover Your Ideal Property
+              {t("properties_page.hero.title")}
               </p>
               <p className="text-white max-sm:text-xs text-lg">
-                Explore homes, apartments, and commercial spaces for sale or
-                rent
+              {t("properties_page.hero.subtitle")}
               </p>
             </div>
           </div>
@@ -146,10 +148,12 @@ const Products = () => {
             <div className="flex flex-col gap-4 flex-1">
               <div className="space-y-2">
                 <h2 className="text-2xl font-bold text-color-text-1">
-                  Property Name
+                {t("properties_page.contact.property_name")}
                 </h2>
                 <div className="bg-section-color p-3 rounded-lg">
-                  <p className="text-color-text-2 font-medium">Contact Agent</p>
+                  <p className="text-color-text-2 font-medium">
+                  {t("properties_page.contact.title")}
+                  </p>
                 </div>
               </div>
 
@@ -162,21 +166,23 @@ const Products = () => {
                 >
                   <div className="bg-green-100 hover:bg-green-200 text-green-700 p-3 rounded-lg border-2 border-green-300 flex items-center justify-center gap-2 transition-colors">
                     <FaWhatsapp size={24} />
-                    <span className="font-medium">WhatsApp</span>
+                    <span className="font-medium">{t("properties_page.contact.whatsapp")}</span>
                   </div>
                 </a>
 
                 <a href="tel:01203023" className="flex-1 min-w-[150px]">
                   <div className="bg-blue-100 hover:bg-blue-200 text-blue-700 p-3 rounded-lg border-2 border-blue-300 flex items-center justify-center gap-2 transition-colors">
                     <IoIosCall size={24} />
-                    <span className="font-medium">Call</span>
+                    <span className="font-medium">            {t("properties_page.contact.call")}</span>
                   </div>
                 </a>
 
                 <a href="mailto:kaml@gmail" className="flex-1 min-w-[150px]">
                   <div className="bg-red-100 hover:bg-red-200 text-red-700 p-3 rounded-lg border-2 border-red-300 flex items-center justify-center gap-2 transition-colors">
                     <Mail size={24} />
-                    <span className="font-medium">Email</span>
+                    <span className="font-medium">
+                    {t("properties_page.contact.email")}
+                    </span>
                   </div>
                 </a>
               </div>

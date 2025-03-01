@@ -8,12 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../components/Form/Input/Input";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { actAuthLogin } from "../store/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const sttt = useAppSelector((state) => state.auth);
 
   console.log(sttt);
@@ -52,10 +53,10 @@ const Login = () => {
         {/* Header */}
         <div className="space-y-2">
           <p className="text-lg font-semibold text-color-text-1">
-            Login Your Account
+          {t("login.title")}
           </p>
           <p className="text-xs text-color-text-2">
-            Get started with our app, just create an account and enjoy the experience.
+          {t("login.subtitle")}
           </p>
         </div>
 
@@ -64,10 +65,10 @@ const Login = () => {
           {/* Email Field */}
           <div className="email relative">
           <Input
-            label="Email"
+            label={t("login.email_label")}
             name="email"
             type="email"
-            placeholder="Enter your Email"
+            placeholder={t("login.email_placeholder")}
             register={register}
             icon={<Mail size={16} className="text-color-text-2" />}
             error={errors.email?.message}
@@ -77,10 +78,10 @@ const Login = () => {
           {/* Password Field */}
           <div className="password relative">
           <Input
-            label="Password"
+            label={t("login.password_label")}
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Enter your Password"
+            placeholder={t("login.password_placeholder")}
             register={register}
             icon={<Lock size={16} className="text-color-text-2" />}
             error={errors.password?.message}
@@ -93,12 +94,7 @@ const Login = () => {
           </div>
           </div>
 
-          {/* Forgot Password */}
-          <div className="forgot-password flex justify-end">
-            <Link to="/forgotPassword" className="text-xs font-medium text-cyan-500 cursor-pointer">
-              Forgot password?
-            </Link>
-          </div>
+
 
           {/* Login Button */}
           <div className="btn">
@@ -109,15 +105,15 @@ const Login = () => {
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isSubmitting ? "Logging in..." : "Login"}
+              {isSubmitting ? t("login.logging_in") :       t("login.login_button")}
             </Button>
           </div>
 
           {/* Sign Up Link */}
           <div className="dont-account text-center text-sm">
-            Don't have an account?{" "}
+          {t("login.no_account")}{" "}
             <span className="font-medium text-cyan-500 cursor-pointer">
-              <Link to="/register">Sign Up</Link>
+              <Link to="/register">  {t("login.signup")}</Link>
             </span>
           </div>
         </form>
