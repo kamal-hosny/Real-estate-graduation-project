@@ -6,7 +6,8 @@ import darkModeReducer from "./features/darkMode/darkModeSlice";
 import menuReducer from "./features/menu/menuSlice";
 import mobileWidthReducer from "./features/mobileWidth/mobileWidthSlice";
 import wishlistReducer from "./wishlist/wishlistReducer";
-import toastsReducer from "./toasts/toastsSlice"
+import toastsReducer from "./toasts/toastsSlice";
+import modal from "./modal/modalSlice"
 const authPersistConfig = {
   key: "auth",
   storage,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   menu: menuReducer,
   mobileWidth: mobileWidthReducer,
   wishlist: wishlistReducer,
-  toasts: toastsReducer
+  toasts: toastsReducer,
+  modal,
 });
 
 
