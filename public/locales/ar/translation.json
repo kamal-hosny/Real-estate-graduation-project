@@ -227,5 +227,120 @@
       "registering": "جاري التسجيل...",
       "have_account": "لديك حساب بالفعل؟",
       "login": "سجل الدخول"
+    },
+    "advertiseProperty": {
+      "hero": {
+        "title": "بيع أو أجر عقارك بثقة",
+        "subtitle": "تواصل مع الآلاف من المشترين المؤهلين عبر شبكتنا المميزة"
+      },
+      "content": {
+        "title": "اعلن عن عقارك",
+        "description": "استفد من انتشارنا الواسع في السوق وفريق الخبراء لتعظيم إمكانات عقارك. نقدم دعمًا كاملًا في كل مرحلة:",
+        "listItems": [
+          "تصوير احترافي وجولات افتراضية",
+          "تحليل تسعير استراتيجي",
+          "حملة تسويقية عبر منصات متعددة",
+          "دعم عملاء 24/7",
+          "إدارة معاملات آمنة"
+        ]
+      }
+    },
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "advertise": "اعلن عن عقار"
+    },
+    "formPropertyDetails": {
+      "propertyDetails": "تفاصيل العقار",
+      "propertyTitle": "عنوان العقار*",
+      "propertyTitlePlaceholder": "شقة حديثة بثلاث غرف نوم",
+      "propertyType": "نوع العقار*",
+      "selectType": "اختر النوع",
+      "townhouse": "تاون هاوس",
+      "villa": "فيلا",
+      "privatehouse": "منزل خاص",
+      "apartment": "شقة",
+      "office": "مكتب",
+      "shop": "متجر",
+      "status": "الحالة*",
+      "selectStatus": "اختر الحالة",
+      "forsale": "للبيع",
+      "forrent": "للإيجار",
+      "price": "السعر (ج.م)*",
+      "pricePlaceholder": "أدخل السعر بالجنيه المصري",
+      "locationDetails": "تفاصيل الموقع",
+      "address": "العنوان*",
+      "addressPlaceholder": "أدخل عنوان العقار",
+      "city": "المدينة*",
+      "cityPlaceholder": "أدخل اسم المدينة",
+      "googleMapsLink": "رابط خرائط جوجل",
+      "googleMapsLinkPlaceholder": "ألصق رابط خرائط جوجل",
+      "propertySpecifications": "مواصفات العقار",
+      "bedrooms": "غرف النوم*",
+      "bathrooms": "الحمامات*",
+      "totalRooms": "إجمالي الغرف*",
+      "area": "المساحة (م²)*",
+      "areaPlaceholder": "أدخل المساحة بالمتر المربع",
+      "floorNumber": "رقم الطابق",
+      "numberPlaceholder": "أدخل الرقم",
+      "furnished": "مفروش",
+      "propertyImages": "صور العقار*",
+      "clickToUpload": "انقر لرفع الصور",
+      "imagesRequired": "الصور مطلوبة",
+      "maxImagesError": "الحد الأقصى 10 صور",
+      "imageTypeError": "ملفات الصور فقط مسموح بها (JPEG، PNG)",
+      "imageConstraints": "الحد الأقصى 10 صور (JPEG، PNG)",
+      "image": "صورة",
+      "submitting": "جارٍ الإرسال...",
+      "submitForReview": "إرسال للمراجعة"
+    },
+    "wishlistPage": {
+      "wishlist": "الرغبات",
+      "wishlistDescription": "استكشف مجموعة واسعة من المواد والأدوات عالية الجودة الأساسية لصناعة حقول النفط. من معدات الحفر إلى أدوات الصيانة، نحن نوفر كل ما تحتاجه لضمان عمليات فعالة.",
+      "wishlistEmpty": "قائمة رغباتك فارغة"
+    },
+    "singlePropertyPage": {
+      "home": "الرئيسية",
+      "properties": "العقارات",
+      "property": "عقار",
+      "propertyImage": "صورة العقار",
+      "addedToWishlist": "تم إضافة العقار إلى قائمة الرغبات",
+      "startingFrom": "بدءًا من",
+      "placeOrder": "تقديم طلب",
+      "description": "الوصف",
+      "publisher": "الناشر",
+      "viewMore": "عرض المزيد",
+      "propertyDetails": "تفاصيل العقار",
+      "locationOnMap": "الموقع على الخريطة",
+      "googleMapLocation": "موقع خرائط جوجل"
+    },
+    "tableDetails": {
+      "general": "العام",
+      "details": "التفاصيل",
+      "propertyType": "نوع العقار",
+      "offerType": "نوع العرض",
+      "referenceNumber": "الرقم المرجعي",
+      "verification": "التثبت",
+      "dateAdded": "تاريخ الإضافة",
+      "numberOfRooms": "عدد الغرف",
+      "numberOfBedrooms": "عدد غرف النوم",
+      "numberOfBathrooms": "عدد الحمامات",
+      "area": "المساحة (م²)",
+      "floorNumber": "رقم الطابق",
+      "yes": "نعم",
+      "no": "لا",
+      "propertyTypes": {
+        "townhouse": "تاون هاوس",
+        "villa": "فيلا",
+        "privatehouse": "منزل خاص",
+        "apartment": "شقة",
+        "office": "مكتب",
+        "shop": "محل"
+      },
+      "status": {
+        "forsale": "للبيع",
+        "forrent": "للإيجار",
+        "sold": "تم البيع",
+        "rented": "تم التأجير"
+      }
     }
   }

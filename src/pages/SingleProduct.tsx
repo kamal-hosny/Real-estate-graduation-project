@@ -24,9 +24,9 @@ import Img from "../components/ui/Img";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
 import { Property } from "../types/product.types";
-
-import defaultPerson from "../assets/defaultImages/defaultPerson.jpeg"
+import defaultPerson from "../assets/defaultImages/defaultPerson.jpeg";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const breadcrumbItems = [
   { label: "Home", link: "/" },
@@ -69,7 +69,8 @@ const property: Property = {
 };
 
 const SingleProperty = () => {
-  const navigate = useNavigate()
+  const { t } = useTranslation(); 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const defaultImg = "https://dummyimage.com/300x300";
 
@@ -87,20 +88,22 @@ const SingleProperty = () => {
       dispatch(addToWishlist(property));
       dispatch(
         addToast({
-          message: "Property added to wishlist",
+          message: t("singlePropertyPage.addedToWishlist"),
           type: "success",
         })
       );
     }
     setIsHeartFilled((prev) => !prev);
   };
-console.log(property?.company?.avatar);
 
   return (
     <div className="container mx-auto px-2 py-4 space-y-5 bg-section-color md:max-w-[70%]">
       <Breadcrumb
-        items={breadcrumbItems}
-        itemNow={property?.title || "Property"}
+        items={[
+          { label: t("singlePropertyPage.home"), link: "/" },
+          { label: t("singlePropertyPage.properties"), link: "/properties" },
+        ]}
+        itemNow={property?.title || t("singlePropertyPage.property")}
       />
       <div className="productPage flex flex-col gap-y-4">
         <div className="relative imageSection rounded-t border-color-border border bg-main-color-background max-w-full">
@@ -124,7 +127,7 @@ console.log(property?.company?.avatar);
                   loading="lazy"
                   className="w-full cursor-grab border-color-border rounded-t object-cover h-[500px] hover:scale-105 transition-all"
                   src={img ?? defaultImg}
-                  alt="Property Image"
+                  alt={t("singlePropertyPage.propertyImage")}
                 />
               </SwiperSlide>
             ))}
@@ -153,7 +156,7 @@ console.log(property?.company?.avatar);
         <div className="details">
           <div className="head flex flex-col gap-3 w-full">
             <div className="date-type text-color-text-2 text-xs font-medium">
-              {property.type} - February 11, 2024
+              {property.type} - {new Date(property.createdAt).toLocaleDateString()}
             </div>
             <h1 className="title text-color-text-1 text-3xl font-medium">
               {property.title}
@@ -163,30 +166,46 @@ console.log(property?.company?.avatar);
               {property.location.city} - {property.location.address}
             </div>
             <div className="price font-semibold text-color-text-1">
-              <span>Starting from {formatCurrency(property.price)}</span>
+              <span>
+                {t("singlePropertyPage.startingFrom")} {formatCurrency(property.price)}
+              </span>
             </div>
 
             <Button className="bg-button-color hover:bg-button-hover-color text-main-color-background w-fit">
-              Place an Order
+              {t("singlePropertyPage.placeOrder")}
             </Button>
-
-     
           </div>
         </div>
         <hr className="border-color-border border-2" />
         <div className="description flex flex-col gap-2">
-          <h2 className="text-2xl font-medium text-color-text-1">Description</h2>
+          <h2 className="text-2xl font-medium text-color-text-1">
+            {t("singlePropertyPage.description")}
+          </h2>
           <p className="text-color-text-1">{property.description}</p>
         </div>
         <hr className="border-color-border border-2" />
         <div className="company flex flex-col gap-4">
           <div className="head flex items-center justify-between">
-          <h2 className="text-2xl font-medium text-color-text-1">الناشر</h2>
-          <p onClick={() => {navigate(`/properties?companyId=${property?.company?.id}`)}} className="text-color-text-2 cursor-pointer transition-all hover:text-color-text-1 flex items-end"><span>عرض المزيد</span> <ChevronRight size={20} /> </p>
+            <h2 className="text-2xl font-medium text-color-text-1">
+              {t("singlePropertyPage.publisher")}
+            </h2>
+            <p
+              onClick={() => {
+                navigate(`/properties?companyId=${property?.company?.id}`);
+              }}
+              className="text-color-text-2 cursor-pointer transition-all hover:text-color-text-1 flex items-end"
+            >
+              <span>{t("singlePropertyPage.viewMore")}</span>{" "}
+              <ChevronRight size={20} />
+            </p>
           </div>
           <div className="card flex items-center gap-4">
-            <div >
-              <Img className="w-16 h-16 object-cover rounded-full border-color-border border-2" src={property?.company?.avatar || defaultPerson} alt={property?.company?.name || "name"} />
+            <div>
+              <Img
+                className="w-16 h-16 object-cover rounded-full border-color-border border-2"
+                src={property?.company?.avatar || defaultPerson}
+                alt={property?.company?.name || "name"}
+              />
             </div>
             <div className="space-y-1">
               <p className="text-color-text-1 font-medium">{property?.company?.name}</p>
@@ -196,24 +215,26 @@ console.log(property?.company?.avatar);
         </div>
         <hr className="border-color-border border-2" />
         <div className="contact-buttons grid grid-cols-3 gap-2 w-full">
-              <a href={`https://wa.me/${property?.company?.phone}`} target="_blank" rel="noreferrer">
-                <div className="bg-green-100 text-green-700 p-3 rounded flex items-center justify-center border-green-300 border-2 cursor-pointer hover:bg-green-200">
-                  <FaWhatsapp size={30} />
-                </div>
-              </a>
-              <a href={`tel:${property?.company?.phone}`}>
-                <div className="bg-blue-100 text-blue-700 p-3 rounded flex items-center justify-center border-blue-300 border-2 cursor-pointer hover:bg-blue-200">
-                  <IoIosCall size={30} />
-                </div>
-              </a>
-              <a href={`mailto:${property?.company?.email}`}>
-                <div className="bg-red-100 text-red-700 p-3 rounded flex items-center justify-center border-red-300 border-2 cursor-pointer hover:bg-red-200">
-                  <Mail size={30} />
-                </div>
-              </a>
+          <a href={`https://wa.me/${property?.company?.phone}`} target="_blank" rel="noreferrer">
+            <div className="bg-green-100 text-green-700 p-3 rounded flex items-center justify-center border-green-300 border-2 cursor-pointer hover:bg-green-200">
+              <FaWhatsapp size={30} />
             </div>
+          </a>
+          <a href={`tel:${property?.company?.phone}`}>
+            <div className="bg-blue-100 text-blue-700 p-3 rounded flex items-center justify-center border-blue-300 border-2 cursor-pointer hover:bg-blue-200">
+              <IoIosCall size={30} />
+            </div>
+          </a>
+          <a href={`mailto:${property?.company?.email}`}>
+            <div className="bg-red-100 text-red-700 p-3 rounded flex items-center justify-center border-red-300 border-2 cursor-pointer hover:bg-red-200">
+              <Mail size={30} />
+            </div>
+          </a>
+        </div>
         <div className="property-details flex flex-col gap-2">
-          <h2 className="text-2xl font-medium text-color-text-1">Property Details</h2>
+          <h2 className="text-2xl font-medium text-color-text-1">
+            {t("singlePropertyPage.propertyDetails")}
+          </h2>
           <TableDetails
             area={property.details.area}
             baths={property.details.baths}
@@ -230,9 +251,11 @@ console.log(property?.company?.avatar);
         </div>
         <hr className="border-color-border border-2" />
         <div className="location-map flex flex-col gap-2">
-          <h2 className="text-2xl font-semibold text-color-text-1">Location on Map</h2>
+          <h2 className="text-2xl font-semibold text-color-text-1">
+            {t("singlePropertyPage.locationOnMap")}
+          </h2>
           <iframe
-            title="Google Map Location"
+            title={t("singlePropertyPage.googleMapLocation")}
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23916.266845252336!2d31.358976!3d30.077747200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583df81720ed69%3A0xb597301dcb56aacf!2z2LPZitiq2Yog2LPZhtiq2LEg2KfZhNmF2KfYuNip!5e1!3m2!1sar!2seg!4v1739970399410!5m2!1sar!2seg"
             className="w-full"
             height="450"

@@ -228,5 +228,120 @@
       "registering": "Registering...",
       "have_account": "Already have an account?",
       "login": "Login"
+    },
+    "advertiseProperty": {
+      "hero": {
+        "title": "Sell or Rent Your Property with Confidence",
+        "subtitle": "Connect with thousands of qualified buyers through our premium network"
+      },
+      "content": {
+        "title": "Advertise Your Property",
+        "description": "Leverage our extensive market reach and expert team to maximize your property's potential. We provide comprehensive support at every stage:",
+        "listItems": [
+          "Professional photography & virtual tours",
+          "Strategic pricing analysis",
+          "Multi-platform marketing campaign",
+          "24/7 client support",
+          "Secure transaction management"
+        ]
+      }
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "advertise": "Advertise Property"
+    },
+    "formPropertyDetails": {
+      "propertyDetails": "Property Details",
+      "propertyTitle": "Property Title*",
+      "propertyTitlePlaceholder": "Modern 3-Bedroom Apartment",
+      "propertyType": "Property Type*",
+      "selectType": "Select Type",
+      "townhouse": "Townhouse",
+      "villa": "Villa",
+      "privatehouse": "Private House",
+      "apartment": "Apartment",
+      "office": "Office",
+      "shop": "Shop",
+      "status": "Status*",
+      "selectStatus": "Select Status",
+      "forsale": "For Sale",
+      "forrent": "For Rent",
+      "price": "Price (EGP)*",
+      "pricePlaceholder": "Enter price in EGP",
+      "locationDetails": "Location Details",
+      "address": "Address*",
+      "addressPlaceholder": "Enter property address",
+      "city": "City*",
+      "cityPlaceholder": "Enter city name",
+      "googleMapsLink": "Google Maps Link",
+      "googleMapsLinkPlaceholder": "Paste Google Maps URL",
+      "propertySpecifications": "Property Specifications",
+      "bedrooms": "Bedrooms*",
+      "bathrooms": "Bathrooms*",
+      "totalRooms": "Total Rooms*",
+      "area": "Area (m²)*",
+      "areaPlaceholder": "Enter area in square meters",
+      "floorNumber": "Floor Number",
+      "numberPlaceholder": "Enter number",
+      "furnished": "Furnished",
+      "propertyImages": "Property Images*",
+      "clickToUpload": "Click to upload images",
+      "imagesRequired": "Images are required",
+      "maxImagesError": "Maximum 10 images allowed",
+      "imageTypeError": "Only image files allowed (JPEG, PNG)",
+      "imageConstraints": "Maximum 10 images (JPEG, PNG)",
+      "image": "Image",
+      "submitting": "Submitting...",
+      "submitForReview": "Submit for Review"
+    },
+    "wishlistPage": {
+      "wishlist": "Wishlist",
+      "wishlistDescription": "Explore a wide range of high-quality materials and tools essential for the oilfield industry. From drilling equipment to maintenance tools, we provide everything you need to ensure efficient operations.",
+      "wishlistEmpty": "Your wishlist is empty"
+    },
+    "singlePropertyPage": {
+      "home": "Home",
+      "properties": "Properties",
+      "property": "Property",
+      "propertyImage": "Property Image",
+      "addedToWishlist": "Property added to wishlist",
+      "startingFrom": "Starting from",
+      "placeOrder": "Place an Order",
+      "description": "Description",
+      "publisher": "Publisher",
+      "viewMore": "View More",
+      "propertyDetails": "Property Details",
+      "locationOnMap": "Location on Map",
+      "googleMapLocation": "Google Map Location"
+    },
+    "tableDetails": {
+      "general": "General",
+      "details": "Details",
+      "propertyType": "Property Type",
+      "offerType": "Offer Type",
+      "referenceNumber": "Reference Number",
+      "verification": "Verification",
+      "dateAdded": "Date Added",
+      "numberOfRooms": "Number of Rooms",
+      "numberOfBedrooms": "Number of Bedrooms",
+      "numberOfBathrooms": "Number of Bathrooms",
+      "area": "Area (m²)",
+      "floorNumber": "Floor Number",
+      "yes": "Yes",
+      "no": "No",
+      "propertyTypes": {
+        "townhouse": "Townhouse",
+        "villa": "Villa",
+        "privatehouse": "Private House",
+        "apartment": "Apartment",
+        "office": "Office",
+        "shop": "Shop"
+      },
+      "status": {
+        "forsale": "For Sale",
+        "forrent": "For Rent",
+        "sold": "Sold",
+        "rented": "Rented"
+      }
     }
   }

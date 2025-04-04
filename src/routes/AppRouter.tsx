@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk";
 
-
+import { SmoothScroll } from "react-smooth-scrolll";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 // pages
 const Home = lazy(() => import("../pages/Home"));
@@ -203,7 +203,11 @@ const AppRouter = () => {
     }
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <SmoothScroll>
+    <RouterProvider router={router} />
+    </SmoothScroll>
+  );
 };
 
 export default AppRouter;

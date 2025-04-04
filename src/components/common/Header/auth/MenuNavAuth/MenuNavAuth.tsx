@@ -40,7 +40,7 @@ const MenuNavAuth = () => {
 
   // const { token } = useAppSelector((state ) => state.auth);
 
-  const token = true
+  const token = false
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
