@@ -28,10 +28,6 @@ import defaultPerson from "../assets/defaultImages/defaultPerson.jpeg";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const breadcrumbItems = [
-  { label: "Home", link: "/" },
-  { label: "Properties", link: "/properties" },
-];
 
 const property: Property = {
   id: "123456",
