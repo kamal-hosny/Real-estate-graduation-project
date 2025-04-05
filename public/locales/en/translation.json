@@ -343,5 +343,137 @@
         "sold": "Sold",
         "rented": "Rented"
       }
+    },
+    "terms": {
+      "title": "Aqarek Terms and Conditions",
+      "introduction": {
+        "heading": "Introduction",
+        "text": "Welcome to our real estate platform. Please read these Terms and Conditions carefully before using the website. Your use of the site constitutes full acceptance of these terms."
+      },
+      "acceptance": {
+        "heading": "Acceptance of Terms",
+        "list": [
+          "You must be at least 18 years old to use the services",
+          "You are responsible for maintaining account confidentiality",
+          "Compliance with applicable local and international laws"
+        ]
+      },
+      "services": {
+        "heading": "Real Estate Services",
+        "description": "The platform provides real estate brokerage services including:",
+        "list": [
+          "Displaying properties for sale/rent",
+          "Facilitating communication between buyers and sellers",
+          "Providing preliminary real estate and financial information"
+        ]
+      },
+      "responsibilities": {
+        "heading": "Responsibilities",
+        "list": [
+          "Ensure accuracy of information in property listings",
+          "Commit to payment within specified periods",
+          "Do not use the platform for illegal purposes"
+        ]
+      },
+      "financial": {
+        "heading": "Financial Transactions",
+        "items": [
+          "- All transactions are subject to 2% service fee",
+          "- Refunds are processed according to published policy",
+          "- We reserve the right to block suspicious transactions"
+        ]
+      },
+      "privacy": {
+        "heading": "Privacy",
+        "text": "We protect your personal data according to the latest security standards. We may use contact information to send promotional offers unless you opt out."
+      },
+      "modifications": {
+        "heading": "Terms Modifications",
+        "text": "We reserve the right to modify these terms at any time, and users will be notified via email or website announcement."
+      }
+    },
+    "privacy": {
+      "title": "Aqarek Privacy Policy",
+      "section1": {
+        "heading": "Introduction",
+        "content": "We at the real estate platform are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when you use our digital platform."
+      },
+      "section2": {
+        "heading": "Data We Collect",
+        "items": [
+          "Personal information (name, email, phone number)",
+          "Financial transaction data",
+          "Real estate search preferences",
+          "Usage and technical data (IP address, browser type)"
+        ]
+      },
+      "section3": {
+        "heading": "How We Use Data",
+        "items": [
+          "Facilitate purchase processes and real estate offers",
+          "Improve user experience and personalize offers",
+          "Respond to inquiries and technical support",
+          "Comply with legal requirements"
+        ]
+      },
+      "section4": {
+        "heading": "Data Sharing",
+        "description": "We do not sell your personal data and may share it with:",
+        "items": [
+          "Approved service providers (e-payment, shipping)",
+          "Government authorities when legally required",
+          "Approved real estate partners with your prior consent"
+        ]
+      },
+      "section5": {
+        "heading": "User Rights",
+        "items": [
+          "- Right to request a copy of your personal data",
+          "- Right to request corrections",
+          "- Right to request data deletion",
+          "- Right to opt-out of marketing communications"
+        ]
+      },
+      "section6": {
+        "heading": "Data Protection",
+        "content": "We use advanced encryption technologies (SSL) and implement ISO 27001 security standards to protect your data. Data is stored on secure servers in certified geographical locations."
+      },
+      "section7": {
+        "heading": "Cookies",
+        "content": "We use cookies to enhance browsing experience. You can manage preferences through browser settings. Continued use of the site implies your consent to their use."
+      },
+      "section8": {
+        "heading": "Policy Changes",
+        "content": "We may update this policy periodically. The updated version will be published on the platform with an effective date. Please review it regularly."
+      }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "name_label": "Full Name",
+      "name_required": "Name is required",
+      "name_placeholder": "Enter your full name",
+      "email_label": "Email Address",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email address",
+      "email_placeholder": "example@domain.com",
+      "phone_label": "Phone Number",
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Invalid phone number",
+      "phone_placeholder": "+966500000000",
+      "inquiry_label": "Inquiry Type",
+      "inquiry_required": "Please select inquiry type",
+      "inquiry_placeholder": "Select inquiry type",
+      "inquiry_technical": "Technical Support",
+      "inquiry_sales": "Sales",
+      "inquiry_partnership": "Partnership",
+      "inquiry_other": "Other",
+      "message_label": "Message",
+      "message_required": "Message is required",
+      "message_min_length": "Message must be at least 20 characters",
+      "message_placeholder": "Enter your message here...",
+      "send_button": "Send Message",
+      "sending": "Sending...",
+      "success_message": "Inquiry sent successfully",
+      "error_message": "Please check data or reload page"
     }
   }

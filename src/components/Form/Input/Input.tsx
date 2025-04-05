@@ -12,6 +12,7 @@ type TInput<TFieldValue extends FieldValues> = {
   accept?: string;
   multiple?: boolean;
   capture?: boolean | 'user' | 'environment';
+  className?: string;
 };
 
 const Input = <TFieldValue extends FieldValues>({
@@ -22,9 +23,12 @@ const Input = <TFieldValue extends FieldValues>({
   icon,
   error,
   placeholder,
+  className,
 
   ...rest
 }: TInput<TFieldValue>) => {
+
+  
   return (
     <div className="email flex flex-col gap-1.5">
       <label className="text-sm text-color-text-1" htmlFor={name}>{label}:</label>

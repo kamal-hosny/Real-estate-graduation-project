@@ -119,7 +119,7 @@ const AppRouter = () => {
           ),
         },
         {
-          path: "terms-of-service",
+          path: "terms",
           element: (
             <PageSuspenseFallback>
               <TermsOfService />
@@ -127,7 +127,7 @@ const AppRouter = () => {
           ),
         },
         {
-          path: "privacy-policy",
+          path: "privacy",
           element: (
             <PageSuspenseFallback>
               <PrivacyPolicy />
