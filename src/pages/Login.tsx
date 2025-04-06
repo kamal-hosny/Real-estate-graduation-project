@@ -9,6 +9,7 @@ import Input from "../components/Form/Input/Input";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { actAuthLogin } from "../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
+import { addToast } from "../store/toasts/toastsSlice";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -35,12 +36,16 @@ const Login = () => {
     console.log(data);
     dispatch(
       actAuthLogin({
-        Email: data.email,
+        email: data.email,
         password: data.password}))
       .unwrap()
       .then(() => {
+        dispatch(
+          addToast({ message: "تم تسجيل الدخول", type: "success" })
+        );
         navigate("/");
       }).catch((err) =>{
+        addToast({ message: "من فضلك راجع البيانات واعد التسجيل", type: "error" })
         console.log(err);
       })
     

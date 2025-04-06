@@ -1,40 +1,37 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosErrorHandler } from "../../../utils";
-
 import { axiosConfig } from "../../../services/axiosConfig";
 
 type TLoginData = {
-    Email: string;
-    password: string;
-  };
-  
-  type TResponse = {
-    message: string;
-    test: {
-      _id: string;
-      contactName: string;
-      lastName: string;
-      companyName: string;
-      Email: string;
-      phoneNumber: string;
-      country: string;
-      isVerified: boolean;
-    };
-    token: string;
-  };
+  email: string;
+  password: string;
+};
 
-  const actAuthLogin = createAsyncThunk(
-    "auth/actAuthLogin",
-    async (loginData:TLoginData, thunk ) => {
-        const { rejectWithValue } = thunk;
+type TResponse = {
+  token: string;
+};
 
-        try {
-            const res = await axiosConfig.post<TResponse>("/user/login", loginData)
-            return res.data
-        } catch (error) {
-            return rejectWithValue(axiosErrorHandler(error));
-        }
+const actAuthLogin = createAsyncThunk(
+  "auth/actAuthLogin",
+  async (loginData: TLoginData, thunk) => {
+    const { rejectWithValue } = thunk;
+    console.log("Login Data:", loginData);
+
+    try {
+      const res = await axiosConfig.post<TResponse>("/api/auth/login", loginData, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        },
+      });
+      console.log("Response:", res.data);
+      return res.data;
+    } catch (error) {
+      console.error("Login Error:", axiosErrorHandler(error));
+      return rejectWithValue(axiosErrorHandler(error));
     }
-  )
+  }
+);
 
-  export default actAuthLogin;
+export default actAuthLogin;

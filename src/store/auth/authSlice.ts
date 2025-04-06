@@ -5,26 +5,23 @@ import { isString } from "../../types";
 import actAuthRegister from "./act/actAuthRegister";
 
 interface IAuthState {
-    test: {
-    _id: string;
-    contactName: string;
-    lastName: string;
-    companyName: string;
-    Email: string;
-    phoneNumber: string;
-    country: string;
-  } | null;
+//     test: {
+//     _id: string;
+//     contactName: string;
+//     lastName: string;
+//     companyName: string;
+//     Email: string;
+//     phoneNumber: string;
+//     country: string;
+//   } | null;
   token: string | null;
-  message: string | null;
   loading: TLoading;
   error: string | null;
   isVerified: boolean | null
 }
 
 const initialState: IAuthState = {
-    test: null,
     token: null,
-    message: null,
     loading: "idle",
     error: null,
     isVerified: null,
@@ -40,9 +37,7 @@ const authSlice = createSlice({
             state.error = null;
         },
         authLogout: (state) => {
-            state.test = null;
             state.token = null;
-            state.message = null
         },
     },
     extraReducers: (builder) => {
@@ -52,9 +47,8 @@ const authSlice = createSlice({
             state.error = null;
         })
         
-        builder.addCase(actAuthRegister.fulfilled, (state, action) => {
+        builder.addCase(actAuthRegister.fulfilled, (state) => {
             state.loading = "succeeded";
-            state.message = action.payload.message
         })
         builder.addCase(actAuthRegister.rejected, (state, action) => {
             state.loading = "failed";
@@ -71,8 +65,7 @@ const authSlice = createSlice({
         builder.addCase(actAuthLogin.fulfilled, (state, action) => {
             state.loading = "succeeded";
             state.token = action.payload.token
-            state.test = action.payload.test
-            state.message = action.payload.message
+       
         })
         builder.addCase(actAuthLogin.rejected, (state, action) => {
             state.loading = "failed";
