@@ -12,5 +12,13 @@ export default defineConfig({
       },
     }),
   ],
-  
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://mshmsh-001-site1.qtempurl.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 });

@@ -12,6 +12,7 @@ import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk
 
 import { SmoothScroll } from "react-smooth-scrolll";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import Users from "../pages/Dashboard/Users";
 // pages
 const Home = lazy(() => import("../pages/Home"));
 const Products = lazy(() => import("../pages/Products"));
@@ -196,6 +197,13 @@ const AppRouter = () => {
         element: (
           <PageSuspenseFallback>
             <RentalRequests />
+          </PageSuspenseFallback> 
+        )
+      }, {
+        path: "users",
+        element: (
+          <PageSuspenseFallback>
+            <Users />
           </PageSuspenseFallback> 
         )
       }
