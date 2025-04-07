@@ -292,7 +292,13 @@
       "imageConstraints": "Maximum 10 images (JPEG, PNG)",
       "image": "Image",
       "submitting": "Submitting...",
-      "submitForReview": "Submit for Review"
+      "submitForReview": "Submit for Review",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter your Description"
+
+
+
+
     },
     "wishlistPage": {
       "wishlist": "Wishlist",

@@ -16,6 +16,7 @@
     "@supabase/supabase-js": "^2.49.4",
     "axios": "^1.7.9",
     "chart.js": "^4.4.8",
+    "cloudinary": "^2.6.0",
     "date-fns": "^4.1.0",
     "i18next": "^24.2.2",
     "i18next-browser-languagedetector": "^8.0.4",
@@ -30,7 +31,7 @@
     "react-dom": "^18.3.1",
     "react-fast-marquee": "^1.6.5",
     "react-helmet-async": "^2.0.5",
-    "react-hook-form": "^7.54.2",
+    "react-hook-form": "^7.55.0",
     "react-i18next": "^15.4.1",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.15.1",
@@ -40,7 +41,7 @@
     "react-smooth-scrolll": "^0.1.2",
     "redux-persist": "^6.0.0",
     "swiper": "^11.2.1",
-    "zod": "^3.24.1"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

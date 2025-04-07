@@ -208,26 +208,28 @@ export const sampleProperties: TProductResponse = {
 
 
 
-  // id: "2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q",
-  // title: "شقة راقية بالطابق العاشر",
-  // type: "Apartment",
-  // price: 80000,
-  // status: "For Rent",
-  //   city: "جدة",  
+// {
+//   id: "2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q",
+//   title: "شقة راقية بالطابق العاشر",
+//   type: "Apartment",
+//   price: 80000,
+//   status: "For Rent",
+//     city: "جدة",  
 //   address: "حي المروج، جدة 67890",
-  //   link: "https://maps.app.goo.gl/R5jSSZvRERhsXMqu6",
-  //   beds: 3,
-  //   baths: 2,
-  //   rooms: 4,
-  //   area: 180,
-  //   floor: 10,
-  //   verification: true
-  //   images: [
-  //     "https://images.bayut.eg/thumbnails/25399754-800x600.webp",
-  //     "https://images.bayut.eg/thumbnails/25399755-800x600.webp"
-  //   ]
-  // },
+//     link: "https://maps.app.goo.gl/R5jSSZvRERhsXMqu6",
+//     beds: 3,
+//     baths: 2,
+//     rooms: 4,
+//     area: 180,
+//     floor: 10,
+//     verification: true
+//     images: [
+//       "https://images.bayut.eg/thumbnails/25399754-800x600.webp",
+//       "https://images.bayut.eg/thumbnails/25399755-800x600.webp"
+//     ]
+  
+//   description: "شقة 3 غرف تشطيب حديث بمساحة 180 م²",
+//   createdAt: new Date("2024-02-15"),
+// }
   
 
-  // description: "شقة 3 غرف تشطيب حديث بمساحة 180 م²",
-  // createdAt: new Date("2024-02-15"),

@@ -291,7 +291,12 @@
       "imageConstraints": "الحد الأقصى 10 صور (JPEG، PNG)",
       "image": "صورة",
       "submitting": "جارٍ الإرسال...",
-      "submitForReview": "إرسال للمراجعة"
+      "submitForReview": "إرسال للمراجعة",
+      "description": "وصف العقار",
+      "descriptionPlaceholder": "ادخل وصف العقار"
+
+
+
     },
     "wishlistPage": {
       "wishlist": "الرغبات",

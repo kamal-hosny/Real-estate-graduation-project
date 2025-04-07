@@ -23,14 +23,16 @@ import {
   FaRulerCombined,
 } from "react-icons/fa";
 import { FaStairs } from "react-icons/fa6";
+import { uploadToCloudinary } from "../../utils/cloudinary";
+import { supabase } from "../../config/supabaseClient";
 
 const AdvertiseForm = () => {
   const { t } = useTranslation();
-
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<createPropertyType>({
     resolver: zodResolver(createPropertySchema),
@@ -46,8 +48,57 @@ const AdvertiseForm = () => {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<createPropertyType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<createPropertyType> = async (data) => {
+    try {
+      const files = data.location.images as FileList;
+
+      if (!files || files.length === 0) {
+        alert("Please select images to upload");
+        return;
+      }
+
+      console.log("Uploading files...");
+
+      const uploadPromises = Array.from(files).map((file) =>
+        uploadToCloudinary(file)
+      );
+      const cloudinaryResults = await Promise.all(uploadPromises);
+      const imageUrls = cloudinaryResults.map((result) => result.secure_url);
+
+      const formData = {
+        ...data,
+        location: {
+          ...data.location,
+          images: imageUrls,
+        },
+      };
+      console.log("Final Form Data:", formData);
+      // Send data to Supabase
+      const { data: salesOrderData, error } = await supabase
+
+        .from("SalesOrders") 
+        .insert([
+          {
+            userToken: "7e27786a-a92d-4951-97e0-13dac4d01907", 
+            property: formData, 
+            TypeOrder: "Pending",
+          },
+        ]);
+
+      if (error) {
+        console.error("Error inserting data into Supabase:", error);
+        alert(`Failed to save data: ${error.message}`);
+        return;
+      }
+
+      console.log("Data inserted successfully:", salesOrderData);
+      alert("Property order submitted successfully!");
+
+      // Reset the form after successful submission
+      reset();
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    }
   };
 
   return (
@@ -272,6 +323,27 @@ const AdvertiseForm = () => {
           </div>
         </div>
 
+        {/* Description */}
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-[#2563eb]">
+            {t("formPropertyDetails.description")}
+          </h3>
+          <div className="relative">
+            <textarea
+              {...register("description")}
+              className="ps-8 min-h-32 p-2 bg-section-color text-sm w-full border border-color-border rounded placeholder-color-text-2 text-color-text-1 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+              placeholder={t("formPropertyDetails.descriptionPlaceholder")}
+            />
+            <span className="absolute start-3 top-3">
+              <FaRulerCombined size={15} className="text-color-text-2" />
+            </span>
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+        </div>
         {/* Description & Photos */}
         <div className="space-y-6">
           <div>

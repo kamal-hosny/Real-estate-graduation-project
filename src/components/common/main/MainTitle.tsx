@@ -26,9 +26,9 @@ const MainTitle = ({title, children}: IMainTitle) => {
         <div className="title text-2xl font-semibold text-color-text-1 ">
           {title}
         </div>
-        <p className="text-color-text-2 text-xs leading-6">
+        <div className="text-color-text-2 text-xs leading-6">
          {children}
-        </p>
+        </div>
       </div>
       {/*  */}
     </div>

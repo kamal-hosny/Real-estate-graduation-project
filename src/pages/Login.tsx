@@ -19,7 +19,6 @@ const Login = () => {
   const sttt = useAppSelector((state) => state.auth);
 
   console.log(sttt);
-  
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
