@@ -9,7 +9,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "http://mohamedtahoon.runasp.net/api/"
+      "destination": "http://mohamedtahoon.runasp.net/api/$1"
     }
   ]
 }
