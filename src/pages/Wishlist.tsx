@@ -3,7 +3,7 @@ import MainTitle from "../components/common/main/MainTitle";
 import ProductCard from "../components/common/ProductCard/ProductCard";
 import Breadcrumb from "../components/Products/Breadcrumb";
 import { useAppSelector } from "../store/hooks";
-import { Property } from "../types/product.types";
+import { RealProperty } from "../types/product.types";
 import { useTranslation } from "react-i18next";
 
 const breadcrumbItems = [{ label: "Home", link: "/" }];
@@ -27,8 +27,8 @@ const Wishlist = () => {
             }
           >
             {wishlist?.length || 0 > 0 ? (
-              wishlist?.map((product: Property) => (
-                <ProductCard key={product.id} productData={product} />
+              wishlist?.map((product: RealProperty) => (
+                <ProductCard key={product.propertyId} productData={product} />
               ))
             ) : (
               <div className="relative login bg-section-color w-full flex justify-center items-center">

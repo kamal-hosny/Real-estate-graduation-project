@@ -1,12 +1,12 @@
 import { Suspense, lazy, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // layouts
-import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
-import { MainLayout } from "../layouts";
-import PageSuspenseFallback from "../components/common/feedback/PageSuspenseFallback/PageSuspenseFallback";
-import Error from "../pages/Error";
-import About from "../pages/About";
 import { useDispatch } from "react-redux";
+import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
+import PageSuspenseFallback from "../components/common/feedback/PageSuspenseFallback/PageSuspenseFallback";
+import { MainLayout } from "../layouts";
+import About from "../pages/About";
+import Error from "../pages/Error";
 import { AppDispatch } from "../store";
 import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk";
 
@@ -21,7 +21,7 @@ const Wishlist = lazy(() => import("../pages/Wishlist"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const AdvertiseProperty = lazy(() => import("../pages/AdvertiseProperty"));
-const Profile = lazy(() => import("../pages/Register"));
+const Profile = lazy(() => import("../pages/Profile"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("../pages/TermsOfService"));

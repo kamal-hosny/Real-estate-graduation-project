@@ -1,7 +1,7 @@
 import { Eye, EyeClosed, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import Button from "../components/ui/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { loginSchema, loginType } from "../validations/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,11 @@ import { useTranslation } from "react-i18next";
 import { addToast } from "../store/toasts/toastsSlice";
 
 const Login = () => {
+
+  const location = useLocation();
+  const { email } = location.state || {};
+
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -29,6 +34,9 @@ const Login = () => {
   } = useForm<loginType>({
     mode: "onBlur",
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: email || null
+    }
   });
 
   const onSubmit: SubmitHandler<loginType> = (data) => {

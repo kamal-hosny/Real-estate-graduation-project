@@ -8,10 +8,12 @@ import mobileWidthReducer from "./features/mobileWidth/mobileWidthSlice";
 import wishlistReducer from "./wishlist/wishlistReducer";
 import toastsReducer from "./toasts/toastsSlice";
 import modal from "./modal/modalSlice"
+import usersSlice from "./user/usersSlice";
+import propertySlice from "./property/propertySlice";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["user", "token", "test"], 
+  whitelist: ["user", "token"], 
 };
 
 const rootReducer = combineReducers({
@@ -21,7 +23,9 @@ const rootReducer = combineReducers({
   mobileWidth: mobileWidthReducer,
   wishlist: wishlistReducer,
   toasts: toastsReducer,
+  property: propertySlice,
   modal,
+  user: usersSlice
 });
 
 

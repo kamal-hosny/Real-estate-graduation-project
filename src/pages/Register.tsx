@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { actAuthRegister } from "../store/auth/authSlice";
 import { useAppDispatch } from "../store/hooks";
 import { useTranslation } from "react-i18next";
+import { addToast } from "../store/toasts/toastsSlice";
 
 
 
@@ -43,17 +44,20 @@ const Register = () => {
 
     dispatch(
       actAuthRegister({
-        name: data.name,
-        Email: data.email,
+        fullName: data.name,
+        email: data.email,
         phoneNumber: data.phoneNumber,
         password: data.password,
+        image: "https://res.cloudinary.com/dizj9rluo/image/upload/v1744113485/defaultPerson_e7w75t.jpg",
       })
     ).unwrap()
     .then(() => {
-      navigate("/VerifyYourAccount", {
+      navigate("/login", {
         state: {email: data.email}
       });
+      addToast({ message: "تم إنشاء حساب بنجاح", type: "success" })
     }).catch((err) => {
+      addToast({ message: "من فضلك راجع البيانات واعد التسجيل", type: "error" })
       console.log(err);
     })
 

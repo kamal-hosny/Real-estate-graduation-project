@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowBigLeftDash,
   ArrowBigRightDash,
-  ChevronRight,
   Heart,
-  Mail,
   MapPinned,
 } from "lucide-react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -21,63 +19,64 @@ import {
   removeFromWishlist,
 } from "../store/wishlist/wishlistActions";
 import Img from "../components/ui/Img";
-import { FaWhatsapp } from "react-icons/fa";
-import { IoIosCall } from "react-icons/io";
-import { Property } from "../types/product.types";
-import defaultPerson from "../assets/defaultImages/defaultPerson.jpeg";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getOneProperty } from "../store/property/act/actGetOneProperty";
+import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
+import { getTimeSincePost } from "../utils/dateFun";
+import { supabase } from "../config/supabaseClient";
+
+interface PropertyImages {
+  $id: string;
+  $values: string[];
+}
+
+interface RealProperty {
+  propertyId: number;
+  propertyTitle: string;
+  propertyType: string;
+  status: string;
+  price: number;
+  area: number;
+  bedrooms: number;
+  bathrooms: number;
+  totalRooms: number;
+  floorNumber: number;
+  furnished: boolean;
+  city: string;
+  address: string;
+  description: string;
+  createdAt: string;
+  googleMapsLink: string;
+  propertyImages: PropertyImages;
+}
 
 
-const property: Property = {
-  id: "123456",
-  title: "Luxury Sea View Villa",
-  status: "For Sale",
-  type: "Villa",
-  price: 2500000,
-  description: "Luxury villa with prime location, featuring large garden and private pool.",
-  createdAt: new Date("2024-02-15"),
-  location: {
-    address: "King Fahd Road, Jeddah",
-    city: "Jeddah",
-    link: "https://maps.google.com/example",
-    images: [
-      "https://img-4.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-large-webp/2310/6537d4004ee58710796084.jpg",
-      "https://img-0.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-large-webp/2310/6537d4013fe5d301910253.jpg",
-      "https://img-1.aqarmap.com.eg/new-aqarmap-media/slider-photo-watermarked-large-webp/2310/6537d40124cfa453601509.jpg",
-    ],
-  },
-  details: {
-    beds: 5,
-    baths: 4,
-    rooms: 7,
-    area: 450,
-    floor: 2,
-    verification: true,
-  },
-  company: {
-    id: "comp-001",
-    name: "Modern Real Estate Co.",
-    phone: "+966500000000",
-    email: "info@realestate.com",
-    avatar: "https://i.pinimg.com/736x/b9/e2/cf/b9e2cf0eb61ee715798c2c380c721e45.jpg",
-  },
-};
 
 const SingleProperty = () => {
-  const { t } = useTranslation(); 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const defaultImg = "https://dummyimage.com/300x300";
+  const { t, i18n } = useTranslation();
 
-  // Wishlist
+  const dispatch = useAppDispatch();
+  const { id } = useParams<{ id: string }>();
+
+  const defaultImg = "https://dummyimage.com/300x300";
+  const { record, loading, error } = useAppSelector((state) => state?.property);
+  const property = record as RealProperty | null;
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getOneProperty({ id }));
+    }
+  }, [dispatch, id]);
+
   const wishlist = useAppSelector((state) => state?.wishlist?.items ?? []);
   const isProductInWishlist = wishlist.some(
-    (item: any) => item.id === property?.id
+    (item: any) => item.propertyId === property?.propertyId
   );
   const [isHeartFilled, setIsHeartFilled] = useState(isProductInWishlist);
 
   const toggleHeart = () => {
+    if (!property) return;
     if (isHeartFilled) {
       dispatch(removeFromWishlist(property));
     } else {
@@ -92,6 +91,93 @@ const SingleProperty = () => {
     setIsHeartFilled((prev) => !prev);
   };
 
+  const getEmbeddableMapUrl = (url: string): string => {
+    if (url.includes("maps.app.goo.gl")) {
+      console.warn(
+        "Short URL detected. Please use an embeddable Google Maps URL."
+      );
+      return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.123456789!3d29.987654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z2YXYrdin2YHYuNipINin2YTZhdi52Kkg2KPZh9mE2YjZhA!5e0!3m2!1sar!2seg!4v1698765432100!5m2!1sar!2seg"; // Example embed URL
+    }
+    return url;
+  };
+
+  console.log(property);
+
+  const authData = useAppSelector((state) => state?.auth)
+  
+
+  const purchaseOrder = async () => {
+    const { error } = await supabase
+      .from("PurchaseOrders") 
+      .insert([{
+        userToken: authData?.token, 
+        property: { ...property, createdAt: Date.now() }, 
+        TypeOrder: "Pending",
+        clientId: authData?.user?.id
+      }]);
+  
+    if (error) {
+      dispatch(addToast({
+        message: t("singlePropertyPage.purchaseError"),
+        type: "error"
+      }));
+    } else {
+      dispatch(addToast({
+        message: t("singlePropertyPage.purchaseSuccess"),
+        type: "success"
+      }));
+    }
+  };
+  
+  const RentOrder = async () => {
+    const { error } = await supabase
+      .from("RentOrders") 
+      .insert([{
+        userToken: authData?.token, 
+        property: { ...property, createdAt: Date.now() }, 
+        TypeOrder: "Pending",
+        clientId: authData?.user?.id
+      }]);
+  
+    if (error) {
+      dispatch(addToast({
+        message: t("singlePropertyPage.rentError"),
+        type: "error"
+      }));
+    } else {
+      dispatch(addToast({
+        message: t("singlePropertyPage.rentSuccess"),
+        type: "success"
+      }));
+    }
+  };
+
+ 
+  if (error) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LottieHandler type="error" message={error} />
+      </div>
+    );
+  }
+  if (loading === "pending") {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LottieHandler type="loading" message={t("loading")} />
+      </div>
+    );
+  }
+  if (!property) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <LottieHandler
+          type="error"
+          message={t("singlePropertyPage.noPropertyFound")}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-2 py-4 space-y-5 bg-section-color md:max-w-[70%]">
       <Breadcrumb
@@ -99,7 +185,7 @@ const SingleProperty = () => {
           { label: t("singlePropertyPage.home"), link: "/" },
           { label: t("singlePropertyPage.properties"), link: "/properties" },
         ]}
-        itemNow={property?.title || t("singlePropertyPage.property")}
+        itemNow={property.propertyTitle || t("singlePropertyPage.property")}
       />
       <div className="productPage flex flex-col gap-y-4">
         <div className="relative imageSection rounded-t border-color-border border bg-main-color-background max-w-full">
@@ -108,21 +194,19 @@ const SingleProperty = () => {
             spaceBetween={0}
             loop={true}
             slidesPerView={1}
-            pagination={{
-              type: "fraction",
-            }}
+            pagination={{ type: "fraction" }}
             navigation={{
               nextEl: ".swiper-next-singleProduct",
               prevEl: ".swiper-prev-singleProduct",
             }}
             modules={[Navigation, Pagination]}
           >
-            {property.location.images.map((img, index) => (
+            {property.propertyImages.$values.map((img, index) => (
               <SwiperSlide key={index}>
                 <Img
                   loading="lazy"
                   className="w-full cursor-grab border-color-border rounded-t object-cover h-[500px] hover:scale-105 transition-all"
-                  src={img ?? defaultImg}
+                  src={img || defaultImg}
                   alt={t("singlePropertyPage.propertyImage")}
                 />
               </SwiperSlide>
@@ -131,12 +215,13 @@ const SingleProperty = () => {
           <Heart
             onClick={toggleHeart}
             className={`cursor-pointer absolute top-4 left-4 z-10 opacity-70 hover:opacity-100 p-2 w-10 h-10 border-color-border border-2 rounded-full transition-all ${
-              isHeartFilled ? "text-red-500 bg-section-color" : "text-gray-400 bg-white"
+              isHeartFilled
+                ? "text-red-500 bg-section-color"
+                : "text-gray-400 bg-white"
             }`}
             fill={isHeartFilled ? "red" : "none"}
           />
-
-          {property.location.images.length > 1 && (
+          {property.propertyImages.$values.length > 1 && (
             <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full z-10 p-1">
               <div className="swiper-prev-singleProduct opacity-70 hover:opacity-100 transition-all bg-section-color border-2 border-color-border p-1.5 text-color-text-2 hover:text-color-text-1 rounded-full cursor-pointer">
                 <ArrowBigLeftDash size={20} />
@@ -148,28 +233,51 @@ const SingleProperty = () => {
           )}
         </div>
 
-        {/* Details Section */}
         <div className="details">
+          {/* head */}
           <div className="head flex flex-col gap-3 w-full">
             <div className="date-type text-color-text-2 text-xs font-medium">
-              {property.type} - {new Date(property.createdAt).toLocaleDateString()}
+              {property.propertyType} - {t("singlePropertyPage.posted")}{" "}
+              {getTimeSincePost(property.createdAt, i18n)}
             </div>
             <h1 className="title text-color-text-1 text-3xl font-medium">
-              {property.title}
+              {property.propertyTitle}
             </h1>
             <div className="location text-color-text-2 font-medium flex gap-2 items-center">
               <MapPinned />
-              {property.location.city} - {property.location.address}
+              {property.city} - {property.address}
             </div>
             <div className="price font-semibold text-color-text-1">
-              <span>
-                {t("singlePropertyPage.startingFrom")} {formatCurrency(property.price)}
-              </span>
+              {property.status === "For Rent"
+                ? `${t("singlePropertyPage.monthlyRent")} ${formatCurrency(
+                    property.price
+                  )}`
+                : formatCurrency(property.price)}
             </div>
 
-            <Button className="bg-button-color hover:bg-button-hover-color text-main-color-background w-fit">
-              {t("singlePropertyPage.placeOrder")}
-            </Button>
+            {property.status === "For Rent" && (
+              <Button
+                onClick={RentOrder}
+                className="bg-button-color hover:bg-button-hover-color text-main-color-background w-fit"
+              >
+                {t("singlePropertyPage.submitRentRequest")}
+              </Button>
+            )}
+            {property.status === "For Sale" && (
+              <Button
+                onClick={purchaseOrder}
+                className="bg-button-color hover:bg-button-hover-color text-main-color-background w-fit"
+              >
+                {t("singlePropertyPage.submitPurchaseRequest")}
+              </Button>
+            )}
+            {(property.status === "Sold" || property.status === "Rented") && (
+              <p className="text-color-text-1 font-medium">
+                {property.status === "Sold"
+                  ? t("singlePropertyPage.sold")
+                  : t("singlePropertyPage.rented")}
+              </p>
+            )}
           </div>
         </div>
         <hr className="border-color-border border-2" />
@@ -179,70 +287,21 @@ const SingleProperty = () => {
           </h2>
           <p className="text-color-text-1">{property.description}</p>
         </div>
-        <hr className="border-color-border border-2" />
-        <div className="company flex flex-col gap-4">
-          <div className="head flex items-center justify-between">
-            <h2 className="text-2xl font-medium text-color-text-1">
-              {t("singlePropertyPage.publisher")}
-            </h2>
-            <p
-              onClick={() => {
-                navigate(`/properties?companyId=${property?.company?.id}`);
-              }}
-              className="text-color-text-2 cursor-pointer transition-all hover:text-color-text-1 flex items-end"
-            >
-              <span>{t("singlePropertyPage.viewMore")}</span>{" "}
-              <ChevronRight size={20} />
-            </p>
-          </div>
-          <div className="card flex items-center gap-4">
-            <div>
-              <Img
-                className="w-16 h-16 object-cover rounded-full border-color-border border-2"
-                src={property?.company?.avatar || defaultPerson}
-                alt={property?.company?.name || "name"}
-              />
-            </div>
-            <div className="space-y-1">
-              <p className="text-color-text-1 font-medium">{property?.company?.name}</p>
-              <p className="text-color-text-2">{property?.company?.email}</p>
-            </div>
-          </div>
-        </div>
-        <hr className="border-color-border border-2" />
-        <div className="contact-buttons grid grid-cols-3 gap-2 w-full">
-          <a href={`https://wa.me/${property?.company?.phone}`} target="_blank" rel="noreferrer">
-            <div className="bg-green-100 text-green-700 p-3 rounded flex items-center justify-center border-green-300 border-2 cursor-pointer hover:bg-green-200">
-              <FaWhatsapp size={30} />
-            </div>
-          </a>
-          <a href={`tel:${property?.company?.phone}`}>
-            <div className="bg-blue-100 text-blue-700 p-3 rounded flex items-center justify-center border-blue-300 border-2 cursor-pointer hover:bg-blue-200">
-              <IoIosCall size={30} />
-            </div>
-          </a>
-          <a href={`mailto:${property?.company?.email}`}>
-            <div className="bg-red-100 text-red-700 p-3 rounded flex items-center justify-center border-red-300 border-2 cursor-pointer hover:bg-red-200">
-              <Mail size={30} />
-            </div>
-          </a>
-        </div>
         <div className="property-details flex flex-col gap-2">
           <h2 className="text-2xl font-medium text-color-text-1">
             {t("singlePropertyPage.propertyDetails")}
           </h2>
           <TableDetails
-            area={property.details.area}
-            baths={property.details.baths}
-            beds={property.details.beds}
-            createdAt={property.createdAt}
-            floor={property.details.floor}
-            id={property.id}
-            key={property.id}
-            rooms={property.details.rooms}
+            area={property.area}
+            baths={property.bathrooms}
+            beds={property.bedrooms}
+            createdAt={new Date(property.createdAt)}
+            floor={property.floorNumber}
+            id={property.propertyId.toString()}
+            rooms={property.totalRooms}
             status={property.status}
-            type={property.type}
-            verification={property.details.verification}
+            type={property.propertyType}
+            verification={property.furnished}
           />
         </div>
         <hr className="border-color-border border-2" />
@@ -252,7 +311,7 @@ const SingleProperty = () => {
           </h2>
           <iframe
             title={t("singlePropertyPage.googleMapLocation")}
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23916.266845252336!2d31.358976!3d30.077747200000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583df81720ed69%3A0xb597301dcb56aacf!2z2LPZitiq2Yog2LPZhtiq2LEg2KfZhNmF2KfYuNip!5e1!3m2!1sar!2seg!4v1739970399410!5m2!1sar!2seg"
+            src={getEmbeddableMapUrl(property.googleMapsLink)}
             className="w-full"
             height="450"
             style={{ border: 0 }}

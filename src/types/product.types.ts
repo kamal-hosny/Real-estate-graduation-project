@@ -31,7 +31,7 @@ export type Property = {
 };
 
 type PropertyType = 
-  | "Townhouse"       // تاون هاوس (بيت متلاصق)
+  | "Townhouse"       // تاون هاوس
   | "Villa"           // فيلا
   | "Private House"   // منزل خاص
   | "Apartment"       // شقة
@@ -43,6 +43,44 @@ type Status =
   | "For Rent"       // معروض للإيجار
   | "Sold"           // تم البيع
   | "Rented"         // تم التأجير
+
+
+
+  export type RealProperty ={
+    propertyId: number,
+    propertyTitle: string,
+    propertyType: PropertyType,
+    price: number,
+    status: Status,
+    city: string,
+    address: string,
+    googleMapsLink: string,
+    totalRooms: number,
+    bathrooms: number,
+    bedrooms: number,
+    floorNumber: number,
+    area: number,
+    furnished: boolean,
+    description: string,
+    createdAt: string,
+    propertyImages: string[],
+    userId: string
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export type TProductResponse = {
   data: {

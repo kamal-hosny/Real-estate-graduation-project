@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 
 interface IProps {
   id?: string; // الرقم المرجعي
-  type?: PropertyType; // نوع العقار
-  status?: Status; // نوع العرض
+  type?: string; // نوع العقار
+  status?: string; // نوع العرض
   createdAt?: Date; // تاريخ الإضافة
   beds?: number; // عدد غرف النوم
   baths?: number; // عدد الحمامات
@@ -13,19 +13,19 @@ interface IProps {
   verification?: boolean; // التثبت
 }
 
-type PropertyType =
-  | "Townhouse" // تاون هاوس
-  | "Villa" // فيلا
-  | "Private House" // منزل خاص
-  | "Apartment" // شقة
-  | "Office" // مكتب
-  | "Shop"; // محل
+// type PropertyType =
+//   | "Townhouse" // تاون هاوس
+//   | "Villa" // فيلا
+//   | "Private House" // منزل خاص
+//   | "Apartment" // شقة
+//   | "Office" // مكتب
+//   | "Shop"; // محل
 
-type Status =
-  | "For Sale" // معروض للبيع
-  | "For Rent" // معروض للإيجار
-  | "Sold" // تم البيع
-  | "Rented"; // تم التأجير
+// type Status =
+//   | "For Sale" // معروض للبيع
+//   | "For Rent" // معروض للإيجار
+//   | "Sold" // تم البيع
+//   | "Rented"; // تم التأجير
 
   const TableDetails = (product: IProps) => {
     const { t } = useTranslation(); // Hook to access translations

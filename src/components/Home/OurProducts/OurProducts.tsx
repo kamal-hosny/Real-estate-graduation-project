@@ -9,17 +9,20 @@ import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
 import ProductCardSkeleton from "../../SkeletonsUi/ProductCardSkeleton";
 import { Link } from "react-router-dom";
 
-import { sampleProperties } from "../../../data/data";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../../store/hooks";
 
 const OurProducts = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const { t } = useTranslation();
-  const products = sampleProperties.data.data
 
-  const totalSlides = products.length;
-  const loading = false;
-  const error = false;
+
+
+  const {records, loading, error} = useAppSelector((state) => state?.property)
+
+  const getLastTenP = records.$values.slice(-10).reverse()
+
+  const totalSlides = getLastTenP.length;
 
   const loadingSkeleton = useMemo(() => (
     Array.from({ length: 6 }, (_, index) => (
@@ -66,8 +69,8 @@ const OurProducts = () => {
           }}
           onSlideChange={(swiper) => setCurrentSlide((swiper.realIndex % totalSlides) + 1)}
         >
-          {loading ? loadingSkeleton : products.map((property) => (
-            <SwiperSlide key={property.id}>
+          {loading === "pending" ? loadingSkeleton : getLastTenP.map((property) => (
+            <SwiperSlide key={property.propertyId}>
               <ProductCard productData={property} />
             </SwiperSlide>
           ))}

@@ -1,158 +1,156 @@
 {
-  
-    "dashboard_link": "Go to Dashboard 🚀"
-  ,
-    "landingPage": {
-      "title": "Find Your Dream Apartment Today",
-      "description": "Discover the perfect living space with our extensive collection of premium apartments. From cozy studios to luxurious penthouses, we have your ideal home waiting.",
-      "cta": {
-        "getStarted": "Get Started",
-        "learnMore": "Learn More"
+  "dashboard_link": "Go to Dashboard 🚀",
+  "landingPage": {
+    "title": "Find Your Dream Apartment Today",
+    "description": "Discover the perfect living space with our extensive collection of premium apartments. From cozy studios to luxurious penthouses, we have your ideal home waiting.",
+    "cta": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    }
+  },
+  "typeOfProperties": {
+    "PropertyTypes": "Property Types",
+    "Townhouse": "Townhouse",
+    "Villa": "Villa",
+    "Privatehouse": "Private House",
+    "Apartment": "Apartment",
+    "Office": "Office",
+    "Shop": "Shop",
+    "propertiesText": "{{count}} Properties"
+  },
+  "ourProducts": {
+    "featuredProperty": "Featured Property",
+    "viewAll": "View All",
+    "counterSeparator": "of"
+  },
+  "achievements": {
+    "successfulDeals": "Successful Deals",
+    "transactionsCompleted": "Transactions completed",
+    "yearsExperience": "Years Experience",
+    "businessBrokerage": "In business brokerage",
+    "happyClients": "Happy Clients",
+    "satisfiedCustomers": "Satisfied customers",
+    "industryAwards": "Industry Awards",
+    "recognitionExcellence": "Recognition of excellence"
+  },
+  "banner": {
+    "welcomeMessage": "Welcome to <0>Aqarek</0>",
+    "description": "Discover your dream property effortlessly with {{brand}}, your gateway to the perfect home or investment.",
+    "exploreNow": "Explore Now"
+  },
+  "ourServices": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive support throughout your apartment buying journey",
+    "services": {
+      "propertySearch": {
+        "title": "Property Search",
+        "paragraph": "Access our extensive database of apartments with advanced filters to find your perfect match"
+      },
+      "virtualTours": {
+        "title": "Virtual Tours",
+        "paragraph": "Take virtual tours of apartments from the comfort of your home before scheduling in-person visits"
+      },
+      "mortgageCalculator": {
+        "title": "Mortgage Calculator",
+        "paragraph": "Calculate your monthly payments and explore financing options with our easy-to-use tools"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "paragraph": "Our dedicated team is always available to answer your questions and provide guidance"
+      },
+      "documentAssistance": {
+        "title": "Document Assistance",
+        "paragraph": "Get expert help with all paperwork and legal documents required for your purchase"
+      },
+      "moveInSupport": {
+        "title": "Move-in Support",
+        "paragraph": "Seamless support from purchase completion to getting the keys to your new home"
       }
-    },
-    "typeOfProperties": {
-      "PropertyTypes": "Property Types",
-      "Townhouse": "Townhouse",
-      "Villa": "Villa",
-      "Private House": "Private House",
-      "Apartment": "Apartment",
-      "Office": "Office",
-      "Shop": "Shop",
-      "propertiesText": "{{count}} Properties"
-    },
-    "ourProducts": {
-      "featuredProperty": "Featured Property",
-      "viewAll": "View All",
-      "counterSeparator": "of"
-    },
-    "achievements": {
-      "successfulDeals": "Successful Deals",
-      "transactionsCompleted": "Transactions completed",
-      "yearsExperience": "Years Experience",
-      "businessBrokerage": "In business brokerage",
-      "happyClients": "Happy Clients",
-      "satisfiedCustomers": "Satisfied customers",
-      "industryAwards": "Industry Awards",
-      "recognitionExcellence": "Recognition of excellence"
-    },
-    "banner": {
-      "welcomeMessage": "Welcome to <0>Aqarek</0>",
-      "description": "Discover your dream property effortlessly with {{brand}}, your gateway to the perfect home or investment.",
-      "exploreNow": "Explore Now"
-    },
-    "ourServices": {
-      "title": "Our Services",
-      "subtitle": "Comprehensive support throughout your apartment buying journey",
-      "services": {
-        "propertySearch": {
-          "title": "Property Search",
-          "paragraph": "Access our extensive database of apartments with advanced filters to find your perfect match"
-        },
-        "virtualTours": {
-          "title": "Virtual Tours",
-          "paragraph": "Take virtual tours of apartments from the comfort of your home before scheduling in-person visits"
-        },
-        "mortgageCalculator": {
-          "title": "Mortgage Calculator",
-          "paragraph": "Calculate your monthly payments and explore financing options with our easy-to-use tools"
-        },
-        "support": {
-          "title": "24/7 Support",
-          "paragraph": "Our dedicated team is always available to answer your questions and provide guidance"
-        },
-        "documentAssistance": {
-          "title": "Document Assistance",
-          "paragraph": "Get expert help with all paperwork and legal documents required for your purchase"
-        },
-        "moveInSupport": {
-          "title": "Move-in Support",
-          "paragraph": "Seamless support from purchase completion to getting the keys to your new home"
-        }
-      }
-    },
-    "footer": {
-      "description": "Your go-to destination for finding the best properties quickly and easily.",
-      "sections": {
-        "quickLinks": {
-          "title": "Quick Links",
-          "items": {
-            "properties": "Properties",
-            "about": "About Us",
-            "contact": "Contact Us"
-          }
-        },
-        "legal": {
-          "title": "Legal",
-          "items": {
-            "privacy": "Privacy Policy",
-            "terms": "Terms of Service"
-          }
-        },
-        "contact": {
-          "title": "Contact",
-          "address": "123 Business Ave",
-          "city": "Houston, TX 77001",
-          "phone": "(123) 456-7890",
-          "email": "info@Aqarek.com"
+    }
+  },
+  "footer": {
+    "description": "Your go-to destination for finding the best properties quickly and easily.",
+    "sections": {
+      "quickLinks": {
+        "title": "Quick Links",
+        "items": {
+          "properties": "Properties",
+          "about": "About Us",
+          "contact": "Contact Us"
         }
       },
-      "copyright": "{{year}} &copy; Aqarek. All rights reserved."
-    },
-    "header": {
-      "nav": {
-        "home": "Home",
-        "properties": "Properties",
-        "about": "About"
-      }
-    },
-    "auth_menu": {
-      "sign_in": "Sign In",
-      "description": "Favorites - Manage your account",
-      "favorites_manage_account": "Favorites - Manage your account",
-      "profile": "Profile",
-      "sign_out": "Sign out",
-      "login": "Login",
-      "register": "Register",
-      "my_activities": "My Activities",
-      "my_favorites": "My Favorites",
-      "switch_to_ar": "Switch to Arabic",
-      "switch_to_en": "Switch to English",
-      "advertise_property": "Advertise your property"
-    },
-    "our_journey": {
-      "title": "Our Journey",
-      "description": "At RealEstateHub, we are committed to providing premium real estate solutions. With a proven track record and a dedicated team, we have successfully helped numerous clients find their dream properties.",
-      "image_alt": "Our Journey in Real Estate",
-      "milestones": {
-        "happy_customers": "Happy Customers",
-        "properties_sold": "Properties Sold",
-        "years_in_business": "Years in Business"
-      }
-    },
-    "our_values": {
-      "title": "Our Values",
-      "description": "At RealEstateHub, we take pride in providing exceptional real estate services. With a strong foundation of trust and expertise, we help clients navigate the property market with confidence.",
-      "cards": {
-        "trust": {
-          "name": "Trust & Integrity",
-          "description": "At RealEstateHub, we believe trust and integrity are the cornerstones of every real estate transaction. We ensure transparency and professionalism in all our dealings."
-        },
-        "expertise": {
-          "name": "Expertise",
-          "description": "Our team of experienced real estate professionals is dedicated to providing market insights and expert advice, helping clients make informed decisions."
-        },
-        "client_centric": {
-          "name": "Client-Centric Approach",
-          "description": "We prioritize our clients' needs and aspirations, ensuring personalized services that cater to their real estate goals and dreams."
-        },
-        "excellence": {
-          "name": "Commitment to Excellence",
-          "description": "We are committed to delivering the best real estate solutions, ensuring a seamless and rewarding experience for buyers, sellers, and investors alike."
+      "legal": {
+        "title": "Legal",
+        "items": {
+          "privacy": "Privacy Policy",
+          "terms": "Terms of Service"
         }
+      },
+      "contact": {
+        "title": "Contact",
+        "address": "123 Business Ave",
+        "city": "Houston, TX 77001",
+        "phone": "(123) 456-7890",
+        "email": "info@Aqarek.com"
       }
     },
-    "company_achievements": {
-      "title": "Our Achievements",
+    "copyright": "{{year}} &copy; Aqarek. All rights reserved."
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "properties": "Properties",
+      "about": "About"
+    }
+  },
+  "auth_menu": {
+    "sign_in": "Sign In",
+    "description": "Favorites - Manage your account",
+    "favorites_manage_account": "Favorites - Manage your account",
+    "profile": "Profile",
+    "sign_out": "Sign out",
+    "login": "Login",
+    "register": "Register",
+    "my_activities": "My Activities",
+    "my_favorites": "My Favorites",
+    "switch_to_ar": "Switch to Arabic",
+    "switch_to_en": "Switch to English",
+    "advertise_property": "Advertise your property"
+  },
+  "our_journey": {
+    "title": "Our Journey",
+    "description": "At RealEstateHub, we are committed to providing premium real estate solutions. With a proven track record and a dedicated team, we have successfully helped numerous clients find their dream properties.",
+    "image_alt": "Our Journey in Real Estate",
+    "milestones": {
+      "happy_customers": "Happy Customers",
+      "properties_sold": "Properties Sold",
+      "years_in_business": "Years in Business"
+    }
+  },
+  "our_values": {
+    "title": "Our Values",
+    "description": "At RealEstateHub, we take pride in providing exceptional real estate services. With a strong foundation of trust and expertise, we help clients navigate the property market with confidence.",
+    "cards": {
+      "trust": {
+        "name": "Trust & Integrity",
+        "description": "At RealEstateHub, we believe trust and integrity are the cornerstones of every real estate transaction. We ensure transparency and professionalism in all our dealings."
+      },
+      "expertise": {
+        "name": "Expertise",
+        "description": "Our team of experienced real estate professionals is dedicated to providing market insights and expert advice, helping clients make informed decisions."
+      },
+      "client_centric": {
+        "name": "Client-Centric Approach",
+        "description": "We prioritize our clients' needs and aspirations, ensuring personalized services that cater to their real estate goals and dreams."
+      },
+      "excellence": {
+        "name": "Commitment to Excellence",
+        "description": "We are committed to delivering the best real estate solutions, ensuring a seamless and rewarding experience for buyers, sellers, and investors alike."
+      }
+    }
+  },
+  "company_achievements": {
+    "title": "Our Achievements",
     "description": "Over the years, we have expanded our reach and expertise in the real estate market. From a small agency to a trusted industry leader, our mission remains focused on delivering quality service and exceptional property solutions to meet our clients' needs.",
     "cards": {
       "years_excellence": {
@@ -166,320 +164,361 @@
       "award_winning": {
         "title": "Award-Winning Real Estate Services",
         "description": "Recognized for excellence, we have earned industry awards for outstanding property management, customer satisfaction, and innovative solutions."
-        }
       }
-    },
-    "company_banner": {
-      "title": "Find Your Dream Property with Aqarek",
-      "subtitle": "Discover, Buy, Rent, and Invest in the Best Real Estate Properties with ease. Your dream home or investment is just a click away!",
-      "cta": "Explore Properties"
-    },
-    "properties_page": {
-      "hero": {
-        "title": "Discover Your Ideal Property",
-        "subtitle": "Explore homes, apartments, and commercial spaces for sale or rent"
-      },
-      "breadcrumb": {
-        "home": "Home",
-        "properties": "Properties"
-      },
-      "contact": {
-        "image_alt": "Property preview",
-        "property_name": "Property Name",
-        "title": "Contact Agent",
-        "whatsapp": "WhatsApp",
-        "call": "Call",
-        "email": "Email"
-      }
-    },
-    "login": {
-      "title": "Login Your Account",
-      "subtitle": "Get started with our app, just create an account and enjoy the experience",
-      "error": "Login failed. Please check your credentials",
-      "email_label": "Email",
-      "email_placeholder": "Enter your Email",
-      "password_label": "Password",
-      "password_placeholder": "Enter your Password",
-      "forgot_password": "Forgot password?",
-      "login_button": "Login",
-      "logging_in": "Logging in...",
-      "no_account": "Don't have an account?",
-      "signup": "Sign Up",
-      "show_password": "Show password",
-      "hide_password": "Hide password"
-    },
-    "register": {
-      "title": "Create Your Account",
-      "subtitle": "Get started with our app, just create an account and enjoy the experience",
-      "error": "Registration failed. Please try again",
-      "name": "Full Name",
-      "name_placeholder": "Enter your full name",
-      "email": "Email",
-      "email_placeholder": "Enter your email",
-      "phone": "Phone Number",
-      "phone_placeholder": "Enter phone number",
-      "password": "Password",
-      "password_placeholder": "Enter your password",
-      "confirm_password": "Confirm Password",
-      "confirm_password_placeholder": "Re-enter your password",
-      "show_password": "Show password",
-      "hide_password": "Hide password",
-      "button": "Register",
-      "registering": "Registering...",
-      "have_account": "Already have an account?",
-      "login": "Login"
-    },
-    "advertiseProperty": {
-      "hero": {
-        "title": "Sell or Rent Your Property with Confidence",
-        "subtitle": "Connect with thousands of qualified buyers through our premium network"
-      },
-      "content": {
-        "title": "Advertise Your Property",
-        "description": "Leverage our extensive market reach and expert team to maximize your property's potential. We provide comprehensive support at every stage:",
-        "listItems": [
-          "Professional photography & virtual tours",
-          "Strategic pricing analysis",
-          "Multi-platform marketing campaign",
-          "24/7 client support",
-          "Secure transaction management"
-        ]
-      }
+    }
+  },
+  "company_banner": {
+    "title": "Find Your Dream Property with Aqarek",
+    "subtitle": "Discover, Buy, Rent, and Invest in the Best Real Estate Properties with ease. Your dream home or investment is just a click away!",
+    "cta": "Explore Properties"
+  },
+  "properties_page": {
+    "hero": {
+      "title": "Discover Your Ideal Property",
+      "subtitle": "Explore homes, apartments, and commercial spaces for sale or rent"
     },
     "breadcrumb": {
       "home": "Home",
-      "advertise": "Advertise Property"
+      "properties": "Properties"
     },
-    "formPropertyDetails": {
-      "propertyDetails": "Property Details",
-      "propertyTitle": "Property Title*",
-      "propertyTitlePlaceholder": "Modern 3-Bedroom Apartment",
-      "propertyType": "Property Type*",
-      "selectType": "Select Type",
+    "contact": {
+      "image_alt": "Property preview",
+      "property_name": "Property Name",
+      "title": "Contact Agent",
+      "whatsapp": "WhatsApp",
+      "call": "Call",
+      "email": "Email"
+    },
+
+
+    "All_Status": "All Status",
+    "For_Sale": "For Sale",
+    "For_Rent": "For Rent",
+    
+    "All_Property_Types": "All Property Types",
+    "Townhouse": "Townhouse",
+    "Villa": "Villa",
+    "Private_House": "Private House",
+    "Apartment": "Apartment",
+    "Office": "Office",
+    "Shop": "Shop",
+
+    "Show 5 Products": "Show 5 Products",
+    "Show 10 Products": "Show 10 Products",
+    "Show 20 Products": "Show 20 Products",
+    "Show 30 Products": "Show 30 Products",
+    "Show 40 Products": "Show 40 Products",
+    "Show 50 Products": "Show 50 Products",
+    "All": "All"
+
+
+
+  },
+  "login": {
+    "title": "Login Your Account",
+    "subtitle": "Get started with our app, just create an account and enjoy the experience",
+    "error": "Login failed. Please check your credentials",
+    "email_label": "Email",
+    "email_placeholder": "Enter your Email",
+    "password_label": "Password",
+    "password_placeholder": "Enter your Password",
+    "forgot_password": "Forgot password?",
+    "login_button": "Login",
+    "logging_in": "Logging in...",
+    "no_account": "Don't have an account?",
+    "signup": "Sign Up",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
+  },
+  "register": {
+    "title": "Create Your Account",
+    "subtitle": "Get started with our app, just create an account and enjoy the experience",
+    "error": "Registration failed. Please try again",
+    "name": "Full Name",
+    "name_placeholder": "Enter your full name",
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "phone": "Phone Number",
+    "phone_placeholder": "Enter phone number",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "confirm_password": "Confirm Password",
+    "confirm_password_placeholder": "Re-enter your password",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "button": "Register",
+    "registering": "Registering...",
+    "have_account": "Already have an account?",
+    "login": "Login"
+  },
+  "advertiseProperty": {
+    "hero": {
+      "title": "Sell or Rent Your Property with Confidence",
+      "subtitle": "Connect with thousands of qualified buyers through our premium network"
+    },
+    "content": {
+      "title": "Advertise Your Property",
+      "description": "Leverage our extensive market reach and expert team to maximize your property's potential. We provide comprehensive support at every stage:",
+      "listItems": [
+        "Professional photography & virtual tours",
+        "Strategic pricing analysis",
+        "Multi-platform marketing campaign",
+        "24/7 client support",
+        "Secure transaction management"
+      ]
+    }
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "advertise": "Advertise Property"
+  },
+  "formPropertyDetails": {
+    "propertyDetails": "Property Details",
+    "propertyTitle": "Property Title*",
+    "propertyTitlePlaceholder": "Modern 3-Bedroom Apartment",
+    "propertyType": "Property Type*",
+    "selectType": "Select Type",
+    "townhouse": "Townhouse",
+    "villa": "Villa",
+    "privatehouse": "Private House",
+    "apartment": "Apartment",
+    "office": "Office",
+    "shop": "Shop",
+    "status": "Status*",
+    "selectStatus": "Select Status",
+    "forsale": "For Sale",
+    "forrent": "For Rent",
+    "price": "Price (EGP)*",
+    "pricePlaceholder": "Enter price in EGP",
+    "locationDetails": "Location Details",
+    "address": "Address*",
+    "addressPlaceholder": "Enter property address",
+    "city": "City*",
+    "cityPlaceholder": "Enter city name",
+    "googleMapsLink": "Google Maps Link",
+    "googleMapsLinkPlaceholder": "Paste Google Maps URL",
+    "propertySpecifications": "Property Specifications",
+    "bedrooms": "Bedrooms*",
+    "bathrooms": "Bathrooms*",
+    "totalRooms": "Total Rooms*",
+    "area": "Area (m²)*",
+    "areaPlaceholder": "Enter area in square meters",
+    "floorNumber": "Floor Number",
+    "numberPlaceholder": "Enter number",
+    "furnished": "Furnished",
+    "propertyImages": "Property Images*",
+    "clickToUpload": "Click to upload images",
+    "imagesRequired": "Images are required",
+    "maxImagesError": "Maximum 10 images allowed",
+    "imageTypeError": "Only image files allowed (JPEG, PNG)",
+    "imageConstraints": "Maximum 10 images (JPEG, PNG)",
+    "image": "Image",
+    "submitting": "Submitting...",
+    "submitForReview": "Submit for Review",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter your Description"
+  },
+  "wishlistPage": {
+    "wishlist": "Wishlist",
+    "wishlistDescription": "Explore a wide range of high-quality materials and tools essential for the oilfield industry. From drilling equipment to maintenance tools, we provide everything you need to ensure efficient operations.",
+    "wishlistEmpty": "Your wishlist is empty"
+  },
+  "singlePropertyPage": {
+    "home": "Home",
+    "properties": "Properties",
+    "property": "Property",
+    "propertyImage": "Property Image",
+    "addedToWishlist": "Property added to wishlist",
+    "startingFrom": "Starting from",
+    "placeOrder": "Place an Order",
+    "description": "Description",
+    "publisher": "Publisher",
+    "viewMore": "View More",
+    "propertyDetails": "Property Details",
+    "locationOnMap": "Location on Map",
+    "googleMapLocation": "Google Map Location",
+    "posted": "Posted ",
+    "monthlyRent": "Monthly Rent:",
+    "submitRentRequest": "Submit Rent Request",
+    "submitPurchaseRequest": "Submit Purchase Request",
+    "sold": "Sold",
+    "rented": "Rented",
+
+    "purchaseSuccess": "Purchase request submitted successfully!",
+    "purchaseError": "Failed to submit purchase request. Please try again.",
+    "rentSuccess": "Rent request submitted successfully!",
+    "rentError": "Failed to submit rent request. Please try again."
+
+  },
+  "tableDetails": {
+    "general": "General",
+    "details": "Details",
+    "propertyType": "Property Type",
+    "offerType": "Offer Type",
+    "referenceNumber": "Reference Number",
+    "verification": "Verification",
+    "dateAdded": "Date Added",
+    "numberOfRooms": "Number of Rooms",
+    "numberOfBedrooms": "Number of Bedrooms",
+    "numberOfBathrooms": "Number of Bathrooms",
+    "area": "Area (m²)",
+    "floorNumber": "Floor Number",
+    "yes": "Yes",
+    "no": "No",
+    "propertyTypes": {
       "townhouse": "Townhouse",
       "villa": "Villa",
       "privatehouse": "Private House",
       "apartment": "Apartment",
       "office": "Office",
-      "shop": "Shop",
-      "status": "Status*",
-      "selectStatus": "Select Status",
+      "shop": "Shop"
+    },
+    "status": {
       "forsale": "For Sale",
       "forrent": "For Rent",
-      "price": "Price (EGP)*",
-      "pricePlaceholder": "Enter price in EGP",
-      "locationDetails": "Location Details",
-      "address": "Address*",
-      "addressPlaceholder": "Enter property address",
-      "city": "City*",
-      "cityPlaceholder": "Enter city name",
-      "googleMapsLink": "Google Maps Link",
-      "googleMapsLinkPlaceholder": "Paste Google Maps URL",
-      "propertySpecifications": "Property Specifications",
-      "bedrooms": "Bedrooms*",
-      "bathrooms": "Bathrooms*",
-      "totalRooms": "Total Rooms*",
-      "area": "Area (m²)*",
-      "areaPlaceholder": "Enter area in square meters",
-      "floorNumber": "Floor Number",
-      "numberPlaceholder": "Enter number",
-      "furnished": "Furnished",
-      "propertyImages": "Property Images*",
-      "clickToUpload": "Click to upload images",
-      "imagesRequired": "Images are required",
-      "maxImagesError": "Maximum 10 images allowed",
-      "imageTypeError": "Only image files allowed (JPEG, PNG)",
-      "imageConstraints": "Maximum 10 images (JPEG, PNG)",
-      "image": "Image",
-      "submitting": "Submitting...",
-      "submitForReview": "Submit for Review",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter your Description"
-
-
-
-
+      "sold": "Sold",
+      "rented": "Rented"
+    }
+  },
+  "terms": {
+    "title": "Aqarek Terms and Conditions",
+    "introduction": {
+      "heading": "Introduction",
+      "text": "Welcome to our real estate platform. Please read these Terms and Conditions carefully before using the website. Your use of the site constitutes full acceptance of these terms."
     },
-    "wishlistPage": {
-      "wishlist": "Wishlist",
-      "wishlistDescription": "Explore a wide range of high-quality materials and tools essential for the oilfield industry. From drilling equipment to maintenance tools, we provide everything you need to ensure efficient operations.",
-      "wishlistEmpty": "Your wishlist is empty"
+    "acceptance": {
+      "heading": "Acceptance of Terms",
+      "list": [
+        "You must be at least 18 years old to use the services",
+        "You are responsible for maintaining account confidentiality",
+        "Compliance with applicable local and international laws"
+      ]
     },
-    "singlePropertyPage": {
-      "home": "Home",
-      "properties": "Properties",
-      "property": "Property",
-      "propertyImage": "Property Image",
-      "addedToWishlist": "Property added to wishlist",
-      "startingFrom": "Starting from",
-      "placeOrder": "Place an Order",
-      "description": "Description",
-      "publisher": "Publisher",
-      "viewMore": "View More",
-      "propertyDetails": "Property Details",
-      "locationOnMap": "Location on Map",
-      "googleMapLocation": "Google Map Location"
+    "services": {
+      "heading": "Real Estate Services",
+      "description": "The platform provides real estate brokerage services including:",
+      "list": [
+        "Displaying properties for sale/rent",
+        "Facilitating communication between buyers and sellers",
+        "Providing preliminary real estate and financial information"
+      ]
     },
-    "tableDetails": {
-      "general": "General",
-      "details": "Details",
-      "propertyType": "Property Type",
-      "offerType": "Offer Type",
-      "referenceNumber": "Reference Number",
-      "verification": "Verification",
-      "dateAdded": "Date Added",
-      "numberOfRooms": "Number of Rooms",
-      "numberOfBedrooms": "Number of Bedrooms",
-      "numberOfBathrooms": "Number of Bathrooms",
-      "area": "Area (m²)",
-      "floorNumber": "Floor Number",
-      "yes": "Yes",
-      "no": "No",
-      "propertyTypes": {
-        "townhouse": "Townhouse",
-        "villa": "Villa",
-        "privatehouse": "Private House",
-        "apartment": "Apartment",
-        "office": "Office",
-        "shop": "Shop"
-      },
-      "status": {
-        "forsale": "For Sale",
-        "forrent": "For Rent",
-        "sold": "Sold",
-        "rented": "Rented"
-      }
+    "responsibilities": {
+      "heading": "Responsibilities",
+      "list": [
+        "Ensure accuracy of information in property listings",
+        "Commit to payment within specified periods",
+        "Do not use the platform for illegal purposes"
+      ]
     },
-    "terms": {
-      "title": "Aqarek Terms and Conditions",
-      "introduction": {
-        "heading": "Introduction",
-        "text": "Welcome to our real estate platform. Please read these Terms and Conditions carefully before using the website. Your use of the site constitutes full acceptance of these terms."
-      },
-      "acceptance": {
-        "heading": "Acceptance of Terms",
-        "list": [
-          "You must be at least 18 years old to use the services",
-          "You are responsible for maintaining account confidentiality",
-          "Compliance with applicable local and international laws"
-        ]
-      },
-      "services": {
-        "heading": "Real Estate Services",
-        "description": "The platform provides real estate brokerage services including:",
-        "list": [
-          "Displaying properties for sale/rent",
-          "Facilitating communication between buyers and sellers",
-          "Providing preliminary real estate and financial information"
-        ]
-      },
-      "responsibilities": {
-        "heading": "Responsibilities",
-        "list": [
-          "Ensure accuracy of information in property listings",
-          "Commit to payment within specified periods",
-          "Do not use the platform for illegal purposes"
-        ]
-      },
-      "financial": {
-        "heading": "Financial Transactions",
-        "items": [
-          "- All transactions are subject to 2% service fee",
-          "- Refunds are processed according to published policy",
-          "- We reserve the right to block suspicious transactions"
-        ]
-      },
-      "privacy": {
-        "heading": "Privacy",
-        "text": "We protect your personal data according to the latest security standards. We may use contact information to send promotional offers unless you opt out."
-      },
-      "modifications": {
-        "heading": "Terms Modifications",
-        "text": "We reserve the right to modify these terms at any time, and users will be notified via email or website announcement."
-      }
+    "financial": {
+      "heading": "Financial Transactions",
+      "items": [
+        "- All transactions are subject to 2% service fee",
+        "- Refunds are processed according to published policy",
+        "- We reserve the right to block suspicious transactions"
+      ]
     },
     "privacy": {
-      "title": "Aqarek Privacy Policy",
-      "section1": {
-        "heading": "Introduction",
-        "content": "We at the real estate platform are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when you use our digital platform."
-      },
-      "section2": {
-        "heading": "Data We Collect",
-        "items": [
-          "Personal information (name, email, phone number)",
-          "Financial transaction data",
-          "Real estate search preferences",
-          "Usage and technical data (IP address, browser type)"
-        ]
-      },
-      "section3": {
-        "heading": "How We Use Data",
-        "items": [
-          "Facilitate purchase processes and real estate offers",
-          "Improve user experience and personalize offers",
-          "Respond to inquiries and technical support",
-          "Comply with legal requirements"
-        ]
-      },
-      "section4": {
-        "heading": "Data Sharing",
-        "description": "We do not sell your personal data and may share it with:",
-        "items": [
-          "Approved service providers (e-payment, shipping)",
-          "Government authorities when legally required",
-          "Approved real estate partners with your prior consent"
-        ]
-      },
-      "section5": {
-        "heading": "User Rights",
-        "items": [
-          "- Right to request a copy of your personal data",
-          "- Right to request corrections",
-          "- Right to request data deletion",
-          "- Right to opt-out of marketing communications"
-        ]
-      },
-      "section6": {
-        "heading": "Data Protection",
-        "content": "We use advanced encryption technologies (SSL) and implement ISO 27001 security standards to protect your data. Data is stored on secure servers in certified geographical locations."
-      },
-      "section7": {
-        "heading": "Cookies",
-        "content": "We use cookies to enhance browsing experience. You can manage preferences through browser settings. Continued use of the site implies your consent to their use."
-      },
-      "section8": {
-        "heading": "Policy Changes",
-        "content": "We may update this policy periodically. The updated version will be published on the platform with an effective date. Please review it regularly."
-      }
+      "heading": "Privacy",
+      "text": "We protect your personal data according to the latest security standards. We may use contact information to send promotional offers unless you opt out."
     },
-    "contact": {
-      "title": "Contact Us",
-      "name_label": "Full Name",
-      "name_required": "Name is required",
-      "name_placeholder": "Enter your full name",
-      "email_label": "Email Address",
-      "email_required": "Email is required",
-      "email_invalid": "Invalid email address",
-      "email_placeholder": "example@domain.com",
-      "phone_label": "Phone Number",
-      "phone_required": "Phone number is required",
-      "phone_invalid": "Invalid phone number",
-      "phone_placeholder": "+966500000000",
-      "inquiry_label": "Inquiry Type",
-      "inquiry_required": "Please select inquiry type",
-      "inquiry_placeholder": "Select inquiry type",
-      "inquiry_technical": "Technical Support",
-      "inquiry_sales": "Sales",
-      "inquiry_partnership": "Partnership",
-      "inquiry_other": "Other",
-      "message_label": "Message",
-      "message_required": "Message is required",
-      "message_min_length": "Message must be at least 20 characters",
-      "message_placeholder": "Enter your message here...",
-      "send_button": "Send Message",
-      "sending": "Sending...",
-      "success_message": "Inquiry sent successfully",
-      "error_message": "Please check data or reload page"
+    "modifications": {
+      "heading": "Terms Modifications",
+      "text": "We reserve the right to modify these terms at any time, and users will be notified via email or website announcement."
     }
+  },
+  "privacy": {
+    "title": "Aqarek Privacy Policy",
+    "section1": {
+      "heading": "Introduction",
+      "content": "We at the real estate platform are committed to protecting your personal data. This policy explains how we collect, use, and protect your information when you use our digital platform."
+    },
+    "section2": {
+      "heading": "Data We Collect",
+      "items": [
+        "Personal information (name, email, phone number)",
+        "Financial transaction data",
+        "Real estate search preferences",
+        "Usage and technical data (IP address, browser type)"
+      ]
+    },
+    "section3": {
+      "heading": "How We Use Data",
+      "items": [
+        "Facilitate purchase processes and real estate offers",
+        "Improve user experience and personalize offers",
+        "Respond to inquiries and technical support",
+        "Comply with legal requirements"
+      ]
+    },
+    "section4": {
+      "heading": "Data Sharing",
+      "description": "We do not sell your personal data and may share it with:",
+      "items": [
+        "Approved service providers (e-payment, shipping)",
+        "Government authorities when legally required",
+        "Approved real estate partners with your prior consent"
+      ]
+    },
+    "section5": {
+      "heading": "User Rights",
+      "items": [
+        "- Right to request a copy of your personal data",
+        "- Right to request corrections",
+        "- Right to request data deletion",
+        "- Right to opt-out of marketing communications"
+      ]
+    },
+    "section6": {
+      "heading": "Data Protection",
+      "content": "We use advanced encryption technologies (SSL) and implement ISO 27001 security standards to protect your data. Data is stored on secure servers in certified geographical locations."
+    },
+    "section7": {
+      "heading": "Cookies",
+      "content": "We use cookies to enhance browsing experience. You can manage preferences through browser settings. Continued use of the site implies your consent to their use."
+    },
+    "section8": {
+      "heading": "Policy Changes",
+      "content": "We may update this policy periodically. The updated version will be published on the platform with an effective date. Please review it regularly."
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name_label": "Full Name",
+    "name_required": "Name is required",
+    "name_placeholder": "Enter your full name",
+    "email_label": "Email Address",
+    "email_required": "Email is required",
+    "email_invalid": "Invalid email address",
+    "email_placeholder": "example@domain.com",
+    "phone_label": "Phone Number",
+    "phone_required": "Phone number is required",
+    "phone_invalid": "Invalid phone number",
+    "phone_placeholder": "+966500000000",
+    "inquiry_label": "Inquiry Type",
+    "inquiry_required": "Please select inquiry type",
+    "inquiry_placeholder": "Select inquiry type",
+    "inquiry_technical": "Technical Support",
+    "inquiry_sales": "Sales",
+    "inquiry_partnership": "Partnership",
+    "inquiry_other": "Other",
+    "message_label": "Message",
+    "message_required": "Message is required",
+    "message_min_length": "Message must be at least 20 characters",
+    "message_placeholder": "Enter your message here...",
+    "send_button": "Send Message",
+    "sending": "Sending...",
+    "success_message": "Inquiry sent successfully",
+    "error_message": "Please check data or reload page"
+  },
+  "ProductCard": {
+    "Publish_time": "Publish time:",
+    "bedrooms": "bedrooms",
+    "bathroom": "bathroom",
+    "meter": "m²",
+    "search": "Search by property name and city",
+    "Unfurnished": "Unfurnished",
+    "Furnished": "Furnished"
   }
+}

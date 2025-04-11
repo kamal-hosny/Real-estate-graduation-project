@@ -25,8 +25,11 @@ import {
 import { FaStairs } from "react-icons/fa6";
 import { uploadToCloudinary } from "../../utils/cloudinary";
 import { supabase } from "../../config/supabaseClient";
+import { useAppSelector } from "../../store/hooks";
 
 const AdvertiseForm = () => {
+  const { user, token } = useAppSelector((state ) => state.auth);
+const userId = user?.id
   const { t } = useTranslation();
   const {
     register,
@@ -49,16 +52,16 @@ const AdvertiseForm = () => {
   });
 
   const onSubmit: SubmitHandler<createPropertyType> = async (data) => {
+    if(!token){
+      return 
+    }
     try {
       const files = data.location.images as FileList;
-
       if (!files || files.length === 0) {
         alert("Please select images to upload");
         return;
       }
-
       console.log("Uploading files...");
-
       const uploadPromises = Array.from(files).map((file) =>
         uploadToCloudinary(file)
       );
@@ -79,8 +82,27 @@ const AdvertiseForm = () => {
         .from("SalesOrders") 
         .insert([
           {
-            userToken: "7e27786a-a92d-4951-97e0-13dac4d01907", 
-            property: formData, 
+            userToken: token, 
+            property: {
+              "propertyId": 0,
+              "propertyTitle": formData.title,
+              "propertyType": formData.type,
+              "price": formData.price,
+              "status": formData.status,
+              "city": formData.location.city,
+              "address": formData.location.address,
+              "googleMapsLink": formData.location.link,
+              "totalRooms": formData.details.rooms,
+              "bathrooms": formData.details.baths,
+              "bedrooms": formData.details.beds,
+              "floorNumber": formData.details.floor,
+              "area": formData.details.area,
+              "furnished": true,
+              "description": formData.description ,
+              "createdAt": Date.now(),
+              "propertyImages": formData.location.images,
+              "userId": userId
+            }, 
             TypeOrder: "Pending",
           },
         ]);
@@ -133,7 +155,7 @@ const AdvertiseForm = () => {
               ...[
                 "Townhouse",
                 "Villa",
-                "Private House",
+                "Privatehouse",
                 "Apartment",
                 "Office",
                 "Shop",

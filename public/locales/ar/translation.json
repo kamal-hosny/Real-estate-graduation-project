@@ -12,7 +12,7 @@
       "PropertyTypes": "نوع العقار",
       "Townhouse": "تاون هاوس ",
       "Villa": "فيلا",
-      "Private House": "منزل خاص",
+      "Privatehouse": "منزل خاص",
       "Apartment": "شقة",
       "Office": "مكتب",
       "Shop": "محل",
@@ -111,7 +111,7 @@
       "profile": "الملف الشخصي",
       "sign_out": "تسجيل الخروج",
       "login": "تسجيل الدخول",
-      "register": "تسجيل حساب",
+      "register": "إنشاء حساب",
       "my_activities": "أنشطتي",
       "my_favorites": "المفضلة",
       "switch_to_ar": "التحويل إلى العربية",
@@ -189,7 +189,32 @@
         "whatsapp": "واتساب",
         "call": "اتصال",
         "email": "بريد إلكتروني"
-      }
+      },
+
+
+      "All_Status": "جميع الحالات",
+      "For_Sale": "للبيع",
+      "For_Rent": "للإيجار",
+
+
+      "All_Property_Types": "جميع أنواع العقارات",
+      "Townhouse": "تاون هاوس",
+      "Villa": "فيلا",
+      "Private_House": "منزل خاص",
+      "Apartment": "شقة",
+      "Office": "مكتب",
+      "Shop": "محل",
+
+
+      "Show 5 Products": "عرض 5 منتجات",
+      "Show 10 Products": "عرض 10 منتجات",
+      "Show 20 Products": "عرض 20 منتج",
+      "Show 30 Products": "عرض 30 منتج",
+      "Show 40 Products": "عرض 40 منتج",
+      "Show 50 Products": "عرض 50 منتج",
+      "All": "الكل"
+
+
     },
     "login": {
       "title": "تسجيل الدخول إلى حسابك",
@@ -251,7 +276,7 @@
     },
     "formPropertyDetails": {
       "propertyDetails": "تفاصيل العقار",
-      "propertyTitle": "عنوان العقار*",
+      "propertyTitle": "اسم العقار*",
       "propertyTitlePlaceholder": "شقة حديثة بثلاث غرف نوم",
       "propertyType": "نوع العقار*",
       "selectType": "اختر النوع",
@@ -316,7 +341,20 @@
       "viewMore": "عرض المزيد",
       "propertyDetails": "تفاصيل العقار",
       "locationOnMap": "الموقع على الخريطة",
-      "googleMapLocation": "موقع خرائط جوجل"
+      "googleMapLocation": "موقع خرائط جوجل",
+      "posted": "تم النشر منذ ",
+      "monthlyRent": "إيجار شهري:",
+      "submitRentRequest": "تقديم طلب إيجار",
+      "submitPurchaseRequest": "تقديم طلب شراء",
+      "sold": "تم البيع",
+      "rented": "تم التأجير",
+
+
+      "purchaseSuccess": "تم إرسال طلب الشراء بنجاح!",
+      "purchaseError": "فشل إرسال طلب الشراء، يرجى المحاولة مرة أخرى",
+      "rentSuccess": "تم إرسال طلب الإيجار بنجاح!",
+      "rentError": "فشل إرسال طلب الإيجار، يرجى المحاولة مرة أخرى"
+
     },
     "tableDetails": {
       "general": "العام",
@@ -479,5 +517,13 @@
       "sending": "جاري الإرسال...",
       "success_message": "تم إرسال الاستفسار بنجاح",
       "error_message": "من فضلك راجع البيانات أو أعد تحميل الصفحة"
+    },  "ProductCard": {
+       "Publish_time": "تاريخ النشر:",
+       "bedrooms":  "غرف نوم",
+       "bathroom": "حمام",
+       "meter": "م² ",
+       "search": "البحث حسب اسم العقار والمدينة",
+       "Unfurnished": "غير مفروشة",
+       "Furnished": "مفروشة"
     }
   }

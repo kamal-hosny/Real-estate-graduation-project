@@ -22,45 +22,37 @@ interface Iproperties {
   id: number;
   img: string;
   title: string;
-  propertyCounter: number;
 }
-
 const properties: Iproperties[] = [
   {
     id: 1,
     img: townhouseImg,
     title: "Townhouse",
-    propertyCounter: 2,
   },
   {
     id: 2,
     img: villa,
     title: "Villa",
-    propertyCounter: 2,
   },
   {
     id: 3,
     img: privateHouse,
-    title: "Private House",
-    propertyCounter: 2,
+    title: "Privatehouse",
   },
   {
     id: 4,
     img: apartment,
     title: "Apartment",
-    propertyCounter: 2,
   },
   {
     id: 5,
     img: office,
     title: "Office",
-    propertyCounter: 2,
   },
   {
     id: 6,
     img: shop,
     title: "Shop",
-    propertyCounter: 2,
   },
 ];
 
@@ -91,11 +83,6 @@ const TypeOfProperties = () => {
                   {t(`typeOfProperties.${property.title}`)}
                 </p>
 
-                <p className="description text-sm text-color-text-2">
-                  {t("typeOfProperties.propertiesText", {
-                    count: property.propertyCounter,
-                  })}
-                </p>
               </div>
             </div>
           ))}
