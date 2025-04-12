@@ -42,7 +42,6 @@ const MainLayout = () => {
         {t("dashboard_link")}
       </Link>
     )}
-      
       <Header />
       <Outlet />
       <ToastList />

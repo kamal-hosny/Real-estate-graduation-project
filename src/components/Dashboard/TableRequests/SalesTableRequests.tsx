@@ -1,3 +1,4 @@
+import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
 import PurchaseTableBody from "./SalesTableBody";
 
 // تعريف نوع البيانات للـ property
@@ -79,7 +80,9 @@ const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
 
       {propertiesArray.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">لا توجد طلبات البيع حاليا</p>
+            <LottieHandler className="scale-75" type="empty" message={
+            (<p className="text-gray-500">لا توجد طلبات البيع حاليا</p>)
+          } />
         </div>
       )}
     </div>

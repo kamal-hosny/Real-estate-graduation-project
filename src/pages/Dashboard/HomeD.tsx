@@ -102,7 +102,7 @@ const HomeD = () => {
     labels: ["طلبات الشراء", "طلبات البيع", "طلبات الإيجار"],
     datasets: [
       {
-        data: [PurchaseOrders?.length || 0, SalesOrders?.length || 0, RentalOrders?.length || 0],
+        data: [SalesOrders?.length || 0,  PurchaseOrders?.length  || 0, RentalOrders?.length || 0],
         backgroundColor: ["#4B9EFA", "#34D399", "#FBBF24"],
         hoverBackgroundColor: ["#6BB5FF", "#4EE4A5", "#FFD147"],
         borderWidth: 0,

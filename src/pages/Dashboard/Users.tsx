@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAllUser } from '../../store/user/act/actGetAllUser';
 import { convertDate } from '../../utils/dateFun';
 import { openModal } from '../../store/modal/modalSlice';
-import * as XLSX from 'xlsx';
 import LottieHandler from '../../components/common/feedback/LottieHandler/LottieHandler';
+import { exportToExcel } from '../../utils/excel/usersSheet';
 
 interface User {
   id: string;
@@ -35,18 +35,7 @@ const Users = () => {
     return cleaned.startsWith('+') ? cleaned : `+20${cleaned}`;
   };
 
-  const exportToExcel = () => {
-    const data = users.map(user => ({
-      'الاسم الكامل': user.fullName,
-      'البريد الإلكتروني': user.email,
-      'رقم الهاتف': user.phoneNumber,
-      'تاريخ التسجيل': convertDate(user.createdAt),
-    }));
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
-    XLSX.writeFile(workbook, 'users.xlsx');
-  };
+
 
   const filteredUsers = users.filter(user =>
     user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,7 +97,7 @@ const Users = () => {
 
           {/* Export Button */}
           <button
-            onClick={exportToExcel}
+            onClick={() => exportToExcel(users)}
             className="flex items-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             <FaFileExcel className="text-lg" />
@@ -121,7 +110,7 @@ const Users = () => {
       {error && <p className="text-center text-red-600 text-lg">خطأ: {error}</p>}
       {loading !== "pending" && !error && sortedUsers.length === 0 && (
               <div className=" flex justify-center items-center ">
-              <LottieHandler type="empty" message={searchTerm ? (<p className='text-black'>لا توجد نتائج مطابقة للبحث</p>) : (<p className='text-black'>لا توجد بيانات للمستخدمين</p>)} />
+              <LottieHandler type="userNotFound" message={searchTerm ? (<p className='text-black'>لا توجد نتائج مطابقة للبحث</p>) : (<p className='text-black'>لا توجد بيانات للمستخدمين</p>)} />
             </div>
       )}
 

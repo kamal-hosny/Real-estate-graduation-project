@@ -4,13 +4,15 @@ import empty from "../../../../assets/lottieFiles/empty.json";
 import error from "../../../../assets/lottieFiles/error.json";
 import loading from "../../../../assets/lottieFiles/loading.json";
 import notFound from "../../../../assets/lottieFiles/notFound.json";
+import userNotFound from "../../../../assets/lottieFiles/userNotFound.json";
 import { ReactNode } from "react";
 
 const lottieFilesMap = {
     empty,
     error,
     loading,
-    notFound
+    notFound,
+    userNotFound
 }
 
 type LottieHandlerProps = {

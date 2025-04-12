@@ -1,4 +1,5 @@
 
+import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
 import TableBody from "./TableBody";
 
 
@@ -80,7 +81,9 @@ const TableRequests = ({ data  }: { data: dataTable[] }) => {
 
       {data.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">لا توجد طلبات شراء حاليا</p>
+          <LottieHandler className="scale-75" type="empty" message={
+            (<p className="text-gray-500 ">لا توجد طلبات شراء حاليا</p>)
+          } />
         </div>
       )}
     </div>
