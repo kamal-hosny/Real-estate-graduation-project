@@ -1,5 +1,5 @@
 import { useGetRentalOrders } from "../../Hooks/Dashboard/useGetRentalOrders.ts";
-import PurchaseTableRequests from "../../components/Dashboard/TableRequests/SalesTableRequests.tsx";
+import TableRequests from "../../components/Dashboard/TableRequests/TableRequests.tsx";
 import LottieHandler from "../../components/common/feedback/LottieHandler/LottieHandler.tsx";
 
 const SalesRequests = () => {
@@ -20,12 +20,15 @@ const SalesRequests = () => {
     );
   }
 
+  console.log(properties);
+  
+
   return (
     <div className="space-y-6 p-6 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900">طلبات البيع</h2>
       </div>
-      <PurchaseTableRequests properties={properties} />
+      <TableRequests data={properties} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ interface dataTable {
   TypeOrder: string;
   created_at: string;
   userToken: string;
+  clientId: string;
   property: {
     propertyId: number;
     propertyTitle: string;
@@ -52,7 +53,7 @@ const TableRequests = ({ data  }: { data: dataTable[] }) => {
               السعر
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              المستخدم
+              منشئ الطلب
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
               صور

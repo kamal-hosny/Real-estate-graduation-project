@@ -1,34 +1,38 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../config/supabaseClient.ts";
 
-interface dataP {
+interface dataTable {
     id: number;
     TypeOrder: string;
     created_at: string;
+    userToken: string;
+    clientId: string;
     property: {
-        propertyId: number;
-        propertyTitle: string;
-        propertyType: string;
-        price: string;
-        status: string;
-        city: string;
-        address: string;
-        googleMapsLink: string;
-        totalRooms: string;
-        bathrooms: string;
-        bedrooms: string;
-        floorNumber: string;
-        area: string;
-        furnished: boolean;
-        description: string;
-        createdAt: number;
-        propertyImages: string[];
-        userId: string;
+      propertyId: number;
+      propertyTitle: string;
+      propertyType: string;
+      price: string;
+      status: string;
+      city: string;
+      address: string;
+      googleMapsLink: string;
+      totalRooms: string;
+      bathrooms: string;
+      bedrooms: string;
+      floorNumber: string;
+      area: string;
+      furnished: boolean;
+      description: string;
+      createdAt: number;
+      propertyImages: string[];
+      userId: string;
     };
-}
+  }
+
+
 export const useGetRentalOrders = () => {
     const [loading, setLoading] = useState(true);
-    const [properties, setProperties] = useState<dataP[]>([]);
+    const [properties, setProperties] = useState<dataTable[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     const fetchProperties = async () => {
@@ -38,7 +42,7 @@ export const useGetRentalOrders = () => {
             console.error("حدث خطأ أثناء جلب بيانات العقارات:", error.message);
             setError("فشل في جلب بيانات العقارات.");
         } else {
-            setProperties(data as dataP[]);
+            setProperties(data as dataTable[]);
         }
         setLoading(false);
     };
@@ -52,11 +56,11 @@ export const useGetRentalOrders = () => {
                 { event: "*", schema: "public", table: "RentOrders" },
                 (payload) => {
                     if (payload.eventType === "INSERT") {
-                        setProperties((prev) => [...prev, payload.new as dataP]);
+                        setProperties((prev) => [...prev, payload.new as dataTable]);
                     } else if (payload.eventType === "UPDATE") {
                         setProperties((prev) =>
                             prev.map((item) =>
-                                item.id === payload.new.id ? (payload.new as dataP) : item
+                                item.id === payload.new.id ? (payload.new as dataTable) : item
                             )
                         );
                     } else if (payload.eventType === "DELETE") {

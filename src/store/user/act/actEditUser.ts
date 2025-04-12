@@ -6,7 +6,7 @@ type TUserData = {
   id: string | null;
   fullName: string | null;
   email: string | null;
-  password: string | null | undefined;
+  password?: string | null | undefined;
   phoneNumber: string | null;
   image: string | null | undefined;
   token: string | null;
@@ -17,8 +17,18 @@ export const editUser = createAsyncThunk(
   async (data: TUserData, thunk) => {
     const { rejectWithValue } = thunk;
 
+    const payload: Record<string, any> = {
+      fullName: data.fullName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      image: data.image,
+    };
+    if (data?.password) {
+      payload.password = data.password;
+    }
+
     try {
-      const res = await axiosConfig.get(`/api/users/${data.id}`, {
+      const res = await axiosConfig.put(`/api/users/${data.id}`, payload, {
         headers: {
           Authorization: `Bearer ${data.token}`,
         },

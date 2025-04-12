@@ -9,6 +9,7 @@ import DeleteOrder from "../components/Dashboard/modalDialog/DeleteOrder";
 import EditOrderSales from "../components/Dashboard/modalDialog/EditOrderSales";
 import ShowUserDetails from "../components/Dashboard/modalDialog/ShowUserDetails";
 import EditOrder from "../components/Dashboard/modalDialog/EditOrder";
+import DeleteUser from "../components/Dashboard/modalDialog/DeleteUser";
 
 type ComponentsLookup = {
     [key: string]: ComponentType<any>;
@@ -23,11 +24,11 @@ const ModalManager = () => {
     DeleteOrder,
     EditOrderSales,
     ShowUserDetails,
-    EditOrder
+    EditOrder,
+    DeleteUser
   };
   let renderComponent: JSX.Element | null = null;;
   
-
   if (componentName) {
     const SelectedComponent = componentsLookup[componentName] ;
     if (SelectedComponent) {

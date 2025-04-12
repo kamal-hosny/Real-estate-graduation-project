@@ -12,6 +12,7 @@ interface dataP {
     id: number;
     TypeOrder: string;
     created_at: string;
+    clientId: string;
     property: {
       propertyId: number;
       propertyTitle: string;
@@ -47,16 +48,14 @@ const TableBody = ({ item, index }: dataP) => {
   };
 
   useEffect(() => {
-    if (item.property.userId) {
-      getUserData(item.property.userId);
+    if (item?.clientId) {
+      getUserData(item?.clientId);
     }
-  }, [item.property.userId]);
+  }, [item?.clientId]);
 
   const property = item.property;
   const images = (item?.property?.propertyImages as any).$values;
 
-  console.log(property);
-  
 
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">

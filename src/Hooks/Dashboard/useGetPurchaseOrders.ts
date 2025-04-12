@@ -6,6 +6,7 @@ interface dataTable {
   TypeOrder: string;
   created_at: string;
   userToken: string;
+  clientId: string;
   property: {
     propertyId: number;
     propertyTitle: string;

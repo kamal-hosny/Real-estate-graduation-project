@@ -2,7 +2,7 @@ import { Eye, Pencil, Trash2, UserRound } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { openModal } from "../../../store/modal/modalSlice";
 import { getOneUser } from "../../../store/user/act/actGetOneUser";
-import { formatCurrency } from "../../../utils";
+import { formatCurrency, textSlicer } from "../../../utils";
 import { useEffect } from "react";
 import Images from "../../ui/Images";
 
@@ -39,6 +39,9 @@ const SalesTableBody = ({ item, index }:   dataP ) => {
     const dispatch = useAppDispatch();
     const { record: user} = useAppSelector((state) => state.user);
 
+    console.log(user);
+    
+
 
     const getUserData = (id: string) => {
         
@@ -64,10 +67,10 @@ const SalesTableBody = ({ item, index }:   dataP ) => {
             <td className="px-6 py-4">
                 <div className="flex flex-col gap-1">
                     <span className="font-medium text-gray-900 text-start">
-                        {property.propertyTitle}
+                        {textSlicer(property.propertyTitle, 30)}
                     </span>
                     <span className="text-xs text-gray-500 text-start">
-                        {property.address}
+                    {textSlicer(property.address, 50)}
                     </span>
                 </div>
             </td>

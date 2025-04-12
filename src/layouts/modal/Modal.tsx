@@ -19,15 +19,17 @@ const Modal = ({ isOpen, children, closeModalHandler }: IProps) => {
       </Helmet>
 
       {isOpen && (
-        <>
+        <div
+          className="fixed inset-0 z-[5] flex items-center justify-center p-4 bg-black bg-opacity-50"
+          onClick={closeModalHandler}
+        >
           <div
-            onClick={closeModalHandler}
-            className="fixed inset-0 bg-black bg-opacity-50 z-[5]"
-          />
-          <div className="fixed inset-0 z-[6] flex items-center justify-center p-4">
+            className="relative w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
             {children}
           </div>
-        </>
+        </div>
       )}
     </>
   );

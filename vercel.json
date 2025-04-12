@@ -5,11 +5,5 @@
       "dest": "/index.html",
       "status": 200
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "http://mohamedtahoon.runasp.net/api/$1"
-    }
   ]
 }
