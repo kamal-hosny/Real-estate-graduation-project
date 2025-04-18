@@ -25,6 +25,7 @@ import { getOneProperty } from "../store/property/act/actGetOneProperty";
 import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
 import { getTimeSincePost } from "../utils/dateFun";
 import { supabase } from "../config/supabaseClient";
+import UserDataSingleProduct from "../components/SingleProduct/UserDataSingleProduct";
 
 interface PropertyImages {
   $id: string;
@@ -49,6 +50,7 @@ interface RealProperty {
   createdAt: string;
   googleMapsLink: string;
   propertyImages: PropertyImages;
+  userId: string
 }
 
 
@@ -101,8 +103,6 @@ const SingleProperty = () => {
     return url;
   };
 
-  console.log(property);
-
   const authData = useAppSelector((state) => state?.auth)
   
 
@@ -152,7 +152,6 @@ const SingleProperty = () => {
     }
   };
 
- 
   if (error) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -280,6 +279,8 @@ const SingleProperty = () => {
             )}
           </div>
         </div>
+
+        {/*  */}
         <hr className="border-color-border border-2" />
         <div className="description flex flex-col gap-2">
           <h2 className="text-2xl font-medium text-color-text-1">
@@ -287,6 +288,12 @@ const SingleProperty = () => {
           </h2>
           <p className="text-color-text-1">{property.description}</p>
         </div>
+        <hr className="border-color-border border-2" />
+{/*  */}
+        
+    <UserDataSingleProduct userId={property?.userId || null} />
+{/*  */}
+<hr className="border-color-border border-2" />
         <div className="property-details flex flex-col gap-2">
           <h2 className="text-2xl font-medium text-color-text-1">
             {t("singlePropertyPage.propertyDetails")}

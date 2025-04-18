@@ -9,14 +9,12 @@ import mainImage from "../assets/advertiseProperty/advertiseProperty.avif";
 import TypeSelector from "../components/Products/Selectors/TypeSelector";
 import TransactionTypeSelector from "../components/Products/Selectors/TransactionTypeSelector";
 import VerificationSelector from "../components/Products/Selectors/VerificationSelector";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { FaWhatsapp } from "react-icons/fa";
-import { IoIosCall } from "react-icons/io";
-import { Mail, X } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getAllProperties } from "../store/property/act/actGetAllProperties";
 import { RealProperty } from "../types";
 import { useTranslation } from "react-i18next";
+import UserCompany from "../components/Products/UserCompany";
 
 type TransactionType = "For Sale" | "For Rent" | "Sold" | "Rented";
 type PropertyType =
@@ -27,27 +25,25 @@ type PropertyType =
   | "Office"
   | "Shop";
 
+const normalizePropertyType = (type: string | null): PropertyType | null => {
+  if (!type) return null;
 
-  const normalizePropertyType = (type: string | null): PropertyType | null => {
-    if (!type) return null;
-  
-    const typeMap: { [key: string]: PropertyType } = {
-      privatehouse: "Private House",
-      townhouse: "Townhouse",
-      villa: "Villa",
-      apartment: "Apartment",
-      office: "Office",
-      shop: "Shop",
-    };
-  
-    const normalizedType = type.toLowerCase().replace(/\s+/g, "");
-    return typeMap[normalizedType] || null;
+  const typeMap: { [key: string]: PropertyType } = {
+    privatehouse: "Private House",
+    townhouse: "Townhouse",
+    villa: "Villa",
+    apartment: "Apartment",
+    office: "Office",
+    shop: "Shop",
   };
+
+  const normalizedType = type.toLowerCase().replace(/\s+/g, "");
+  return typeMap[normalizedType] || null;
+};
 
 const breadcrumbItems = [{ label: "Home", link: "/" }];
 
 const Products = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const getTypeUrl = searchParams.get("type");
   const getCompanyId = searchParams.get("companyId");
@@ -65,22 +61,37 @@ const Products = () => {
     propertyType: PropertyType | null;
     transactionType: TransactionType | null;
     verification: boolean;
+    companyId: string | null;
   }>({
     propertyType: initialPropertyType,
     transactionType: null,
     verification: false,
+    companyId: getCompanyId,
   });
 
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  // Fetch properties
   useEffect(() => {
     dispatch(getAllProperties());
   }, [dispatch]);
 
-  const { records, loading, error } = useAppSelector((state) => state?.property);
-  const propertiesSata = records.$values;
+  // Update filterValues when companyId or propertyType changes in URL
+  useEffect(() => {
+    setFilterValues({
+      propertyType: initialPropertyType,
+      transactionType: null,
+      verification: false,
+      companyId: getCompanyId,
+    });
+    setCurrentPage(1); // Reset pagination to first page
+  }, [getCompanyId, initialPropertyType]);
 
+  const { records, loading, error } = useAppSelector((state) => state?.property);
+  const propertiesData = records.$values;
+
+  // Debounce search term
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -91,8 +102,9 @@ const Products = () => {
     };
   }, [searchTerm]);
 
+  // Filter properties
   const filteredProperties = useMemo(() => {
-    let result = [...propertiesSata];
+    let result = [...propertiesData];
 
     if (filterValues.propertyType) {
       result = result.filter(
@@ -114,6 +126,12 @@ const Products = () => {
       );
     }
 
+    if (filterValues.companyId) {
+      result = result.filter(
+        (property: RealProperty) => property.userId === filterValues.companyId
+      );
+    }
+
     if (debouncedSearchTerm.trim()) {
       const searchLower = debouncedSearchTerm.toLowerCase();
       result = result.filter((property: RealProperty) =>
@@ -128,10 +146,11 @@ const Products = () => {
 
     return result;
   }, [
-    propertiesSata,
+    propertiesData,
     filterValues.propertyType,
     filterValues.transactionType,
     filterValues.verification,
+    filterValues.companyId,
     debouncedSearchTerm,
   ]);
 
@@ -280,72 +299,7 @@ const Products = () => {
       </div>
 
       <div className="container mx-auto px-4">
-        {getCompanyId && (
-          <div className="bg-main-color-background p-4 rounded relative">
-            <div className="flex flex-col md:flex-row gap-4 p-4 rounded-lg">
-              <img
-                className="w-full md:w-48 h-48 object-cover rounded-lg border-2 border-color-border"
-                src="https://images.bayut.eg/thumbnails/18031029-240x180.webp"
-                alt="Property preview"
-              />
-
-              <div className="flex flex-col gap-4 flex-1">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-color-text-1">
-                    {t("properties_page.contact.property_name")}
-                  </h2>
-                  <div className="bg-section-color p-3 rounded-lg">
-                    <p className="text-color-text-2 font-medium">
-                      {t("properties_page.contact.title")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href="https://wa.me/01203023"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 min-w-[150px]"
-                  >
-                    <div className="bg-green-100 hover:bg-green-200 text-green-700 p-3 rounded-lg border-2 border-green-300 flex items-center justify-center gap-2 transition-colors">
-                      <FaWhatsapp size={24} />
-                      <span className="font-medium">
-                        {t("properties_page.contact.whatsapp")}
-                      </span>
-                    </div>
-                  </a>
-
-                  <a href="tel:01203023" className="flex-1 min-w-[150px]">
-                    <div className="bg-blue-100 hover:bg-blue-200 text-blue-700 p-3 rounded-lg border-2 border-blue-300 flex items-center justify-center gap-2 transition-colors">
-                      <IoIosCall size={24} />
-                      <span className="font-medium">
-                        {t("properties_page.contact.call")}
-                      </span>
-                    </div>
-                  </a>
-
-                  <a href="mailto:kaml@gmail" className="flex-1 min-w-[150px]">
-                    <div className="bg-red-100 hover:bg-red-200 text-red-700 p-3 rounded-lg border-2 border-red-300 flex items-center justify-center gap-2 transition-colors">
-                      <Mail size={24} />
-                      <span className="font-medium">
-                        {t("properties_page.contact.email")}
-                      </span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <span
-              onClick={() => {
-                navigate("/properties");
-              }}
-              className="bg-red-600 hover:bg-red-700 text-gray-200 hover:text-white transition-all absolute top-0 end-0 rounded"
-            >
-              <X className="cursor-pointer p-1 " />
-            </span>
-          </div>
-        )}
+        {filterValues.companyId && <UserCompany userId={filterValues.companyId} />}
 
         <div className="relative z-10 mat flex justify-between gap-2 mt-6">
           {/* Products section */}
@@ -398,7 +352,6 @@ const Products = () => {
                   <p className="text-center text-color-text-2 col-span-full py-4">
                     <LottieHandler type="empty" message="No products found." />
                   </p>
-
                 )}
               </div>
             </div>

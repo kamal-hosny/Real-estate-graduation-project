@@ -1,4 +1,4 @@
-import { FaPhone, FaWhatsapp, FaEnvelope, FaSearch, FaFileExcel } from 'react-icons/fa'; // أضفت FaFileExcel
+import { FaPhone, FaWhatsapp, FaEnvelope, FaSearch, FaFileExcel } from 'react-icons/fa'; 
 import { Trash2, UserRound, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -24,7 +24,8 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const { records, loading, error } = useAppSelector((state) => state.user);
   const { token } = useAppSelector((state) => state.auth);
-  const users: User[] = records.$values || [];
+  const users: User[] = records || [];
+
 
   useEffect(() => {
     dispatch(getAllUser(token || ""));

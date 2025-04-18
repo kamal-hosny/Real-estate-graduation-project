@@ -39,23 +39,17 @@ interface dataP {
 
 const TableBody = ({ item, index }: dataP) => {
   const dispatch = useAppDispatch();
-  const { record: user } = useAppSelector((state) => state.user);
-
-  const getUserData = (id: string) => {
-    if (id) {
-      dispatch(getOneUser({ id }));
-    }
-  };
+  const usersById = useAppSelector((state) => state.user.usersById); 
+  const user = usersById[item.clientId];
 
   useEffect(() => {
-    if (item?.clientId) {
-      getUserData(item?.clientId);
+    if (item?.clientId && !usersById[item.clientId]) {
+      dispatch(getOneUser({ id: item.clientId }));
     }
-  }, [item?.clientId]);
+  }, [item?.clientId, usersById, dispatch]);
 
   const property = item.property;
   const images = (item?.property?.propertyImages as any).$values;
-
 
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">

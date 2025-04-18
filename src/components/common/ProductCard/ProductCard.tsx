@@ -10,7 +10,6 @@ import {
 } from "../../../store/wishlist/wishlistActions";
 import { addToast } from "../../../store/toasts/toastsSlice";
 import { RealProperty } from "../../../types/product.types";
-
 import defaultPerson from "../../../assets/defaultImages/defaultPerson.jpeg";
 import { useTranslation } from "react-i18next";
 import { getOneUser } from "../../../store/user/act/actGetOneUser";
@@ -26,9 +25,19 @@ const ProductCard = ({ productData }: { productData: RealProperty }) => {
   );
   const [isHeartFilled, setIsHeartFilled] = useState(isInWishlist);
 
+  const userData = useAppSelector((state) => state.user.usersById[productData.userId]);
+  const userLoading = useAppSelector((state) => state.user.loading);
+  const userError = useAppSelector((state) => state.user.error);
+
   useEffect(() => {
     setIsHeartFilled(isInWishlist);
   }, [isInWishlist]);
+
+  useEffect(() => {
+    if (!userData && productData.userId && userLoading !== "pending") {
+      dispatch(getOneUser({ id: productData.userId }));
+    }
+  }, [dispatch, productData.userId, userData, userLoading]);
 
   const toggleHeart = () => {
     if (isHeartFilled) {
@@ -36,7 +45,7 @@ const ProductCard = ({ productData }: { productData: RealProperty }) => {
     } else {
       dispatch(addToWishlist(productData));
       dispatch(
-        addToast({ message: "تمت الإضافة إلى المفضلة", type: "success" })
+        addToast({ message: t("ProductCard.addedToWishlist"), type: "success" })
       );
     }
     setIsHeartFilled((prev) => !prev);
@@ -44,24 +53,12 @@ const ProductCard = ({ productData }: { productData: RealProperty }) => {
 
   const image = (productData?.propertyImages as any)?.$values?.[0];
 
-  const { record } = useAppSelector((state) => state?.user )
-
-  const userData = record
-  
-
-  const pUserID = productData?.userId
-useEffect(() => {
-  dispatch(getOneUser({ id: pUserID}))
-}, [dispatch,pUserID ])
-
   return (
     <div className="product-card border rounded-lg shadow-lg bg-section-color border-color-border hover:shadow-xl transition-shadow duration-300 text-right">
       <div className="relative image w-full h-64 rounded-t-lg overflow-hidden">
         <Img
           className="w-full h-full object-cover cursor-pointer transform hover:scale-105 transition-transform duration-300"
-          src={
-            image || "https://dummyimage.com/200x200"
-          }
+          src={image || "https://dummyimage.com/200x200"}
           alt={productData.propertyTitle}
           onClick={() => navigate(`/singleProperty/${productData.propertyId}`)}
         />
@@ -78,14 +75,14 @@ useEffect(() => {
           {productData.propertyType}
         </span>
         <span
-            className={`absolute top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              productData.status === "For Sale"
-                ? "bg-[#dcfce7] text-[#16a34a]"
-                : "bg-[#ffedd5] text-[#ea580c]"
-            }`}
-          >
-            {productData.status}
-          </span>
+          className={`absolute top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+            productData.status === "For Sale"
+              ? "bg-[#dcfce7] text-[#16a34a]"
+              : "bg-[#ffedd5] text-[#ea580c]"
+          }`}
+        >
+          {productData.status}
+        </span>
       </div>
 
       <div className="body p-4 space-y-3">
@@ -95,7 +92,7 @@ useEffect(() => {
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 text-color-text-2 ">
+        <div className="flex items-center gap-2 text-color-text-2">
           <Building2 size={16} />
           <span>{productData.city}</span>
         </div>
@@ -104,13 +101,21 @@ useEffect(() => {
           <div className="text-xl font-bold text-blue-600">
             {formatCurrency(productData.price)}
           </div>
-          <div className="flex items-center border-color-border border gap-2 text-sm capitalize text-color-text-2">
-          <span >{userData?.fullName ?? "unknown"}</span>
-            <Img
-              src={ userData?.image ?? defaultPerson}
-              className="w-8 h-8 rounded-md border-color-border border object-cover"
-              alt="User"
-            />
+          <div className="flex items-center  gap-2 text-sm capitalize text-color-text-2">
+            {userLoading === "pending" ? (
+              <span>{t("ProductCard.loading")}</span>
+            ) : userError ? (
+              <span>{t("ProductCard.error")}</span>
+            ) : (
+              <>
+                <span>{userData?.fullName ?? t("ProductCard.unknown")}</span>
+                <Img
+                  src={userData?.image ?? defaultPerson}
+                  className="w-8 h-8 rounded-md border-color-border border object-cover"
+                  alt="User"
+                />
+              </>
+            )}
           </div>
         </div>
 

@@ -26,10 +26,14 @@ import { FaStairs } from "react-icons/fa6";
 import { uploadToCloudinary } from "../../utils/cloudinary";
 import { supabase } from "../../config/supabaseClient";
 import { useAppSelector } from "../../store/hooks";
+import { addToast } from "../../store/toasts/toastsSlice";
+import { useDispatch } from "react-redux";
 
 const AdvertiseForm = () => {
-  const { user, token } = useAppSelector((state ) => state.auth);
-const userId = user?.id
+      const dispatch = useDispatch()
+
+  const { user, token } = useAppSelector((state) => state.auth);
+  const userId = user?.id;
   const { t } = useTranslation();
   const {
     register,
@@ -52,13 +56,26 @@ const userId = user?.id
   });
 
   const onSubmit: SubmitHandler<createPropertyType> = async (data) => {
-    if(!token){
-      return 
+    if (!token) {
+      dispatch(
+        addToast({
+          message: t("formPropertyDetails.noTokenError"),
+          type: "error",
+        })
+      )
+
+      return;
     }
     try {
       const files = data.location.images as FileList;
       if (!files || files.length === 0) {
-        alert("Please select images to upload");
+        dispatch(
+          addToast({
+            message: t("formPropertyDetails.selectImagesRequired"),
+            type: "error",
+          })
+        )
+        
         return;
       }
       console.log("Uploading files...");
@@ -78,48 +95,63 @@ const userId = user?.id
       console.log("Final Form Data:", formData);
       // Send data to Supabase
       const { data: salesOrderData, error } = await supabase
-
-        .from("SalesOrders") 
+        .from("SalesOrders")
         .insert([
           {
-            userToken: token, 
+            userToken: token,
             property: {
-              "propertyId": 0,
-              "propertyTitle": formData.title,
-              "propertyType": formData.type,
-              "price": formData.price,
-              "status": formData.status,
-              "city": formData.location.city,
-              "address": formData.location.address,
-              "googleMapsLink": formData.location.link,
-              "totalRooms": formData.details.rooms,
-              "bathrooms": formData.details.baths,
-              "bedrooms": formData.details.beds,
-              "floorNumber": formData.details.floor,
-              "area": formData.details.area,
-              "furnished": true,
-              "description": formData.description ,
-              "createdAt": Date.now(),
-              "propertyImages": formData.location.images,
-              "userId": userId
-            }, 
+              propertyId: 0,
+              propertyTitle: formData.title,
+              propertyType: formData.type,
+              price: formData.price,
+              status: formData.status,
+              city: formData.location.city,
+              address: formData.location.address,
+              googleMapsLink: formData.location.link,
+              totalRooms: formData.details.rooms,
+              bathrooms: formData.details.baths,
+              bedrooms: formData.details.beds,
+              floorNumber: formData.details.floor,
+              area: formData.details.area,
+              furnished: true,
+              description: formData.description,
+              createdAt: Date.now(),
+              propertyImages: formData.location.images,
+              userId: userId,
+            },
             TypeOrder: "Pending",
           },
         ]);
 
       if (error) {
+
+        dispatch(
+          addToast({
+            message: t("formPropertyDetails.submitError"),
+            type: "error",
+          })
+        )
+        
         console.error("Error inserting data into Supabase:", error);
-        alert(`Failed to save data: ${error.message}`);
         return;
       }
-
+      dispatch(
+        addToast({
+          message: t("formPropertyDetails.submitSuccess"),
+          type: "success",
+        })
+      )
+      
       console.log("Data inserted successfully:", salesOrderData);
-      alert("Property order submitted successfully!");
 
-      // Reset the form after successful submission
       reset();
     } catch (error) {
-      console.error("Error uploading images:", error);
+      dispatch(
+        addToast({
+          message: t("formPropertyDetails.imageUploadError"),
+          type: "error",
+        })
+      )
     }
   };
 
@@ -373,7 +405,7 @@ const userId = user?.id
               name="location.images"
               control={control}
               rules={{
-                required: t("formPropertyDetails.imagesRequired"),
+                required: t("formPropertyDetails.selectImagesRequired"), // Fixed to use selectImagesRequired
                 validate: {
                   maxFiles: (files) =>
                     files.length <= 10 ||

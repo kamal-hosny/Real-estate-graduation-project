@@ -71,7 +71,6 @@ const Login = () => {
           {t("login.subtitle")}
           </p>
         </div>
-
         {/* Form */}
         <form className="text-color-text-1 space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {/* Email Field */}

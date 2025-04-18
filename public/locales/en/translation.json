@@ -316,7 +316,13 @@
     "submitting": "Submitting...",
     "submitForReview": "Submit for Review",
     "description": "Description",
-    "descriptionPlaceholder": "Enter your Description"
+    "descriptionPlaceholder": "Enter your Description",
+    "noTokenError": "You must be logged in to submit the form.",
+    "selectImagesRequired": "Please select at least one image to upload.",
+    "submitSuccess": "Property submitted successfully!",
+    "submitError": "Failed to submit the property. Please try again.",
+    "imageUploadError": "Error uploading images. Please try again."
+    
   },
   "wishlistPage": {
     "wishlist": "Wishlist",
@@ -347,7 +353,10 @@
     "purchaseSuccess": "Purchase request submitted successfully!",
     "purchaseError": "Failed to submit purchase request. Please try again.",
     "rentSuccess": "Rent request submitted successfully!",
-    "rentError": "Failed to submit rent request. Please try again."
+    "rentError": "Failed to submit rent request. Please try again.",
+
+    "loading": "Loading...",
+  "view_more": "View More"
 
   },
   "tableDetails": {

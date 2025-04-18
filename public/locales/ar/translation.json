@@ -318,7 +318,12 @@
       "submitting": "جارٍ الإرسال...",
       "submitForReview": "إرسال للمراجعة",
       "description": "وصف العقار",
-      "descriptionPlaceholder": "ادخل وصف العقار"
+      "descriptionPlaceholder": "ادخل وصف العقار",
+      "noTokenError": "يجب تسجيل الدخول لإرسال النموذج.",
+      "selectImagesRequired": "يرجى اختيار صورة واحدة على الأقل للتحميل.",
+      "submitSuccess": "تم إرسال العقار بنجاح!",
+      "submitError": "فشل إرسال العقار. يرجى المحاولة مرة أخرى.",
+      "imageUploadError": "خطأ في رفع الصور. يرجى المحاولة مرة أخرى."
 
 
 
@@ -353,7 +358,12 @@
       "purchaseSuccess": "تم إرسال طلب الشراء بنجاح!",
       "purchaseError": "فشل إرسال طلب الشراء، يرجى المحاولة مرة أخرى",
       "rentSuccess": "تم إرسال طلب الإيجار بنجاح!",
-      "rentError": "فشل إرسال طلب الإيجار، يرجى المحاولة مرة أخرى"
+      "rentError": "فشل إرسال طلب الإيجار، يرجى المحاولة مرة أخرى",
+  "loading": "جارٍ التحميل...",
+  "view_more": "عرض المزيد"
+
+
+      
 
     },
     "tableDetails": {

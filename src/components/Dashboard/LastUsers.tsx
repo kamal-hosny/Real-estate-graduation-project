@@ -16,8 +16,8 @@ const LastUsers = () => {
   }, [dispatch]);
 
  
-  const lastFiveUsers: any[] = records?.$values 
-    ? records.$values
+  const lastFiveUsers: any[] = records 
+    ? records
         .slice(-5) 
         .reverse() 
     : [];

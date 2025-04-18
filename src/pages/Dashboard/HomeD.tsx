@@ -21,7 +21,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomeD = () => {
   const dispatch = useAppDispatch()
-  const userLength = useAppSelector((state) => state?.user?.records?.$values?.length)
+  const userLength = useAppSelector((state) => state?.user?.records?.length)
   const propertyLength = useAppSelector((state) => state?.property?.records?.$values?.length)
 
   const { properties : SalesOrders } = useGetSalesOrders();

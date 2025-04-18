@@ -10,9 +10,11 @@ const HeaderVertical = () => {
         </div>
         <div className="title font-bold">Aqarek Dashboard</div>
       </div>
+      <span className="flex items-center gap-">
       <Link to={"/"} className="bg-blue-100 text-blue-600 px-4 py-2 text-xs font-medium rounded-md hover:bg-blue-200 transition-colors">
         الذهاب إلي المتجر
       </Link>
+      </span>
     </div>
   );
 };
