@@ -58,7 +58,7 @@ const UserDataSingleProduct = ({ userId }: UserDataSingleProductProps) => {
                     />
                 </div>
                 <div className="space-y-1">
-                    <p className="text-color-text-1 font-medium">{user.fullName || "User"}</p>
+                    <p className="text-color-text-1 font-medium capitalize">{user.fullName || "User"}</p>
                     <p className="text-color-text-2">{user.email || "email"}</p>
                 </div>
             </div>

@@ -50,32 +50,38 @@ interface RealProperty {
   createdAt: string;
   googleMapsLink: string;
   propertyImages: PropertyImages;
-  userId: string
+  userId: string;
 }
 
-
+interface WishlistItem {
+  propertyId: number;
+}
 
 const SingleProperty = () => {
   const { t, i18n } = useTranslation();
-
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
 
   const defaultImg = "https://dummyimage.com/300x300";
   const { record, loading, error } = useAppSelector((state) => state?.property);
   const property = record as RealProperty | null;
+  const wishlist = useAppSelector((state) => state?.wishlist?.items ?? []) as WishlistItem[];
+  const { token, user } = useAppSelector((state) => state?.auth);
+
+  const isProductInWishlist = wishlist.some(
+    (item) => item.propertyId === property?.propertyId
+  );
+  const [isHeartFilled, setIsHeartFilled] = useState(isProductInWishlist);
+
+  useEffect(() => {
+    setIsHeartFilled(isProductInWishlist);
+  }, [isProductInWishlist]);
 
   useEffect(() => {
     if (id) {
       dispatch(getOneProperty({ id }));
     }
-  }, [dispatch, id]);
-
-  const wishlist = useAppSelector((state) => state?.wishlist?.items ?? []);
-  const isProductInWishlist = wishlist.some(
-    (item: any) => item.propertyId === property?.propertyId
-  );
-  const [isHeartFilled, setIsHeartFilled] = useState(isProductInWishlist);
+  }, [dispatch, id, i18n.language]);
 
   const toggleHeart = () => {
     if (!property) return;
@@ -95,60 +101,105 @@ const SingleProperty = () => {
 
   const getEmbeddableMapUrl = (url: string): string => {
     if (url.includes("maps.app.goo.gl")) {
-      console.warn(
-        "Short URL detected. Please use an embeddable Google Maps URL."
-      );
-      return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.123456789!3d29.987654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z2YXYrdin2YHYuNipINin2YTZhdi52Kkg2KPZh9mE2YjZhA!5e0!3m2!1sar!2seg!4v1698765432100!5m2!1sar!2seg"; // Example embed URL
+      console.warn("Short URL detected. Please use an embeddable Google Maps URL.");
+      return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.123456789!3d29.987654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z2YXYrdin2YHYuNipINin2YTZhdi52Kkg2KPZh9mE2YjZhA!5e0!3m2!1sar!2seg!4v1698765432100!5m2!1sar!2seg";
     }
     return url;
   };
 
-  const authData = useAppSelector((state) => state?.auth)
-  
-
   const purchaseOrder = async () => {
-    const { error } = await supabase
-      .from("PurchaseOrders") 
-      .insert([{
-        userToken: authData?.token, 
-        property: { ...property, createdAt: Date.now() }, 
+    if (!token) {
+      return dispatch(
+        addToast({
+          message: t("singlePropertyPage.unauthenticatedError"),
+          type: "warning",
+        })
+      );
+    }
+    if (!property) {
+      return dispatch(
+        addToast({
+          message: t("singlePropertyPage.noPropertyFound"),
+          type: "error",
+        })
+      );
+    }
+
+    const { error } = await supabase.from("PurchaseOrders").insert([
+      {
+        userToken: token,
+        property: {
+          ...property,
+          createdAt: property.createdAt, 
+        },
         TypeOrder: "Pending",
-        clientId: authData?.user?.id
-      }]);
-  
+        clientId: user?.id,
+      },
+    ]);
+
     if (error) {
-      dispatch(addToast({
-        message: t("singlePropertyPage.purchaseError"),
-        type: "error"
-      }));
+      console.error("Purchase Order Error:", error.message);
+      dispatch(
+        addToast({
+          message: `${t("singlePropertyPage.purchaseError")}: ${error.message}`,
+          type: "error",
+        })
+      );
     } else {
-      dispatch(addToast({
-        message: t("singlePropertyPage.purchaseSuccess"),
-        type: "success"
-      }));
+      dispatch(
+        addToast({
+          message: t("singlePropertyPage.purchaseSuccess"),
+          type: "success",
+        })
+      );
     }
   };
-  
-  const RentOrder = async () => {
-    const { error } = await supabase
-      .from("RentOrders") 
-      .insert([{
-        userToken: authData?.token, 
-        property: { ...property, createdAt: Date.now() }, 
+
+  const rentOrder = async () => {
+    if (!token) {
+      return dispatch(
+        addToast({
+          message: t("singlePropertyPage.unauthenticatedError"),
+          type: "warning",
+        })
+      );
+    }
+    if (!property) {
+      return dispatch(
+        addToast({
+          message: t("singlePropertyPage.noPropertyFound"),
+          type: "error",
+        })
+      );
+    }
+
+    const { error } = await supabase.from("RentOrders").insert([
+      {
+        userToken: token,
+        property: {
+          ...property,
+          createdAt: property.createdAt,
+        },
         TypeOrder: "Pending",
-        clientId: authData?.user?.id
-      }]);
-  
+        clientId: user?.id,
+      },
+    ]);
+
     if (error) {
-      dispatch(addToast({
-        message: t("singlePropertyPage.rentError"),
-        type: "error"
-      }));
+      console.error("Rent Order Error:", error.message);
+      dispatch(
+        addToast({
+          message: `${t("singlePropertyPage.rentError")}: ${error.message}`,
+          type: "error",
+        })
+      );
     } else {
-      dispatch(addToast({
-        message: t("singlePropertyPage.rentSuccess"),
-        type: "success"
-      }));
+      dispatch(
+        addToast({
+          message: t("singlePropertyPage.rentSuccess"),
+          type: "success",
+        })
+      );
     }
   };
 
@@ -191,7 +242,7 @@ const SingleProperty = () => {
           <Swiper
             className="swiper relative custom-pagination"
             spaceBetween={0}
-            loop={true}
+            loop={property.propertyImages.$values.length > 1} 
             slidesPerView={1}
             pagination={{ type: "fraction" }}
             navigation={{
@@ -233,7 +284,6 @@ const SingleProperty = () => {
         </div>
 
         <div className="details">
-          {/* head */}
           <div className="head flex flex-col gap-3 w-full">
             <div className="date-type text-color-text-2 text-xs font-medium">
               {property.propertyType} - {t("singlePropertyPage.posted")}{" "}
@@ -256,7 +306,7 @@ const SingleProperty = () => {
 
             {property.status === "For Rent" && (
               <Button
-                onClick={RentOrder}
+                onClick={rentOrder}
                 className="bg-button-color hover:bg-button-hover-color text-main-color-background w-fit"
               >
                 {t("singlePropertyPage.submitRentRequest")}
@@ -280,7 +330,6 @@ const SingleProperty = () => {
           </div>
         </div>
 
-        {/*  */}
         <hr className="border-color-border border-2" />
         <div className="description flex flex-col gap-2">
           <h2 className="text-2xl font-medium text-color-text-1">
@@ -289,11 +338,10 @@ const SingleProperty = () => {
           <p className="text-color-text-1">{property.description}</p>
         </div>
         <hr className="border-color-border border-2" />
-{/*  */}
-        
-    <UserDataSingleProduct userId={property?.userId || null} />
-{/*  */}
-<hr className="border-color-border border-2" />
+
+        <UserDataSingleProduct userId={property?.userId || null} />
+        <hr className="border-color-border border-2" />
+
         <div className="property-details flex flex-col gap-2">
           <h2 className="text-2xl font-medium text-color-text-1">
             {t("singlePropertyPage.propertyDetails")}

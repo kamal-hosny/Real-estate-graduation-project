@@ -349,6 +349,7 @@
     "submitPurchaseRequest": "Submit Purchase Request",
     "sold": "Sold",
     "rented": "Rented",
+    "unauthenticatedError": "You must be logged in to perform this action",
 
     "purchaseSuccess": "Purchase request submitted successfully!",
     "purchaseError": "Failed to submit purchase request. Please try again.",

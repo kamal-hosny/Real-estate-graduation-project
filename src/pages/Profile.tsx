@@ -38,8 +38,14 @@ const Profile = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { user, token } = useAppSelector((state) => state.auth);
-  const { record, error, loading } = useAppSelector((state) => state.user);
+
+  const { error, loading } = useAppSelector((state) => state.user);
   const userId = user?.id;
+
+  const record = useAppSelector((state) =>
+  userId && state.user.usersById[userId] ? state.user.usersById[userId] : null
+)
+console.log(userId );
 
   const {
     register,
@@ -64,10 +70,10 @@ const Profile = () => {
   }, [record, reset]);
 
   useEffect(() => {
-    if (userId) {
+    if ( userId && !record ) {
       dispatch(getOneUser({ id: userId }));
     }
-  }, [userId, dispatch]);
+  }, [userId, dispatch, record]);
 
   useEffect(() => {
     return () => {

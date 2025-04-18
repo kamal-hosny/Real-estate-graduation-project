@@ -353,7 +353,7 @@
       "submitPurchaseRequest": "تقديم طلب شراء",
       "sold": "تم البيع",
       "rented": "تم التأجير",
-
+      "unauthenticatedError": "يجب تسجيل الدخول لإتمام هذا الإجراء",
 
       "purchaseSuccess": "تم إرسال طلب الشراء بنجاح!",
       "purchaseError": "فشل إرسال طلب الشراء، يرجى المحاولة مرة أخرى",
