@@ -10,6 +10,9 @@ import EditOrderSales from "../components/Dashboard/modalDialog/EditOrderSales";
 import ShowUserDetails from "../components/Dashboard/modalDialog/ShowUserDetails";
 import EditOrder from "../components/Dashboard/modalDialog/EditOrder";
 import DeleteUser from "../components/Dashboard/modalDialog/DeleteUser";
+import ShowPropertyDetails from "../components/Dashboard/modalDialog/ShowPropertyDetails";
+import SettingsForProperty from "../components/Dashboard/modalDialog/SettingsForProperty";
+import AssistantBotDialog from "../components/common/HomeModalDialog/AssistantBotDialog";
 
 type ComponentsLookup = {
     [key: string]: ComponentType<any>;
@@ -25,7 +28,10 @@ const ModalManager = () => {
     EditOrderSales,
     ShowUserDetails,
     EditOrder,
-    DeleteUser
+    DeleteUser,
+    ShowPropertyDetails,
+    SettingsForProperty,
+    AssistantBotDialog
   };
   let renderComponent: JSX.Element | null = null;;
   
@@ -35,7 +41,6 @@ const ModalManager = () => {
       renderComponent = <SelectedComponent />;
     }
   }
-
   return (
     <Modal isOpen={isOpen} closeModalHandler={closeModalHandler}>
       {renderComponent}

@@ -529,6 +529,20 @@
     "meter": "m²",
     "search": "Search by property name and city",
     "Unfurnished": "Unfurnished",
-    "Furnished": "Furnished"
+    "Furnished": "Furnished",
+    "addedToWishlist": "The property has been successfully added to the favorites",
+    "removedFromWishlist": "The property has been successfully removed from the favorites"
+    
+  },
+  "SettingsForProperty": {
+    "advanced_settings_title": "Advanced Property Settings",
+      "advanced_settings_description": "You can manage sensitive settings and important actions for the property",
+      "delete_property_title": "Permanently Delete Property",
+      "delete_property_description": "All data and images associated with the property will be permanently deleted",
+      "delete_property_warning": "This data cannot be recovered later",
+      "confirm_delete_button": "Confirm Permanent Deletion",
+      "auto_save_note": "Changes are automatically saved upon executing any action",
+      "delete_success_message": "Property deleted successfully",
+      "delete_error_message": "Failed to delete property, please try again"
   }
 }

@@ -6,6 +6,7 @@ import i18n from "../../language";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../store/hooks";
+import ModalManager from "../../utils/ModalManger";
 
 const MainLayout = () => {
   const { user } = useAppSelector((state ) => state.auth);
@@ -34,6 +35,7 @@ const MainLayout = () => {
 
   return (
     <>
+        <ModalManager />
     {isAdmin && (
       <Link
         to="dashboard"

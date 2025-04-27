@@ -16,7 +16,7 @@ const Images = ({ images }: { images: string[] }) => {
               }`}
             >
               <Img
-                className="h-10 w-10 object-cover rounded-full"
+                className="h-10 w-10 object-cover rounded-full bg-white"
                 src={fiveImage}
                 alt={`image-${index}`}
               />

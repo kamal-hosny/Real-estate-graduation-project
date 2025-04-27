@@ -10,6 +10,7 @@ import toastsReducer from "./toasts/toastsSlice";
 import modal from "./modal/modalSlice"
 import usersSlice from "./user/usersSlice";
 import propertySlice from "./property/propertySlice";
+import deepSeekSlice from "./AIModleDeepSeek/deepSeekSlice";
 const authPersistConfig = {
   key: "auth",
   storage,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   toasts: toastsReducer,
   property: propertySlice,
   modal,
+  deepSeek: deepSeekSlice,
   user: usersSlice
 });
 

@@ -1,4 +1,5 @@
-import { Property } from '../../types/product.types';
+
+import { RealProperty } from '../../types';
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from './wishlistActions';
 
 const initialState = {
@@ -15,7 +16,7 @@ const wishlistReducer = (state = initialState, action: any) => {
     case REMOVE_FROM_WISHLIST:
       return {
         ...state,
-        items: state.items.filter((item: Property) => item.id !== action.payload.id),
+        items: state.items.filter((item: RealProperty) => item.propertyId !== action.payload.propertyId),
       };
     default:
       return state;

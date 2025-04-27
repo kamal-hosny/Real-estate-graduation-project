@@ -116,7 +116,7 @@ const Login = () => {
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isSubmitting ? t("login.logging_in") :       t("login.login_button")}
+              {isSubmitting ? t("login.logging_in") : t("login.login_button")}
             </Button>
           </div>
 

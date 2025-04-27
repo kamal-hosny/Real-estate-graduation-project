@@ -140,43 +140,65 @@ body::-webkit-scrollbar-thumb {
 
 
 
- /* Custom fraction pagination styles */
- .custom-pagination .swiper-pagination-fraction {
-    background: var(--main-color-background-css); /* تقليل الشفافية إلى 80% */
+/* Custom fraction pagination styles */
+.custom-pagination .swiper-pagination-fraction {
+  background: var(--main-color-background-css);
+  color: var(--color-text-1-css);
+  padding: 4px 16px; 
+  border-radius: 20px;
+  font-size: 1.1rem; 
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 8px; 
+  backdrop-filter: blur(2px);
+}
 
-    color: var(--color-text-1-css);
-    padding: 3px 14px;
-    border-radius: 20px;
-    font-size: 0; 
-    width: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    backdrop-filter: blur(2px);
-  }
 
-  .custom-pagination .swiper-pagination-current,
-  .custom-pagination .swiper-pagination-total {
-    font-size: 1.1rem;
+.custom-pagination .swiper-pagination-current,
+.custom-pagination .swiper-pagination-total {
+  font-size: 1.1rem;
+  color: var(--color-text-1-css);
+  font-family: 'Tajawal', sans-serif;
+}
 
-    color: var(--color-text-1-css);
-    font-family: 'Tajawal', sans-serif; /* Arabic font */
+
+.custom-pagination .swiper-pagination-current::after {
+  display: none; 
+}
+
+
+html[dir="rtl"] .custom-pagination .swiper-pagination-fraction {
+  flex-direction: row-reverse;
+  gap: 8px; 
+}
+
+
+
+
+
+/*  */
+
+  @keyframes color-change {
+    0% { color: rgba(var(--button-color), 1); }
+    25% { color: rgba(59, 130, 246, 1); }
+    50% { color: rgba(96, 165, 250, 1); }
+    75% { color: rgba(99, 102, 241, 1); }
+    100% { color: rgba(var(--button-color), 1); }
   }
   
-  
-
-  .custom-pagination .swiper-pagination-current::after {
-    content: "/";
-    font-size: 0.8rem;
-    margin: 0 4px;
-    color: var(--color-text-1-css);
-    font-weight: 400;
+  @keyframes glow {
+    0% { filter: drop-shadow(0 0 2px rgba(var(--button-color), 0.4)); }
+    50% { filter: drop-shadow(0 0 8px rgba(var(--button-color), 0.6)); }
+    100% { filter: drop-shadow(0 0 2px rgba(var(--button-color), 0.4)); }
   }
-
-  /* RTL adjustments */
-  html[dir="rtl"] .custom-pagination .swiper-pagination-fraction {
-    flex-direction: row-reverse;
+  
+  @keyframes pulse-glow {
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.9; }
   }

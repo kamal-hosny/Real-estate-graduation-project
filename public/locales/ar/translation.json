@@ -534,6 +534,19 @@
        "meter": "م² ",
        "search": "البحث حسب اسم العقار والمدينة",
        "Unfurnished": "غير مفروشة",
-       "Furnished": "مفروشة"
+       "Furnished": "مفروشة",
+       "addedToWishlist": "تمت إضافة العقار إلى قائمة المفضلات بنجاح",
+       "removedFromWishlist": "تمت إزالة العقار من قائمة المفضلات بنجاح"
+    },
+    "SettingsForProperty": {
+      "advanced_settings_title": "الإعدادات المتقدمة للعقار",
+      "advanced_settings_description": "يمكنك إدارة الإعدادات الحساسة والإجراءات المهمة للعقار",
+      "delete_property_title": "حذف العقار نهائياً",
+      "delete_property_description": "سيتم حذف جميع البيانات والصور المرتبطة بالعقار بشكل دائم",
+      "delete_property_warning": "لا يمكن استرجاع هذه البيانات لاحقاً",
+      "confirm_delete_button": "تأكيد الحذف الدائم",
+      "auto_save_note": "يتم حفظ التغييرات تلقائياً عند تنفيذ أي إجراء",
+      "delete_success_message": "تم حذف العقار بنجاح",
+      "delete_error_message": "فشل حذف العقار، يرجى المحاولة مرة أخرى"
     }
   }

@@ -297,10 +297,8 @@ const Products = () => {
           <Breadcrumb items={breadcrumbItems} itemNow={"Properties"} />
         </div>
       </div>
-
       <div className="container mx-auto px-4">
         {filterValues.companyId && <UserCompany userId={filterValues.companyId} />}
-
         <div className="relative z-10 mat flex justify-between gap-2 mt-6">
           {/* Products section */}
           <div className="products w-full bg-main-color-background border-2 border-color-border flex flex-col gap-4 p-2">
@@ -355,7 +353,6 @@ const Products = () => {
                 )}
               </div>
             </div>
-
             {/* Pagination Controls */}
             {totalPages > 1 && (
               <div className="pagination flex justify-center items-center gap-2 mt-4 flex-wrap">

@@ -131,7 +131,17 @@ const SalesTableBody = ({ item, index }: dataP) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex justify-center items-center gap-3">
-          <button className="text-gray-400 hover:text-green-600 transition-colors">
+          <button className="text-gray-400 hover:text-green-600 transition-colors"
+          onClick={() => {
+            dispatch(
+              openModal({
+                name: "ShowPropertyDetails",
+                product: item,
+              })
+            )
+          }}
+
+          >
             <Eye size={20} className="stroke-current" />
           </button>
           <button

@@ -42,6 +42,9 @@ const ProductCard = ({ productData }: { productData: RealProperty }) => {
   const toggleHeart = () => {
     if (isHeartFilled) {
       dispatch(removeFromWishlist(productData));
+      dispatch(
+        addToast({ message: t("ProductCard.removedFromWishlist"), type: "success" })
+      );
     } else {
       dispatch(addToWishlist(productData));
       dispatch(

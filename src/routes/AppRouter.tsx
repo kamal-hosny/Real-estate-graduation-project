@@ -13,6 +13,7 @@ import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk
 import { SmoothScroll } from "react-smooth-scrolll";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Users from "../pages/Dashboard/Users";
+
 // pages
 const Home = lazy(() => import("../pages/Home"));
 const Products = lazy(() => import("../pages/Products"));
@@ -212,9 +213,9 @@ const AppRouter = () => {
   ]);
 
   return (
-    <SmoothScroll>
+    // <SmoothScroll>
     <RouterProvider router={router} />
-    </SmoothScroll>
+    // </SmoothScroll>
   );
 };
 

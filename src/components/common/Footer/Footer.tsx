@@ -25,7 +25,6 @@ const Footer = () => {
             {t("footer.description")}
           </p>
         </div>
-
         {/* Dynamic Links */}
         {links.map((section) => (
           <div key={section.key} className="flex flex-col gap-2">

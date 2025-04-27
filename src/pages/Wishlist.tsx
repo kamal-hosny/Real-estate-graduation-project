@@ -12,6 +12,9 @@ const Wishlist = () => {
   const { t } = useTranslation(); 
   const wishlist = useAppSelector((state) => state.wishlist?.items);
 
+  console.log(wishlist);
+  
+
   return (
     <div className="bg-main-color-background">
       <div className="container mx-auto px-2 py-6 space-y-5">

@@ -18,8 +18,7 @@ const LastUsers = () => {
  
   const lastFiveUsers: any[] = records 
     ? records
-        .slice(-5) 
-        .reverse() 
+        .slice(-5)
     : [];
 
 
