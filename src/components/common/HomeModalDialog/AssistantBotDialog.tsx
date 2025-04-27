@@ -370,10 +370,10 @@ const AssistantBotDialog = () => {
                <button
                   type="submit"
                   disabled={isLoading || loading === 'pending' || isChatCompleted || !inputMessage.trim()}
-                  className="flex justify-center items-center w-14 h-12 bg-[rgb(var(--button-color))] text-white rounded-xl hover:bg-[rgb(var(--button-color),0.9)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="flex justify-center items-center w-14 h-12 bg-[#828282] text-white rounded-xl hover:bg-[#767676] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
                   aria-label="إرسال الرسالة"
                 >
-                  <Send className="w-5 h-5" />
+                  <Send className="w-5 h-5 text-white" />
                 </button>
                <button
                   

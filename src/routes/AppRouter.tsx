@@ -1,21 +1,21 @@
+// External libraries
 import { Suspense, lazy, useEffect } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-// layouts
 import { useDispatch } from "react-redux";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import i18n from "../language";
+
+// Internal components
 import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
 import PageSuspenseFallback from "../components/common/feedback/PageSuspenseFallback/PageSuspenseFallback";
 import { MainLayout } from "../layouts";
-import About from "../pages/About";
-import Error from "../pages/Error";
-import { AppDispatch } from "../store";
-import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk";
-
-import { SmoothScroll } from "react-smooth-scrolll";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
-import Users from "../pages/Dashboard/Users";
-import i18n from "../language";
 
-// pages
+// Pages
+import About from "../pages/About";
+import Users from "../pages/Dashboard/Users";
+import Error from "../pages/Error";
+
+// Lazy-loaded pages
 const Home = lazy(() => import("../pages/Home"));
 const Products = lazy(() => import("../pages/Products"));
 const SingleProduct = lazy(() => import("../pages/SingleProduct"));
@@ -28,14 +28,20 @@ const ContactUs = lazy(() => import("../pages/ContactUs"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("../pages/TermsOfService"));
 
+// Lazy-loaded dashboard pages
 const HomeD = lazy(() => import("../pages/Dashboard/HomeD"));
 const PurchaseRequests = lazy(() => import("../pages/Dashboard/PurchaseRequests"));
 const SalesRequests = lazy(() => import("../pages/Dashboard/SalesRequests"));
 const RentalRequests = lazy(() => import("../pages/Dashboard/RentalRequests"));
 
+// Store
+import { AppDispatch } from "../store";
+import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk";
+
 const AppRouter = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  // Handle window resize for mobile detection
   useEffect(() => {
     const handleResize = () => {
       dispatch(checkMobileWidth());
@@ -49,7 +55,7 @@ const AppRouter = () => {
     };
   }, [dispatch]);
 
-
+  // Handle language changes
   useEffect(() => {
     const savedLang = localStorage.getItem("language") || "ar";
     i18n.changeLanguage(savedLang);
@@ -68,7 +74,6 @@ const AppRouter = () => {
     };
   }, []);
 
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -76,7 +81,10 @@ const AppRouter = () => {
         <Suspense
           fallback={
             <div className="relative login bg-section-color w-screen h-[calc(100vh-65px)] flex justify-center items-center">
-              <LottieHandler type="loading" message="Loading please wait..." />
+              <LottieHandler 
+                type="loading" 
+                message="Loading please wait..." 
+              />
             </div>
           }
         >
@@ -107,7 +115,7 @@ const AppRouter = () => {
             <PageSuspenseFallback>
               <Profile />
             </PageSuspenseFallback>
-          )
+          ),
         },
         {
           path: "advertise-property",
@@ -115,7 +123,7 @@ const AppRouter = () => {
             <PageSuspenseFallback>
               <AdvertiseProperty />
             </PageSuspenseFallback>
-          )
+          ),
         },
         {
           path: "singleProperty/:id",
@@ -180,64 +188,72 @@ const AppRouter = () => {
               <Register />
             </PageSuspenseFallback>
           ),
-        }
+        },
       ],
     },
     {
       path: "/dashboard",
       element: (
-        <Suspense fallback={<div className="relative login bg-section-color w-screen h-[calc(100vh-65px)] flex justify-center items-center">
-        <LottieHandler type="loading" message="Loading Dashboard..." />
-      </div>}>
-        <DashboardLayout />
+        <Suspense 
+          fallback={
+            <div className="relative login bg-section-color w-screen h-[calc(100vh-65px)] flex justify-center items-center">
+              <LottieHandler 
+                type="loading" 
+                message="Loading Dashboard..." 
+              />
+            </div>
+          }
+        >
+          <DashboardLayout />
         </Suspense>
       ),
       errorElement: <Error />,
-      children: [{
-        index: true,
-        element: (
-          <PageSuspenseFallback>
-          <HomeD />
-        </PageSuspenseFallback>
-        )
-      },{
-        path: "purchase-requests" ,
-        element: (
-          <PageSuspenseFallback>
-          <PurchaseRequests />
-        </PageSuspenseFallback>
-        )
-      }, {
-        path: "sales-requests",
-        element: (
-          <PageSuspenseFallback>
-            <SalesRequests />
-          </PageSuspenseFallback>
-        )
-      }, {
-        path: "rental-requests",
-        element: (
-          <PageSuspenseFallback>
-            <RentalRequests />
-          </PageSuspenseFallback> 
-        )
-      }, {
-        path: "users",
-        element: (
-          <PageSuspenseFallback>
-            <Users />
-          </PageSuspenseFallback> 
-        )
-      }
-    ]
-    }
+      children: [
+        {
+          index: true,
+          element: (
+            <PageSuspenseFallback>
+              <HomeD />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "purchase-requests",
+          element: (
+            <PageSuspenseFallback>
+              <PurchaseRequests />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "sales-requests",
+          element: (
+            <PageSuspenseFallback>
+              <SalesRequests />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "rental-requests",
+          element: (
+            <PageSuspenseFallback>
+              <RentalRequests />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "users",
+          element: (
+            <PageSuspenseFallback>
+              <Users />
+            </PageSuspenseFallback>
+          ),
+        },
+      ],
+    },
   ]);
 
-  return (
-    // <SmoothScroll>
-    <RouterProvider router={router} />
-    // </SmoothScroll>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default AppRouter;

@@ -15,7 +15,6 @@ export const sendMessageToDeepSeek = createAsyncThunk(
             console.error("OpenRouter API key is missing.");
             return rejectWithValue("Missing OpenRouter API key.");
         }
-
         try {
             const res = await axiosConfig.post(
                 `https://openrouter.ai/api/v1/chat/completions`,
