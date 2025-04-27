@@ -19,8 +19,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { ReactNode, useCallback } from "react";
 import { closeModal } from "../../../store/modal/modalSlice";
+import { useTranslation } from "react-i18next";
+
+type PropertyType =
+  | "Townhouse"
+  | "Villa"
+  | "Private House"
+  | "Apartment"
+  | "Office"
+  | "Shop";
 
 const ShowPropertyDetails = () => {
+  const { t } = useTranslation(""); // Use default namespace
   const dispatch = useAppDispatch();
   const { property } = useAppSelector((state) => state?.modal?.product);
 
@@ -30,9 +40,41 @@ const ShowPropertyDetails = () => {
 
   if (!property) return null;
 
+  // Map propertyType to translation key
+  const propertyTypeKey = property.propertyType
+    .toLowerCase()
+    .replace(/\s+/g, "_") as
+    | "townhouse"
+    | "villa"
+    | "private_house"
+    | "apartment"
+    | "office"
+    | "shop";
+
+  // Helper function to get translated propertyType with fallback
+  const getPropertyTypeTranslation = (
+    key: string,
+    fallback: string
+  ): string => {
+    const translation = t(`ShowPropertyDetails.propertyType.${key}`);
+    // If translation is the key itself (i.e., missing), use fallback
+    return translation.startsWith("ShowPropertyDetails.propertyType.")
+      ? fallback
+      : translation;
+  };
+
+  const propertyStatusKey = property.status.toLowerCase().replace(/\s+/g, "_");
+  const furnishedKey = property.furnished ? "true" : "false";
+
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={cancel}>
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden border border-blue-50" onClick={(e: any) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+      onClick={cancel}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden border border-blue-50"
+        onClick={(e: any) => e.stopPropagation()}
+      >
         {/* Header Section */}
         <div className="flex justify-between items-center px-8 py-6 bg-blue-25 border-b border-blue-100">
           <h2 className="text-3xl font-bold text-blue-900 flex items-center gap-3 tracking-tight">
@@ -50,7 +92,7 @@ const ShowPropertyDetails = () => {
         <div className="flex-1 overflow-y-auto custom-scrollbar">
           {/* Image Gallery */}
           {property?.propertyImages?.length > 0 && (
-            <div className="px-8 pt-6 pb-4">
+            <div className="px-8 pt-6 pb-4 relative">
               <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
@@ -68,27 +110,30 @@ const ShowPropertyDetails = () => {
                     <div className="h-96 relative">
                       <img
                         src={img}
-                        alt={`Property ${index + 1}`}
+                        alt={`${t("ShowPropertyDetails.imageAlt")} ${index + 1}`}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-
-                      <span className="absolute top-4 right-4 bg-blue-600 text-white py-1 px-3 text-sm rounded-full shadow-sm">
-                        {property.propertyType}
+             
+                    </div>
+                  </SwiperSlide>
+                ))}
+                         <span className="absolute z-10 top-4 right-4 bg-blue-600 text-white py-1 px-3 text-sm rounded-full shadow-sm">
+                        {getPropertyTypeTranslation(
+                          propertyTypeKey,
+                          property.propertyType
+                        )}
                       </span>
                       <span
-                        className={`absolute top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                        className={`absolute z-10 top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                           property.status === "For Sale"
                             ? "bg-green-100 text-green-800"
                             : "bg-amber-100 text-amber-800"
                         }`}
                       >
-                        {property.status}
+                        {t(`ShowPropertyDetails.status.${propertyStatusKey}`)}
                       </span>
-                    </div>
-                  </SwiperSlide>
-                ))}
               </Swiper>
             </div>
           )}
@@ -96,60 +141,78 @@ const ShowPropertyDetails = () => {
           {/* Details Sections */}
           <div className="px-8 py-6 space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Property Details Column */}
               <div className="space-y-4">
-                <SectionHeading title="Property Details" />
+                <SectionHeading
+                  title={t("ShowPropertyDetails.section.propertyDetails")}
+                />
                 <DetailItem
                   icon={<FaMoneyBillAlt />}
-                  title="Price"
+                  title={t("ShowPropertyDetails.detail.price")}
                   value={`$${property?.price?.toLocaleString()}`}
                   accent="text-green-600"
                 />
                 <DetailItem
                   icon={<FaHome />}
-                  title="Type"
-                  value={property?.propertyType}
+                  title={t("ShowPropertyDetails.detail.type")}
+                  value={getPropertyTypeTranslation(
+                    propertyTypeKey,
+                    property.propertyType
+                  )}
                 />
                 <DetailItem
                   icon={<FaRulerCombined />}
-                  title="Area"
-                  value={`${property?.area?.toLocaleString()} sqm`}
+                  title={t("ShowPropertyDetails.detail.area")}
+                  value={`${property?.area?.toLocaleString()} ${t(
+                    "ShowPropertyDetails.unit.sqm"
+                  )}`}
                 />
               </div>
 
               {/* Features Column */}
               <div className="space-y-4">
-                <SectionHeading title="Features" />
+                <SectionHeading
+                  title={t("ShowPropertyDetails.section.features")}
+                />
                 <div className="grid grid-cols-2 gap-4">
                   <DetailItem
                     icon={<FaBed />}
-                    title="Bedrooms"
+                    title={t("ShowPropertyDetails.detail.bedrooms")}
                     value={property?.bedrooms}
                     compact
                   />
                   <DetailItem
                     icon={<FaBath />}
-                    title="Bathrooms"
+                    title={t("ShowPropertyDetails.detail.bathrooms")}
                     value={property?.bathrooms}
                     compact
                   />
                   <DetailItem
                     icon={<FaDoorOpen />}
-                    title="Total Rooms"
+                    title={t("ShowPropertyDetails.detail.totalRooms")}
                     value={property?.totalRooms}
                     compact
                   />
                   <DetailItem
                     icon={<FaBuilding />}
-                    title="Floor"
+                    title={t("ShowPropertyDetails.detail.floor")}
                     value={property?.floorNumber}
                     compact
                   />
                 </div>
-                <div className={`p-4 rounded-lg ${property?.furnished ? 'bg-green-25 border border-green-100' : 'bg-amber-25 border border-amber-100'}`}>
+                <div
+                  className={`p-4 rounded-lg ${
+                    property?.furnished
+                      ? "bg-green-25 border border-green-100"
+                      : "bg-amber-25 border border-amber-100"
+                  }`}
+                >
                   <FaBuilding className="inline mr-2 text-lg text-green-600" />
-                  <span className={`font-medium ${property?.furnished ? 'text-green-700' : 'text-amber-700'}`}>
-                    {property?.furnished ? "Fully Furnished" : "Unfurnished"}
+                  <span
+                    className={`font-medium ${
+                      property?.furnished ? "text-green-700" : "text-amber-700"
+                    }`}
+                  >
+                    {t(`ShowPropertyDetails.furnished.${furnishedKey}`)}
                   </span>
                 </div>
               </div>
@@ -157,17 +220,19 @@ const ShowPropertyDetails = () => {
 
             {/* Location Section */}
             <div className="space-y-4">
-              <SectionHeading title="Location" />
+              <SectionHeading
+                title={t("ShowPropertyDetails.section.location")}
+              />
               <div className="grid grid-cols-2 gap-4">
                 <DetailItem
                   icon={<FaMapMarkerAlt />}
-                  title="Address"
+                  title={t("ShowPropertyDetails.detail.address")}
                   value={property?.address}
                   fullWidth
                 />
-                <DetailItem 
+                <DetailItem
                   icon={<FaCity />}
-                  title="City"
+                  title={t("ShowPropertyDetails.detail.city")}
                   value={property?.city}
                   fullWidth
                 />
@@ -176,7 +241,9 @@ const ShowPropertyDetails = () => {
 
             {/* Description Section */}
             <div className="space-y-4">
-              <SectionHeading title="Description" />
+              <SectionHeading
+                title={t("ShowPropertyDetails.section.description")}
+              />
               <p className="text-gray-700 leading-relaxed text-justify whitespace-pre-line bg-blue-25 rounded-lg p-5 border border-blue-50">
                 {property?.description}
               </p>
@@ -194,7 +261,7 @@ const ShowPropertyDetails = () => {
               className="flex-1 flex items-center justify-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all font-medium shadow-sm hover:shadow-blue-200"
             >
               <FaMapMarkedAlt className="text-xl" />
-              View on Map
+              {t("ShowPropertyDetails.button.viewOnMap")}
             </a>
           )}
           <button
@@ -202,7 +269,7 @@ const ShowPropertyDetails = () => {
             className="flex-1 flex items-center justify-center gap-3 px-6 py-3 text-blue-700 bg-white rounded-lg border border-blue-100 hover:border-blue-200 hover:bg-blue-50 transition-all font-medium shadow-sm hover:shadow-blue-100"
           >
             <FaTimes className="text-xl" />
-            Close Details
+            {t("ShowPropertyDetails.button.closeDetails")}
           </button>
         </div>
       </div>
@@ -219,14 +286,14 @@ const SectionHeading = ({ title }: { title: string }) => (
 );
 
 // Detail Item Component
-const DetailItem = ({ 
-  icon, 
-  title, 
-  value, 
-  accent, 
+const DetailItem = ({
+  icon,
+  title,
+  value,
+  accent,
   compact,
-  fullWidth 
-}: { 
+  fullWidth,
+}: {
   icon: ReactNode;
   title: string;
   value: string | number;
@@ -234,15 +301,31 @@ const DetailItem = ({
   compact?: boolean;
   fullWidth?: boolean;
 }) => (
-  <div className={`${fullWidth ? 'w-full' : 'w-auto'} ${compact ? 'p-2.5' : 'p-3.5'} flex items-center gap-4 bg-white rounded-lg border border-blue-50 hover:border-blue-100 transition-colors`}>
-    <span className={`text-blue-600 ${compact ? 'text-lg p-2' : 'text-xl p-2.5'} bg-blue-25 rounded-lg`}>
+  <div
+    className={`${fullWidth ? "w-full" : "w-auto"} ${
+      compact ? "p-2.5" : "p-3.5"
+    } flex items-center gap-4 bg-white rounded-lg border border-blue-50 hover:border-blue-100 transition-colors`}
+  >
+    <span
+      className={`text-blue-600 ${
+        compact ? "text-lg p-2" : "text-xl p-2.5"
+      } bg-blue-25 rounded-lg`}
+    >
       {icon}
     </span>
     <div className="flex-1">
-      <span className={`${compact ? 'text-sm' : 'text-base'} font-medium text-blue-500/90`}>
+      <span
+        className={`${
+          compact ? "text-sm" : "text-base"
+        } font-medium text-blue-500/90`}
+      >
         {title}
       </span>
-      <span className={`block ${compact ? 'text-lg' : 'text-xl'} ${accent || 'text-blue-900'} font-semibold mt-0.5`}>
+      <span
+        className={`block ${
+          compact ? "text-lg" : "text-xl"
+        } ${accent || "text-blue-900"} font-semibold mt-0.5`}
+      >
         {value}
       </span>
     </div>

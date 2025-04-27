@@ -3,17 +3,19 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { closeModal } from "../../../store/modal/modalSlice";
 import { supabase } from "../../../config/supabaseClient";
 import { addToast } from "../../../store/toasts/toastsSlice";
+import { useTranslation } from "react-i18next";
 
 type TTypeOrder = "PurchaseOrders" | "RentOrders" | "SalesOrders";
 
 const DeleteOrder = () => {
+  const { t } = useTranslation(""); // Use default namespace
   const dispatch = useAppDispatch();
   const { id, property } = useAppSelector((state) => state?.modal?.product);
 
-  const TypeOrder: TTypeOrder | null = property?.status === "For Sale" 
-    ? "PurchaseOrders" 
-    : property?.status === "For Rent" 
-    ? "RentOrders" 
+  const TypeOrder: TTypeOrder | null = property?.status === "For Sale"
+    ? "PurchaseOrders"
+    : property?.status === "For Rent"
+    ? "RentOrders"
     : null;
 
   const confirmLog = useCallback(async () => {
@@ -31,22 +33,21 @@ const DeleteOrder = () => {
         throw error;
       }
 
-      dispatch(addToast({ message: "تم حذف الطلب", type: "success" }));
+      dispatch(addToast({ message: t("deleteOrder.successMessage"), type: "success" }));
     } catch (err) {
       dispatch(
-        addToast({ message: "حدثت مشكلة، من فضلك راجع البيانات", type: "error" })
+        addToast({ message: t("deleteOrder.errorMessage"), type: "error" })
       );
       console.error(err);
     } finally {
       dispatch(closeModal());
     }
-  }, [dispatch, id, TypeOrder]);
+  }, [dispatch, id, TypeOrder, t]);
 
   const cancel = useCallback(() => {
     dispatch(closeModal());
   }, [dispatch]);
 
-  
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleConfirm = async () => {
@@ -76,11 +77,8 @@ const DeleteOrder = () => {
       </div>
 
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">حذف الطلب</h3>
-        <p className="text-gray-500">
-          هل أنت متأكد من رغبتك في حذف هذا الطلب؟ لا يمكن التراجع عن هذا
-          الإجراء.
-        </p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("deleteOrder.title")}</h3>
+        <p className="text-gray-500">{t("deleteOrder.confirmMessage")}</p>
       </div>
 
       <div className="flex justify-end gap-3">
@@ -89,14 +87,14 @@ const DeleteOrder = () => {
           disabled={isDeleting}
           className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          إلغاء
+          {t("deleteOrder.cancelButton")}
         </button>
         <button
           onClick={handleConfirm}
           disabled={isDeleting}
           className="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isDeleting ? "جاري الحذف..." : "نعم، احذف الطلب"}
+          {isDeleting ? t("deleteOrder.deleting") : t("deleteOrder.confirmButton")}
         </button>
       </div>
     </div>

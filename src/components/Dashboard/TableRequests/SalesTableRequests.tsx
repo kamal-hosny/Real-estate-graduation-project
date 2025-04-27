@@ -1,7 +1,7 @@
 import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
 import PurchaseTableBody from "./SalesTableBody";
+import { useTranslation } from "react-i18next";
 
-// تعريف نوع البيانات للـ property
 interface DataP {
   id: number;
   TypeOrder: string;
@@ -29,10 +29,11 @@ interface DataP {
 }
 
 interface SalesTableRequestsProps {
-  properties: DataP[] | { $values: DataP[] }; 
+  properties: DataP[] | { $values: DataP[] };
 }
 
 const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
+  const { t } = useTranslation(""); // Use default namespace
   const propertiesArray = Array.isArray(properties)
     ? properties
     : properties?.$values || [];
@@ -43,46 +44,50 @@ const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              #
+              {t("salesTableRequests.headers.id")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              العقار
+              {t("salesTableRequests.headers.property")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              النوع
+              {t("salesTableRequests.headers.type")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              السعر
+              {t("salesTableRequests.headers.price")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              المستخدم
+              {t("salesTableRequests.headers.user")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              صور
+              {t("salesTableRequests.headers.images")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              نوع الطلب
+              {t("salesTableRequests.headers.orderType")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              حالة الطلب
+              {t("salesTableRequests.headers.orderStatus")}
             </th>
             <th className="px-6 py-4 text-sm font-semibold text-gray-500 text-center">
-              الإجراءات
+              {t("salesTableRequests.headers.actions")}
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
           {propertiesArray.map((item: DataP, index: number) => (
-            <PurchaseTableBody key={item.id} item={item} index={index}  />
+            <PurchaseTableBody key={item.id} item={item} index={index} />
           ))}
         </tbody>
       </table>
 
       {propertiesArray.length === 0 && (
         <div className="text-center py-12">
-            <LottieHandler className="scale-75" type="empty" message={
-            (<p className="text-gray-500">لا توجد طلبات البيع حاليا</p>)
-          } />
+          <LottieHandler
+            className="scale-75"
+            type="empty"
+            message={
+              <p className="text-gray-500">{t("salesTableRequests.emptyMessage")}</p>
+            }
+          />
         </div>
       )}
     </div>

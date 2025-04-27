@@ -5,6 +5,7 @@ import { getOneUser } from "../../../store/user/act/actGetOneUser";
 import { formatCurrency, textSlicer } from "../../../utils";
 import { useEffect } from "react";
 import Images from "../../ui/Images";
+import { useTranslation } from "react-i18next";
 
 interface dataP {
   item: {
@@ -36,9 +37,10 @@ interface dataP {
 }
 
 const SalesTableBody = ({ item, index }: dataP) => {
+  const { t } = useTranslation(""); // Use default namespace
   const dispatch = useAppDispatch();
-  const usersById = useAppSelector((state) => state.user.usersById); 
-  const user = usersById[item.property.userId]; 
+  const usersById = useAppSelector((state) => state.user.usersById);
+  const user = usersById[item.property.userId];
 
   useEffect(() => {
     if (item.property.userId && !usersById[item.property.userId]) {
@@ -48,6 +50,15 @@ const SalesTableBody = ({ item, index }: dataP) => {
 
   const property = item.property;
 
+  // Fallback for dynamic translations
+  const getStatusTranslation = (status: string) => {
+    return t(`salesTableBody.status.${status}`, t("salesTableBody.status.Other"));
+  };
+
+  const getOrderTypeTranslation = (orderType: string) => {
+    return t(`salesTableBody.orderType.${orderType}`, t("salesTableBody.orderType.Other"));
+  };
+
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">
       <td className="px-6 py-4 text-sm font-medium text-gray-700">
@@ -55,10 +66,10 @@ const SalesTableBody = ({ item, index }: dataP) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-gray-900 text-start">
+          <span className="font-medium text-gray-900 text-left">
             {textSlicer(property.propertyTitle, 30)}
           </span>
-          <span className="text-xs text-gray-500 text-start">
+          <span className="text-xs text-gray-500 text-left">
             {textSlicer(property.address, 50)}
           </span>
         </div>
@@ -76,22 +87,20 @@ const SalesTableBody = ({ item, index }: dataP) => {
               <img
                 src={user.image}
                 className="w-10 h-10 rounded-full object-cover"
-                alt={user.fullName}
+                alt={user.fullName || t("salesTableBody.unknownUser")}
               />
             ) : (
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                <span className="text-xs text-blue-600">
-                  <UserRound />
-                </span>
+                <UserRound className="w-6 h-6 text-blue-600" />
               </div>
             )}
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">
-              {user?.fullName || "غير معروف"}
+              {user?.fullName || t("salesTableBody.unknownUser")}
             </span>
             <span className="text-xs text-gray-500">
-              {user?.phoneNumber || "غير متوفر"}
+              {user?.phoneNumber || t("salesTableBody.noPhone")}
             </span>
           </div>
         </div>
@@ -100,7 +109,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
         {item?.property?.propertyImages ? (
           <Images images={item?.property?.propertyImages} />
         ) : (
-          <span>لا يوجد صور</span>
+          <span>{t("salesTableBody.noImages")}</span>
         )}
       </td>
       <td className="px-6 py-4 text-sm text-gray-600">
@@ -111,7 +120,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
               : "bg-[#ffedd5] text-[#ea580c]"
           }`}
         >
-          {property.status}
+          {getStatusTranslation(property.status)}
         </span>
       </td>
       <td className="px-6 py-4">
@@ -126,21 +135,21 @@ const SalesTableBody = ({ item, index }: dataP) => {
               : "bg-gray-100 text-gray-800"
           }`}
         >
-          {item.TypeOrder}
+          {getOrderTypeTranslation(item.TypeOrder)}
         </span>
       </td>
       <td className="px-6 py-4">
         <div className="flex justify-center items-center gap-3">
-          <button className="text-gray-400 hover:text-green-600 transition-colors"
-          onClick={() => {
-            dispatch(
-              openModal({
-                name: "ShowPropertyDetails",
-                product: item,
-              })
-            )
-          }}
-
+          <button
+            className="text-gray-400 hover:text-green-600 transition-colors"
+            onClick={() => {
+              dispatch(
+                openModal({
+                  name: "ShowPropertyDetails",
+                  product: item,
+                })
+              );
+            }}
           >
             <Eye size={20} className="stroke-current" />
           </button>

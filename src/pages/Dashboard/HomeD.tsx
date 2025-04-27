@@ -10,30 +10,35 @@ import { Link } from "react-router-dom";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import LastUsers from "../../components/Dashboard/LastUsers";
-
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect } from "react";
 import { getAllProperties } from "../../store/property/act/actGetAllProperties";
 import { useGetSalesOrders } from "../../Hooks/Dashboard/useGetSalesOrders.ts";
 import { useGetPurchaseOrders } from "../../Hooks/Dashboard/useGetPurchaseOrders.ts";
 import { useGetRentalOrders } from "../../Hooks/Dashboard/useGetRentalOrders.ts";
+import { useTranslation } from "react-i18next";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomeD = () => {
-  const dispatch = useAppDispatch()
-  const userLength = useAppSelector((state) => state?.user?.records?.length)
-  const propertyLength = useAppSelector((state) => state?.property?.records?.$values?.length)
+  const { t } = useTranslation(""); 
 
-  const { properties : SalesOrders } = useGetSalesOrders();
-  const { properties : PurchaseOrders } = useGetPurchaseOrders()
-  const { properties : RentalOrders } = useGetRentalOrders()
+  
+  const dispatch = useAppDispatch();
+  const userLength = useAppSelector((state) => state?.user?.records?.length);
+  const propertyLength = useAppSelector(
+    (state) => state?.property?.records?.$values?.length
+  );
 
+  const { properties: SalesOrders } = useGetSalesOrders();
+  const { properties: PurchaseOrders } = useGetPurchaseOrders();
+  const { properties: RentalOrders } = useGetRentalOrders();
 
   const statsData = [
     {
       id: 1,
-      title: "طلبات البيع",
-      description: "العروض المقدمة حالياً",
+      title: t("homeD.stats.salesOrders.title"),
+      description: t("homeD.stats.salesOrders.description"),
       icon: FaDollarSign,
       count: SalesOrders?.length || 0,
       link: "/dashboard/sales-requests",
@@ -45,11 +50,10 @@ const HomeD = () => {
     },
     {
       id: 2,
-      title: "طلبات الشراء",
-      description: "عدد الطلبات النشطة حالياً",
+      title: t("homeD.stats.purchaseOrders.title"),
+      description: t("homeD.stats.purchaseOrders.description"),
       icon: FaShoppingCart,
       count: PurchaseOrders?.length || 0,
-      
       link: "/dashboard/purchase-requests",
       color: {
         bg: "bg-green-100",
@@ -59,8 +63,8 @@ const HomeD = () => {
     },
     {
       id: 3,
-      title: "طلبات الإيجار",
-      description: "العقارات المؤجرة حالياً",
+      title: t("homeD.stats.rentalOrders.title"),
+      description: t("homeD.stats.rentalOrders.description"),
       icon: FaKey,
       count: RentalOrders?.length || 0,
       link: "/dashboard/rental-requests",
@@ -72,8 +76,8 @@ const HomeD = () => {
     },
     {
       id: 4,
-      title: "عدد المستخدمين",
-      description: "المستخدمين المسجلين في الموقع",
+      title: t("homeD.stats.users.title"),
+      description: t("homeD.stats.users.description"),
       icon: FaUser,
       count: userLength || 0,
       link: "/dashboard/users",
@@ -85,8 +89,8 @@ const HomeD = () => {
     },
     {
       id: 5,
-      title: "العقارات المتاحة",
-      description: "عدد العقارات المتاحة حالياً",
+      title: t("homeD.stats.properties.title"),
+      description: t("homeD.stats.properties.description"),
       icon: FaBuilding,
       count: propertyLength || 0,
       link: "/properties",
@@ -99,10 +103,18 @@ const HomeD = () => {
   ];
 
   const chartData = {
-    labels: ["طلبات الشراء", "طلبات البيع", "طلبات الإيجار"],
+    labels: [
+      t("homeD.chart.labels.purchaseOrders"),
+      t("homeD.chart.labels.salesOrders"),
+      t("homeD.chart.labels.rentalOrders"),
+    ],
     datasets: [
       {
-        data: [SalesOrders?.length || 0,  PurchaseOrders?.length  || 0, RentalOrders?.length || 0],
+        data: [
+          SalesOrders?.length || 0,
+          PurchaseOrders?.length || 0,
+          RentalOrders?.length || 0,
+        ],
         backgroundColor: ["#4B9EFA", "#34D399", "#FBBF24"],
         hoverBackgroundColor: ["#6BB5FF", "#4EE4A5", "#FFD147"],
         borderWidth: 0,
@@ -140,7 +152,7 @@ const HomeD = () => {
       ctx.textAlign = "center";
       ctx.fillStyle = "#4B5563";
       ctx.fillText(
-        "إجمالي الطلبات",
+        t("homeD.chart.centerText.totalOrders"),
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y - 10
       );
@@ -153,19 +165,17 @@ const HomeD = () => {
     },
   };
 
-useEffect(() => {
-  dispatch(getAllProperties())
-}, [dispatch])
+  useEffect(() => {
+    dispatch(getAllProperties());
+  }, [dispatch]);
 
   return (
     <div className="p-6 w-full h-full bg-gray-50">
-      <div className="mb-8 text-right">
+      <div className="mb-8 text-start">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          مرحبًا بك في لوحة التحكم
+          {t("homeD.welcomeTitle")}
         </h1>
-        <p className="text-gray-600">
-          هنا يمكنك متابعة جميع معاملاتك العقارية وإدارتها بسهولة
-        </p>
+        <p className="text-gray-600">{t("homeD.welcomeDescription")}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -191,23 +201,23 @@ useEffect(() => {
                 to={item.link}
                 className={`${item.color.bg} ${item.color.text} px-4 py-2 rounded-md ${item.color.hover} transition-colors duration-300`}
               >
-                التفاصيل
+                {t("homeD.details")}
               </Link>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
         {/* Chart */}
         <div className="bg-[#f4f7fa] p-6 rounded-lg shadow-md border border-gray-200 h-full">
-          <div className="flex items-center gap-2 mb-4 ">
+          <div className="flex items-center gap-2 mb-4">
             <FaChartPie className="text-gray-800 text-xl" />
             <h2 className="text-xl font-bold text-gray-800 text-right">
-              توزيع الطلبات
+              {t("homeD.chart.title")}
             </h2>
           </div>
-          <div className="relative doughnut-container flex items-center justify-center ">
+          <div className="relative doughnut-container flex items-center justify-center">
             <div className="max-w-96">
               <Doughnut
                 data={chartData}
@@ -219,9 +229,7 @@ useEffect(() => {
         </div>
 
         {/* Last users */}
-  <LastUsers />
-
-
+        <LastUsers />
       </div>
     </div>
   );

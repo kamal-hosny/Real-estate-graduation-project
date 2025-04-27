@@ -13,6 +13,7 @@ import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk
 import { SmoothScroll } from "react-smooth-scrolll";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Users from "../pages/Dashboard/Users";
+import i18n from "../language";
 
 // pages
 const Home = lazy(() => import("../pages/Home"));
@@ -47,6 +48,26 @@ const AppRouter = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
+
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("language") || "ar";
+    i18n.changeLanguage(savedLang);
+    document.documentElement.lang = savedLang;
+    document.documentElement.dir = i18n.dir(savedLang);
+
+    const handleLanguageChange = (lng: string) => {
+      localStorage.setItem("language", lng);
+      document.documentElement.lang = lng;
+      document.documentElement.dir = i18n.dir(lng);
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, []);
+
 
   const router = createBrowserRouter([
     {

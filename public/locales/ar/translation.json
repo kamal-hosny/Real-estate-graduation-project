@@ -548,5 +548,284 @@
       "auto_save_note": "يتم حفظ التغييرات تلقائياً عند تنفيذ أي إجراء",
       "delete_success_message": "تم حذف العقار بنجاح",
       "delete_error_message": "فشل حذف العقار، يرجى المحاولة مرة أخرى"
+    },
+    "homeD": {
+      "welcomeTitle": "مرحبًا بك في لوحة التحكم",
+      "welcomeDescription": "هنا يمكنك متابعة جميع معاملاتك العقارية وإدارتها بسهولة",
+      "details": "التفاصيل",
+      "stats": {
+        "salesOrders": {
+          "title": "طلبات البيع",
+          "description": "العروض المقدمة حالياً"
+        },
+        "purchaseOrders": {
+          "title": "طلبات الشراء",
+          "description": "عدد الطلبات النشطة حالياً"
+        },
+        "rentalOrders": {
+          "title": "طلبات الإيجار",
+          "description": "العقارات المؤجرة حالياً"
+        },
+        "users": {
+          "title": "عدد المستخدمين",
+          "description": "المستخدمين المسجلين في الموقع"
+        },
+        "properties": {
+          "title": "العقارات المتاحة",
+          "description": "عدد العقارات المتاحة حالياً"
+        }
+      },
+      "chart": {
+        "title": "توزيع الطلبات",
+        "labels": {
+          "purchaseOrders": "طلبات الشراء",
+          "salesOrders": "طلبات البيع",
+          "rentalOrders": "طلبات الإيجار"
+        },
+        "centerText": {
+          "totalOrders": "إجمالي الطلبات"
+        }
+      }
+    },
+    "headerHorizontal": {
+      "routes": {
+        "home": "الصفحة الرئيسية",
+        "purchaseRequests": "طلبات الشراء",
+        "rentalRequests": "طلبات الإيجار",
+        "salesRequests": "طلبات البيع",
+        "users": "المستخدمين"
+      }
+    },
+    "headerVertical": {
+      "title": "لوحة تحكم عقارك",
+      "goToStore": "الذهاب إلي المتجر"
+    },
+    "purchaseRequests": {
+      "title": "طلبات الشراء",
+      "searchPlaceholder": "ابحث عن طلب...",
+      "sort": {
+        "newest": "الأحدث أولاً",
+        "oldest": "الأقدم أولاً"
+      },
+      "exportButton": "تصدير إلى Excel"
+    },
+    "tableRequests": {
+      "headers": {
+        "id": "#",
+        "property": "العقار",
+        "type": "النوع",
+        "price": "السعر",
+        "createdBy": "منشئ الطلب",
+        "images": "صور",
+        "orderType": "نوع الطلب",
+        "orderStatus": "حالة الطلب",
+        "actions": "الإجراءات"
+      },
+      "emptyMessage": "لا توجد طلبات شراء حاليا"
+    },
+    "salesTableRequests": {
+      "headers": {
+        "id": "#",
+        "property": "العقار",
+        "type": "النوع",
+        "price": "السعر",
+        "user": "المستخدم",
+        "images": "صور",
+        "orderType": "نوع الطلب",
+        "orderStatus": "حالة الطلب",
+        "actions": "الإجراءات"
+      },
+      "emptyMessage": "لا توجد طلبات البيع حاليا"
+    },
+    "salesTableBody": {
+      "unknownUser": "غير معروف",
+      "noPhone": "غير متوفر",
+      "noImages": "لا يوجد صور",
+      "status": {
+        "For Sale": "للبيع",
+        "Other": "أخرى"
+      },
+      "orderType": {
+        "Pending": "قيد الانتظار",
+        "Success": "ناجح",
+        "Rejected": "مرفوض",
+        "Other": "أخرى"
+      }
+    },
+    "lastUsers": {
+      "title": "آخر المستخدمين",
+      "viewMore": "عرض المزيد",
+      "error": "خطأ: {error}",
+      "unknownUser": "غير معروف",
+      "noUsers": "لا يوجد مستخدمين لعرضهم",
+      "registrationDate": "تاريخ التسجيل"
+    },
+    "users": {
+      "title": "قائمة المستخدمين",
+      "searchPlaceholder": "ابحث عن مستخدم...",
+      "sortLabel": "ترتيب حسب:",
+      "sortOptions": {
+        "newestFirst": "الأحدث أولاً",
+        "oldestFirst": "الأقدم أولاً"
+      },
+      "exportToExcel": "تصدير إلى Excel",
+      "loading": "جاري التحميل...",
+      "error": "خطأ: {error}",
+      "noSearchResults": "لا توجد نتائج مطابقة للبحث",
+      "noUsers": "لا توجد بيانات للمستخدمين",
+      "registrationDate": "تاريخ التسجيل",
+      "unknownUser": "غير معروف",
+      "callAriaLabel": "اتصال هاتفي",
+      "whatsappAriaLabel": "مراسلة عبر واتساب",
+      "emailAriaLabel": "إرسال بريد إلكتروني"
+    },
+    "getSalesOrders": {
+      "title": "طلبات البيع",
+      "searchPlaceholder": "ابحث عن طلب...",
+      "sortOptions": {
+        "newestFirst": "الأحدث أولاً",
+        "oldestFirst": "الأقدم أولاً"
+      },
+      "exportToExcel": "تصدير إلى Excel"
+    },"salesRequests": {
+      "title": "طلبات الإيجار",
+      "searchPlaceholder": "ابحث عن طلب...",
+      "searchAriaLabel": "البحث عن طلب إيجار",
+      "sortOptions": {
+        "newestFirst": "الأحدث أولاً",
+        "oldestFirst": "الأقدم أولاً"
+      },
+      "exportToExcel": "تصدير إلى Excel",
+      "exportToExcelAriaLabel": "تصدير طلبات الإيجار إلى Excel",
+      "error": "خطأ: {error}",
+      "unknownError": "خطأ غير معروف",
+      "languageSwitcher": {
+        "toEnglish": "التبديل إلى الإنجليزية",
+        "toArabic": "التبديل إلى العربية",
+        "ariaLabel": "تغيير اللغة"
+      }
+    },
+    "deleteOrder": {
+      "title": "حذف الطلب",
+      "confirmMessage": "هل أنت متأكد من رغبتك في حذف هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancelButton": "إلغاء",
+      "confirmButton": "نعم، احذف الطلب",
+      "deleting": "جاري الحذف...",
+      "successMessage": "تم حذف الطلب",
+      "errorMessage": "حدثت مشكلة، من فضلك راجع البيانات"
+    },
+    "deleteUser": {
+      "title": "تأكيد حذف المستخدم",
+      "warning": "إجراء لا يمكن التراجع عنه",
+      "fullNameLabel": "الاسم الكامل:",
+      "emailLabel": "البريد الإلكتروني:",
+      "phoneNumberLabel": "رقم الهاتف:",
+      "confirmMessage": "سيتم حذف جميع البيانات المرتبطة بهذا الحساب بشكل دائم بما في ذلك السجلات والأنشطة المرتبطة بالمستخدم.",
+      "confirmButton": "تأكيد الحذف",
+      "deleting": "جاري التنفيذ...",
+      "cancelButton": "إلغاء العملية",
+      "successMessage": "تم حذف المستخدم بنجاح",
+      "errorMessage": "فشل في الحذف، يرجى المحاولة مرة أخرى"
+    },
+
+    "editOrder": {
+      "title": "تعديل الطلب",
+      "description": "قم بتعديل نوع الطلب",
+      "typeOrderLabel": "نوع الطلب",
+      "typeOrderOptions": {
+        "pending": "معلق",
+        "success": "ناجح",
+        "rejected": "مرفوض"
+      },
+      "typeOrderRequired": "يرجى اختيار نوع الطلب",
+      "note": "لكي تستطيع نشر عقارك يجب أن يكون الطلب ناجح",
+      "publishButton": "إتمام الصفقة",
+      "cancelButton": "إلغاء",
+      "saveButton": "حفظ التعديلات",
+      "deleteSuccess": "تم حذف الطلب بنجاح",
+      "deleteError": "فشل في حذف الطلب",
+      "successRequired": "يجب أن يكون نوع الطلب 'ناجح' لإتمام الصفقة",
+      "publishSuccess": "تم إتمام الصفقة بنجاح",
+      "publishError": "حدث خطأ أثناء إتمام الصفقة",
+      "incompleteData": "بيانات الطلب غير مكتملة",
+      "updateSuccess": "تم تحديث الطلب بنجاح",
+      "updateError": "فشل في تحديث الطلب"
+    },
+    "editOrderSales": {
+      "title": "تعديل الطلب",
+      "description": "قم بتعديل نوع الطلب",
+      "typeOrderLabel": "نوع الطلب",
+      "typeOrderPlaceholder": "اختر نوع الطلب",
+      "typeOrderOptions": {
+        "pending": "معلق",
+        "success": "ناجح",
+        "rejected": "مرفوض"
+      },
+      "typeOrderRequired": "يرجى اختيار نوع الطلب",
+      "note": "لكي تستطيع نشر عقارك يجب أن يكون الطلب ناجح",
+      "publishButton": "انشر العقار",
+      "cancelButton": "إلغاء",
+      "saveButton": "حفظ التعديلات",
+      "updateSuccess": "تم تحديث البيانات",
+      "updateError": "حدث مشكلة أثناء التحديث",
+      "successRequired": "يجب أن تكون القيمة ناجح لنشر العقار",
+      "publishSuccess": "تم نشر العقار بنجاح",
+      "publishError": "حدث مشكلة ولم يتم نشر العقار"
+    },
+    "ShowPropertyDetails": {
+      "section": {
+        "propertyDetails": "تفاصيل العقار",
+        "features": "الميزات",
+        "location": "الموقع",
+        "description": "الوصف"
+      },
+      "detail": {
+        "price": "السعر",
+        "type": "النوع",
+        "area": "المساحة",
+        "bedrooms": "غرف النوم",
+        "bathrooms": "الحمامات",
+        "totalRooms": "إجمالي الغرف",
+        "floor": "الطابق",
+        "address": "العنوان",
+        "city": "المدينة"
+      },
+      "button": {
+        "viewOnMap": "عرض على الخريطة",
+        "closeDetails": "إغلاق التفاصيل"
+      },
+      "propertyType": {
+        "townhouse": "تاون هاوس",
+        "villa": "فيلا",
+        "private_house": "منزل خاص",
+        "apartment": "شقة",
+        "office": "مكتب",
+        "shop": "محل"
+      },
+      "status": {
+        "for_sale": "للبيع",
+        "for_rent": "للإيجار"
+      },
+      "furnished": {
+        "true": "مفروش بالكامل",
+        "false": "غير مفروش"
+      },
+      "unit": {
+        "sqm": "متر مربع"
+      },
+      "imageAlt": "صورة العقار"
+    },
+    "ShowUserDetails": {
+      "label": {
+        "memberSince": "عضو منذ"
+      },
+      "button": {
+        "close": "إغلاق"
+      },
+      "unknown": "غير معروف",
+      "imageAlt": "صورة المستخدم",
+      "noData": "لا توجد بيانات متاحة"
     }
+    
+
   }

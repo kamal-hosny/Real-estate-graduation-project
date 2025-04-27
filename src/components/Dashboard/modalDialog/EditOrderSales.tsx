@@ -6,6 +6,7 @@ import { supabase } from "../../../config/supabaseClient";
 import { addToast } from "../../../store/toasts/toastsSlice";
 import { createProperty } from "../../../store/property/act/actCreateProperty";
 import { RealProperty } from "../../../types";
+import { useTranslation } from "react-i18next";
 
 type FormData = {
   TypeOrder: "Rejected" | "Success" | "Pending";
@@ -20,6 +21,7 @@ interface DataP {
 }
 
 const EditOrderSales = () => {
+  const { t } = useTranslation(""); // Use default namespace
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.modal.product as DataP);
 
@@ -58,17 +60,14 @@ const EditOrderSales = () => {
         throw new Error(`Failed to update order: ${error.message}`);
       }
 
-      console.log("Order updated successfully:", responseData);
       return responseData;
     } catch (error) {
-      console.error("Error updating order:", error);
       throw error;
     }
   };
 
   const supabaseDeleteOrderSale = async () => {
     try {
-        
       if (!data?.id) {
         throw new Error("No order ID provided for deletion");
       }
@@ -81,10 +80,7 @@ const EditOrderSales = () => {
       if (error) {
         throw new Error(`Failed to delete order: ${error.message}`);
       }
-
-      console.log("Order deleted successfully");
     } catch (error) {
-      console.error("Error deleting order:", error);
       throw error;
     }
   };
@@ -92,11 +88,10 @@ const EditOrderSales = () => {
   const onSubmit = async (formData: FormData) => {
     try {
       await supabaseEditOrderSale(formData.TypeOrder);
-      dispatch(addToast({ message: "تم تحديث البيانات", type: "success" }));
+      dispatch(addToast({ message: t("editOrderSales.updateSuccess"), type: "success" }));
       dispatch(closeModal());
     } catch (error) {
-      dispatch(addToast({ message: "حدث مشكلة أثناء التحديث", type: "error" }));
-      console.error("Submit error:", error);
+      dispatch(addToast({ message: t("editOrderSales.updateError"), type: "error" }));
     }
   };
 
@@ -105,7 +100,7 @@ const EditOrderSales = () => {
     if (typeOrder !== "Success") {
       dispatch(
         addToast({
-          message: "يجب أن تكون القيمة Success لنشر العقار",
+          message: t("editOrderSales.successRequired"),
           type: "warning",
         })
       );
@@ -119,43 +114,41 @@ const EditOrderSales = () => {
       // Step 2: Publish the property via API
       await dispatch(
         createProperty({
-            property: {
-                propertyId: 0,
-                propertyTitle: data.property.propertyTitle,
-                propertyType: data.property.propertyType,
-                price: data.property.price,
-                status: data.property.status,
-                city: data.property.city,
-                address: data.property.address,
-                googleMapsLink: data.property.googleMapsLink,
-                totalRooms: data.property.totalRooms,
-                bathrooms: data.property.bathrooms,
-                bedrooms: data.property.bedrooms,
-                floorNumber: data.property.floorNumber,
-                area: data.property.area,
-                furnished: data.property.furnished,
-                description: data.property.description,
-                createdAt:
-                  new Date().toISOString().replace("Z", "+00:00").split(".")[0] +
-                  "+00:00",
-                propertyImages: data.property.propertyImages,
-                userId: data.property.userId,
-              },
-              tokenUser: data.userToken || "",
+          property: {
+            propertyId: 0,
+            propertyTitle: data.property.propertyTitle,
+            propertyType: data.property.propertyType,
+            price: data.property.price,
+            status: data.property.status,
+            city: data.property.city,
+            address: data.property.address,
+            googleMapsLink: data.property.googleMapsLink,
+            totalRooms: data.property.totalRooms,
+            bathrooms: data.property.bathrooms,
+            bedrooms: data.property.bedrooms,
+            floorNumber: data.property.floorNumber,
+            area: data.property.area,
+            furnished: data.property.furnished,
+            description: data.property.description,
+            createdAt:
+              new Date().toISOString().replace("Z", "+00:00").split(".")[0] +
+              "+00:00",
+            propertyImages: data.property.propertyImages,
+            userId: data.property.userId,
+          },
+          tokenUser: data.userToken || "",
         })
       )
         .unwrap()
         .then(async () => {
           await supabaseDeleteOrderSale();
-
-          dispatch(addToast({ message: "تم نشر العقار بنجاح", type: "success" }));
+          dispatch(addToast({ message: t("editOrderSales.publishSuccess"), type: "success" }));
           dispatch(closeModal());
         });
     } catch (error) {
       dispatch(
-        addToast({ message: "حدث مشكلة ولم يتم نشر العقار", type: "error" })
+        addToast({ message: t("editOrderSales.publishError"), type: "error" })
       );
-      console.error("Publish error:", error);
     }
   };
 
@@ -169,26 +162,26 @@ const EditOrderSales = () => {
     <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6">
       <div className="text-center mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          تعديل الطلب
+          {t("editOrderSales.title")}
         </h3>
-        <p className="text-gray-500">قم بتعديل نوع الطلب</p>
+        <p className="text-gray-500">{t("editOrderSales.description")}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            نوع الطلب
+            {t("editOrderSales.typeOrderLabel")}
           </label>
           <select
             {...register("TypeOrder", {
-              required: "يرجى اختيار نوع الطلب",
+              required: t("editOrderSales.typeOrderRequired"),
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">اختر نوع الطلب</option>
-            <option value="Pending">Pending</option>
-            <option value="Success">Success</option>
-            <option value="Rejected">Rejected</option>
+            <option value="">{t("editOrderSales.typeOrderPlaceholder")}</option>
+            <option value="Pending">{t("editOrderSales.typeOrderOptions.pending")}</option>
+            <option value="Success">{t("editOrderSales.typeOrderOptions.success")}</option>
+            <option value="Rejected">{t("editOrderSales.typeOrderOptions.rejected")}</option>
           </select>
           {errors.TypeOrder && (
             <p className="text-red-500 text-sm mt-1">
@@ -199,7 +192,7 @@ const EditOrderSales = () => {
 
         <div>
           <p className="text-xs font-medium text-gray-400 text-center">
-            لكي تستطيع نشر عقارك يجب ان يكون الطلب Success
+            {t("editOrderSales.note")}
           </p>
           <div
             className={`flex items-center gap-3 mt-6 ${
@@ -212,7 +205,7 @@ const EditOrderSales = () => {
                 onClick={onPublish}
                 className="px-4 py-2 text-green-700 bg-green-100 rounded-lg hover:bg-green-200 transition-colors"
               >
-                انشر العقار
+                {t("editOrderSales.publishButton")}
               </button>
             )}
             <span className="flex items-center gap-1.5">
@@ -221,13 +214,13 @@ const EditOrderSales = () => {
                 onClick={cancel}
                 className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
               >
-                إلغاء
+                {t("editOrderSales.cancelButton")}
               </button>
               <button
                 type="submit"
                 className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                حفظ التعديلات
+                {t("editOrderSales.saveButton")}
               </button>
             </span>
           </div>

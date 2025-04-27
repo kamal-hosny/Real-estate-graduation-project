@@ -1,4 +1,4 @@
-import { FaPhone, FaWhatsapp, FaEnvelope, FaSearch, FaFileExcel } from 'react-icons/fa'; 
+import { FaPhone, FaWhatsapp, FaEnvelope, FaSearch, FaFileExcel } from 'react-icons/fa';
 import { Trash2, UserRound, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -7,6 +7,7 @@ import { convertDate } from '../../utils/dateFun';
 import { openModal } from '../../store/modal/modalSlice';
 import LottieHandler from '../../components/common/feedback/LottieHandler/LottieHandler';
 import { exportToExcel } from '../../utils/excel/usersSheet';
+import { useTranslation } from 'react-i18next';
 
 interface User {
   id: string;
@@ -18,6 +19,7 @@ interface User {
 }
 
 const Users = () => {
+  const { t } = useTranslation(""); // Use default namespace
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -25,7 +27,6 @@ const Users = () => {
   const { records, loading, error } = useAppSelector((state) => state.user);
   const { token } = useAppSelector((state) => state.auth);
   const users: User[] = records || [];
-
 
   useEffect(() => {
     dispatch(getAllUser(token || ""));
@@ -35,8 +36,6 @@ const Users = () => {
     const cleaned = phone.replace(/\D/g, '');
     return cleaned.startsWith('+') ? cleaned : `+20${cleaned}`;
   };
-
-
 
   const filteredUsers = users.filter(user =>
     user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -53,7 +52,7 @@ const Users = () => {
   return (
     <div className="p-8 bg-gray-100 min-h-screen font-sans">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-8 text-right tracking-tight">
-        قائمة المستخدمين
+        {t("users.title")}
       </h1>
 
       {/* Search, Filter & Export Section */}
@@ -62,7 +61,7 @@ const Users = () => {
         <div className="relative flex-1 md:max-w-lg">
           <input
             type="text"
-            placeholder="ابحث عن مستخدم..."
+            placeholder={t("users.searchPlaceholder")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pr-12 pl-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-500 bg-white shadow-sm text-right transition-all duration-300 ease-in-out"
@@ -84,15 +83,17 @@ const Users = () => {
         <div className="flex items-center gap-4">
           {/* Sort Filter */}
           <div className="flex items-center gap-3 bg-white py-2.5 px-4 rounded-xl border border-gray-200 shadow-sm">
-            <label className="text-sm font-medium text-gray-600 whitespace-nowrap">ترتيب حسب:</label>
+            <label className="text-sm font-medium text-gray-600 whitespace-nowrap">
+              {t("users.sortLabel")}
+            </label>
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
               className="text-right pr-3 pl-8 py-1.5 bg-transparent border-none appearance-none focus:outline-none focus:ring-0 cursor-pointer bg-select-chevron bg-no-repeat bg-left"
               style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%236B7280\'%3E%3Cpath d=\'M12 15.0006L7.7573 10.758L9.1715 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758L12 15.0006Z\'/%3E%3C/svg%3E")'}}
             >
-              <option value="desc">الأحدث أولاً</option>
-              <option value="asc">الأقدم أولاً</option>
+              <option value="desc">{t("users.sortOptions.newestFirst")}</option>
+              <option value="asc">{t("users.sortOptions.oldestFirst")}</option>
             </select>
           </div>
 
@@ -102,17 +103,30 @@ const Users = () => {
             className="flex items-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             <FaFileExcel className="text-lg" />
-            تصدير إلى Excel
+            {t("users.exportToExcel")}
           </button>
         </div>
       </div>
 
-      {loading === "pending" && <p className="text-center text-gray-600 text-lg">جاري التحميل...</p>}
-      {error && <p className="text-center text-red-600 text-lg">خطأ: {error}</p>}
+      {loading === "pending" && (
+        <p className="text-center text-gray-600 text-lg">{t("users.loading")}</p>
+      )}
+      {error && (
+        <p className="text-center text-red-600 text-lg">{t("users.error", { error })}</p>
+      )}
       {loading !== "pending" && !error && sortedUsers.length === 0 && (
-              <div className=" flex justify-center items-center ">
-              <LottieHandler type="userNotFound" message={searchTerm ? (<p className='text-black'>لا توجد نتائج مطابقة للبحث</p>) : (<p className='text-black'>لا توجد بيانات للمستخدمين</p>)} />
-            </div>
+        <div className="flex justify-center items-center">
+          <LottieHandler
+            type="userNotFound"
+            message={
+              searchTerm ? (
+                <p className="text-black">{t("users.noSearchResults")}</p>
+              ) : (
+                <p className="text-black">{t("users.noUsers")}</p>
+              )
+            }
+          />
+        </div>
       )}
 
       {loading !== "pending" && !error && sortedUsers.length > 0 && (
@@ -130,12 +144,12 @@ const Users = () => {
                 {user.image ? (
                   <img
                     src={user.image}
-                    alt={user.fullName}
+                    alt={user.fullName || t("users.unknownUser")}
                     className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                   />
                 ) : (
                   <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center">
-                    <span className="text-blue-600"><UserRound className="w-16 h-16" /></span>
+                    <UserRound className="w-16 h-16 text-blue-600" />
                   </div>
                 )}
 
@@ -144,7 +158,7 @@ const Users = () => {
                   <p className="text-gray-600 mt-1">{user.email}</p>
                   <p className="text-gray-600">{user.phoneNumber}</p>
                   <p className="text-sm text-gray-500 mt-2 flex flex-col">
-                    <span>:تاريخ التسجيل</span>
+                    <span>{t("users.registrationDate")}</span>
                     <span>{user.createdAt && convertDate(user.createdAt)}</span>
                   </p>
                 </div>
@@ -170,7 +184,7 @@ const Users = () => {
                   <a
                     href={`tel:${user.phoneNumber}`}
                     className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
-                    aria-label="اتصال هاتفي"
+                    aria-label={t("users.callAriaLabel")}
                   >
                     <FaPhone className="text-xl" />
                   </a>
@@ -179,14 +193,14 @@ const Users = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
-                    aria-label="مراسلة عبر واتساب"
+                    aria-label={t("users.whatsappAriaLabel")}
                   >
                     <FaWhatsapp className="text-xl" />
                   </a>
                   <a
                     href={`mailto:${user.email}`}
                     className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors"
-                    aria-label="إرسال بريد إلكتروني"
+                    aria-label={t("users.emailAriaLabel")}
                   >
                     <FaEnvelope className="text-xl" />
                   </a>

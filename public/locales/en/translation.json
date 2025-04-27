@@ -544,5 +544,287 @@
       "auto_save_note": "Changes are automatically saved upon executing any action",
       "delete_success_message": "Property deleted successfully",
       "delete_error_message": "Failed to delete property, please try again"
+  },
+  "homeD": {
+    "welcomeTitle": "Welcome to the Dashboard",
+    "welcomeDescription": "Here you can track and manage all your real estate transactions with ease",
+    "details": "Details",
+    "stats": {
+      "salesOrders": {
+        "title": "Sales Requests",
+        "description": "Current offers submitted"
+      },
+      "purchaseOrders": {
+        "title": "Purchase Requests",
+        "description": "Number of active requests currently"
+      },
+      "rentalOrders": {
+        "title": "Rental Requests",
+        "description": "Properties currently rented"
+      },
+      "users": {
+        "title": "Number of Users",
+        "description": "Users registered on the site"
+      },
+      "properties": {
+        "title": "Available Properties",
+        "description": "Number of properties currently available"
+      }
+    },
+    "chart": {
+      "title": "Order Distribution",
+      "labels": {
+        "purchaseOrders": "Purchase Requests",
+        "salesOrders": "Sales Requests",
+        "rentalOrders": "Rental Requests"
+      },
+      "centerText": {
+        "totalOrders": "Total Orders"
+      }
+    }
+  },
+  "headerHorizontal": {
+    "routes": {
+      "home": "Home Page",
+      "purchaseRequests": "Purchase Requests",
+      "rentalRequests": "Rental Requests",
+      "salesRequests": "Sales Requests",
+      "users": "Users"
+    }
+  },
+  "headerVertical": {
+    "title": "Aqarek Dashboard",
+    "goToStore": "Go to Store"
+  },
+  "purchaseRequests": {
+    "title": "Purchase Requests",
+    "searchPlaceholder": "Search for a request...",
+    "sort": {
+      "newest": "Newest First",
+      "oldest": "Oldest First"
+    },
+    "exportButton": "Export to Excel"
+  },
+  "tableRequests": {
+    "headers": {
+      "id": "#",
+      "property": "Property",
+      "type": "Type",
+      "price": "Price",
+      "createdBy": "Created By",
+      "images": "Images",
+      "orderType": "Order Type",
+      "orderStatus": "Order Status",
+      "actions": "Actions"
+    },
+    "emptyMessage": "No purchase requests currently available"
+  },
+  "salesTableRequests": {
+    "headers": {
+      "id": "#",
+      "property": "Property",
+      "type": "Type",
+      "price": "Price",
+      "user": "User",
+      "images": "Images",
+      "orderType": "Order Type",
+      "orderStatus": "Order Status",
+      "actions": "Actions"
+    },
+    "emptyMessage": "No sales requests currently available"
+  },
+  "salesTableBody": {
+    "unknownUser": "Unknown",
+    "noPhone": "Not Available",
+    "noImages": "No Images",
+    "status": {
+      "For Sale": "For Sale",
+      "Other": "Other"
+    },
+    "orderType": {
+      "Pending": "Pending",
+      "Success": "Success",
+      "Rejected": "Rejected",
+      "Other": "Other"
+    }
+  },
+  "lastUsers": {
+    "title": "Latest Users",
+    "viewMore": "View More",
+    "error": "Error: {error}",
+    "unknownUser": "Unknown",
+    "noUsers": "No users to display",
+    "registrationDate": "Registration Date"
+  },
+  "users": {
+    "title": "Users List",
+    "searchPlaceholder": "Search for a user...",
+    "sortLabel": "Sort by:",
+    "sortOptions": {
+      "newestFirst": "Newest First",
+      "oldestFirst": "Oldest First"
+    },
+    "exportToExcel": "Export to Excel",
+    "loading": "Loading...",
+    "error": "Error: {error}",
+    "noSearchResults": "No results match the search",
+    "noUsers": "No user data available",
+    "registrationDate": "Registration Date",
+    "unknownUser": "Unknown",
+    "callAriaLabel": "Make a phone call",
+    "whatsappAriaLabel": "Message via WhatsApp",
+    "emailAriaLabel": "Send an email"
+  },
+
+  "getSalesOrders": {
+    "title": "Sales Orders",
+    "searchPlaceholder": "Search for an order...",
+    "sortOptions": {
+      "newestFirst": "Newest First",
+      "oldestFirst": "Oldest First"
+    },
+    "exportToExcel": "Export to Excel"
+  },
+  "salesRequests": {
+    "title": "Rental Requests",
+    "searchPlaceholder": "Search for a request...",
+    "searchAriaLabel": "Search for a rental request",
+    "sortOptions": {
+      "newestFirst": "Newest First",
+      "oldestFirst": "Oldest First"
+    },
+    "exportToExcel": "Export to Excel",
+    "exportToExcelAriaLabel": "Export rental requests to Excel",
+    "error": "Error: {error}",
+    "unknownError": "Unknown error",
+    "languageSwitcher": {
+      "toEnglish": "Switch to English",
+      "toArabic": "Switch to Arabic",
+      "ariaLabel": "Change language"
+    }
+  },
+  "deleteOrder": {
+    "title": "Delete Order",
+    "confirmMessage": "Are you sure you want to delete this order? This action cannot be undone.",
+    "cancelButton": "Cancel",
+    "confirmButton": "Yes, Delete Order",
+    "deleting": "Deleting...",
+    "successMessage": "Order deleted successfully",
+    "errorMessage": "An error occurred, please review the data"
+  },
+  "deleteUser": {
+    "title": "Confirm User Deletion",
+    "warning": "This action cannot be undone",
+    "fullNameLabel": "Full Name:",
+    "emailLabel": "Email:",
+    "phoneNumberLabel": "Phone Number:",
+    "confirmMessage": "All data associated with this account will be permanently deleted, including records and activities related to the user.",
+    "confirmButton": "Confirm Deletion",
+    "deleting": "Processing...",
+    "cancelButton": "Cancel Operation",
+    "successMessage": "User deleted successfully",
+    "errorMessage": "Deletion failed, please try again"
+  },
+
+  "editOrder": {
+    "title": "Edit Order",
+    "description": "Modify the order type",
+    "typeOrderLabel": "Order Type",
+    "typeOrderOptions": {
+      "pending": "Pending",
+      "success": "Success",
+      "rejected": "Rejected"
+    },
+    "typeOrderRequired": "Please select an order type",
+    "note": "To publish your property, the order must be Success",
+    "publishButton": "Complete Transaction",
+    "cancelButton": "Cancel",
+    "saveButton": "Save Changes",
+    "deleteSuccess": "Order deleted successfully",
+    "deleteError": "Failed to delete order",
+    "successRequired": "Order type must be 'Success' to complete the transaction",
+    "publishSuccess": "Transaction completed successfully",
+    "publishError": "An error occurred during the transaction",
+    "incompleteData": "Order data is incomplete",
+    "updateSuccess": "Order updated successfully",
+    "updateError": "Failed to update order"
+  },
+  "editOrderSales": {
+    "title": "Edit Order",
+    "description": "Modify the order type",
+    "typeOrderLabel": "Order Type",
+    "typeOrderPlaceholder": "Select order type",
+    "typeOrderOptions": {
+      "pending": "Pending",
+      "success": "Success",
+      "rejected": "Rejected"
+    },
+    "typeOrderRequired": "Please select an order type",
+    "note": "To publish your property, the order must be Success",
+    "publishButton": "Publish Property",
+    "cancelButton": "Cancel",
+    "saveButton": "Save Changes",
+    "updateSuccess": "Data updated successfully",
+    "updateError": "An error occurred during the update",
+    "successRequired": "The value must be Success to publish the property",
+    "publishSuccess": "Property published successfully",
+    "publishError": "An error occurred, and the property was not published"
+  },
+  "ShowPropertyDetails": {
+    "section": {
+      "propertyDetails": "Property Details",
+      "features": "Features",
+      "location": "Location",
+      "description": "Description"
+    },
+    "detail": {
+      "price": "Price",
+      "type": "Type",
+      "area": "Area",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "totalRooms": "Total Rooms",
+      "floor": "Floor",
+      "address": "Address",
+      "city": "City"
+    },
+    "button": {
+      "viewOnMap": "View on Map",
+      "closeDetails": "Close Details"
+    },
+    "propertyType": {
+      "townhouse": "Townhouse",
+      "villa": "Villa",
+      "private_house": "Private House",
+      "apartment": "Apartment",
+      "office": "Office",
+      "shop": "Shop"
+    },
+    "status": {
+      "for_sale": "For Sale",
+      "for_rent": "For Rent"
+    },
+    "furnished": {
+      "true": "Fully Furnished",
+      "false": "Unfurnished"
+    },
+    "unit": {
+      "sqm": "sqm"
+    },
+    "imageAlt": "Property image"
+  },
+  "ShowUserDetails": {
+    "label": {
+      "memberSince": "Member since"
+    },
+    "button": {
+      "close": "Close"
+    },
+    "unknown": "Unknown",
+    "imageAlt": "User avatar",
+    "noData": "No data available"
   }
+
+
+
 }

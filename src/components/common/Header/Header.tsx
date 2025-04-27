@@ -54,9 +54,7 @@ const Header = () => {
           <div className="action-nav flex gap-1.5 justify-center items-center">
             <DarkMode />
           </div>
-
           <MenuNavAuth />
-
           <div className="menu md:hidden">
             <Button
               onClick={closeMenu}

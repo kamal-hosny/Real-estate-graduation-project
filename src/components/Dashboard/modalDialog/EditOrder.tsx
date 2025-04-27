@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { supabase } from '../../../config/supabaseClient';
 import { closeModal } from '../../../store/modal/modalSlice';
 import { addToast } from '../../../store/toasts/toastsSlice';
+import { useTranslation } from 'react-i18next';
 
 type TTypeOrder = 'PurchaseOrders' | 'RentOrders' | 'SalesOrders' | null;
 type FormData = {
@@ -21,6 +22,7 @@ interface DataP {
 }
 
 const EditOrder = () => {
+  const { t } = useTranslation(""); // Use default namespace
   const dispatch = useAppDispatch();
   const { id, property, TypeOrder } = useAppSelector(
     (state) => state.modal.product as DataP
@@ -61,14 +63,14 @@ const EditOrder = () => {
 
       dispatch(
         addToast({
-          message: 'تم حذف الطلب بنجاح',
+          message: t("editOrder.deleteSuccess"),
           type: 'success',
         })
       );
     } catch (error) {
       dispatch(
         addToast({
-          message: 'فشل في حذف الطلب',
+          message: t("editOrder.deleteError"),
           type: 'error',
         })
       );
@@ -81,7 +83,7 @@ const EditOrder = () => {
     if (typeOrder !== 'Success') {
       dispatch(
         addToast({
-          message: 'يجب أن يكون نوع الطلب "Success" لإتمام الصفقة',
+          message: t("editOrder.successRequired"),
           type: 'warning',
         })
       );
@@ -92,7 +94,7 @@ const EditOrder = () => {
       await supabaseDeleteOrderSale();
       dispatch(
         addToast({
-          message: 'تم إتمام الصفقة بنجاح',
+          message: t("editOrder.publishSuccess"),
           type: 'success',
         })
       );
@@ -100,7 +102,7 @@ const EditOrder = () => {
     } catch (error) {
       dispatch(
         addToast({
-          message: 'حدث خطأ أثناء إتمام الصفقة',
+          message: t("editOrder.publishError"),
           type: 'error',
         })
       );
@@ -113,7 +115,7 @@ const EditOrder = () => {
       if (!TypeOrderSupa || !id) {
         dispatch(
           addToast({
-            message: 'بيانات الطلب غير مكتملة',
+            message: t("editOrder.incompleteData"),
             type: 'error',
           })
         );
@@ -131,7 +133,7 @@ const EditOrder = () => {
 
       dispatch(
         addToast({
-          message: 'تم تحديث الطلب بنجاح',
+          message: t("editOrder.updateSuccess"),
           type: 'success',
         })
       );
@@ -139,7 +141,7 @@ const EditOrder = () => {
     } catch (error) {
       dispatch(
         addToast({
-          message: 'فشل في تحديث الطلب',
+          message: t("editOrder.updateError"),
           type: 'error',
         })
       );
@@ -157,25 +159,25 @@ const EditOrder = () => {
     <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6">
       <div className="text-center mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          تعديل الطلب
+          {t("editOrder.title")}
         </h3>
-        <p className="text-gray-500">قم بتعديل نوع الطلب</p>
+        <p className="text-gray-500">{t("editOrder.description")}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            نوع الطلب
+            {t("editOrder.typeOrderLabel")}
           </label>
           <select
             {...register('TypeOrder', {
-              required: 'يرجى اختيار نوع الطلب',
+              required: t("editOrder.typeOrderRequired"),
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="Pending">Pending</option>
-            <option value="Success">Success</option>
-            <option value="Rejected">Rejected</option>
+            <option value="Pending">{t("editOrder.typeOrderOptions.pending")}</option>
+            <option value="Success">{t("editOrder.typeOrderOptions.success")}</option>
+            <option value="Rejected">{t("editOrder.typeOrderOptions.rejected")}</option>
           </select>
           {errors.TypeOrder && (
             <p className="text-red-500 text-sm mt-1">
@@ -186,7 +188,7 @@ const EditOrder = () => {
 
         <div>
           <p className="text-xs font-medium text-gray-400 text-center">
-            لكي تستطيع نشر عقارك يجب أن يكون الطلب Success
+            {t("editOrder.note")}
           </p>
           <div
             className={`flex items-center gap-3 mt-6 ${
@@ -199,7 +201,7 @@ const EditOrder = () => {
                 onClick={onPublish}
                 className="px-4 py-2 text-green-700 bg-green-100 rounded-lg hover:bg-green-200 transition-colors"
               >
-                إتمام الصفقة
+                {t("editOrder.publishButton")}
               </button>
             )}
             <span className="flex items-center gap-1.5">
@@ -208,13 +210,13 @@ const EditOrder = () => {
                 onClick={cancel}
                 className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
               >
-                إلغاء
+                {t("editOrder.cancelButton")}
               </button>
               <button
                 type="submit"
                 className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                حفظ التعديلات
+                {t("editOrder.saveButton")}
               </button>
             </span>
           </div>

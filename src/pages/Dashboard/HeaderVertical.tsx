@@ -1,19 +1,60 @@
-import { House } from "lucide-react";
+import { House, Languages } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import i18n from "../../language";
 
 const HeaderVertical = () => {
+  const { t } = useTranslation("");
+
+  const [direction, setDirection] = useState(document.dir || "ltr");
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setDirection(document.dir || "ltr");
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["dir"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="p-4 bg-[#f4f7fa] border-b-2 border-[#e5e5e5] flex justify-between items-center">
-      <div className="logo flex gap-2">
+    <div className="p-4 bg-[#f4f7fa] border-b border-[#e5e5e5] flex justify-between items-center">
+      <div className="logo flex gap-2 items-center">
         <div className="icon">
-          <House className="bg-blue-900 text-white p-1 rounded" />
+          <House className="bg-blue-900 text-white p-1 rounded w-6 h-6" />
         </div>
-        <div className="title font-bold">Aqarek Dashboard</div>
+        <div className="title font-bold text-sm">{t("headerVertical.title")}</div>
       </div>
-      <span className="flex items-center gap-">
-      <Link to={"/"} className="bg-blue-100 text-blue-600 px-4 py-2 text-xs font-medium rounded-md hover:bg-blue-200 transition-colors">
-        الذهاب إلي المتجر
-      </Link>
+      <span className="flex items-center gap-4">
+        {direction === "rtl" ? (
+          <li
+            onClick={() => i18n.changeLanguage("en")}
+            className="flex cursor-pointer items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md transition-colors bg-blue-100 text-blue-600 hover:bg-blue-200"
+          >
+            <Languages size={18} />
+            <span className="text-xs">تحويل اللغة إلي الانجليزية</span>
+          </li>
+        ) : (
+          <li
+            onClick={() => i18n.changeLanguage("ar")}
+            className="flex cursor-pointer items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-md transition-colors bg-blue-100 text-blue-600 hover:bg-blue-200"
+          >
+            <Languages size={18} />
+            <span className="text-xs">Switch to Arabic</span>
+          </li>
+        )}
+
+        <Link
+          to={"/"}
+          className="bg-blue-100 text-blue-600 px-3 py-1.5 text-xs font-medium rounded-md hover:bg-blue-200 transition-colors"
+        >
+          {t("headerVertical.goToStore")}
+        </Link>
       </span>
     </div>
   );
