@@ -24,9 +24,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { closeModal } from "../../../store/modal/modalSlice";
 
-// Styles
-import 'swiper/swiper-bundle.min.css';
-
 // Types
 // type PropertyType =
 //   | "Townhouse"
