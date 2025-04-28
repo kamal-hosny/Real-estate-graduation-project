@@ -5,8 +5,5 @@
       "dest": "/index.html",
       "status": 200
     }
-  ],
-  "buildCommand": "npm install && npm run build",
-  "installCommand": "npm install",
-  "framework": "vite"
+  ]
 }
