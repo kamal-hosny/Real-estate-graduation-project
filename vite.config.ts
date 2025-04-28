@@ -15,8 +15,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://mshmsh-001-site1.qtempurl.com',
+        target: 'http://mohamedtahoon.runasp.net',
         changeOrigin: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
