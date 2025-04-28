@@ -24,7 +24,7 @@ const OurProducts = () => {
   const { t } = useTranslation();
   const { records, loading, error } = useAppSelector((state) => state?.property);
 
-  const getLastTenP = records.$values.slice(-10).reverse();
+  const getLastTenP = records?.$values?.slice(-10)?.reverse() || [];
   const totalSlides = getLastTenP.length;
 
   const loadingSkeleton = useMemo(
