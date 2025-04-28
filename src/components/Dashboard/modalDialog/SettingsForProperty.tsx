@@ -1,18 +1,25 @@
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+// External imports
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+// Internal imports
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { closeModal } from "../../../store/modal/modalSlice";
 import { deleteProperty } from "../../../store/property/act/actDeleteProperty";
 import { addToast } from "../../../store/toasts/toastsSlice";
-import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
-import { closeModal } from "../../../store/modal/modalSlice";
 
 const SettingsForProperty = () => {
+  // Hooks
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { product } = useAppSelector((state) => state?.modal);
-  const { token } = useAppSelector((state) => state?.auth);
   const { t } = useTranslation();
 
+  // Selectors
+  const { product } = useAppSelector((state) => state?.modal);
+  const { token } = useAppSelector((state) => state?.auth);
+
+  // Handlers
   const deleteThisProperty = () => {
     if (product?.propertyId && token) {
       dispatch(

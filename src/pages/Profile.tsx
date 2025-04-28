@@ -1,34 +1,51 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import Breadcrumb from "../components/Products/Breadcrumb";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getOneUser } from "../store/user/act/actGetOneUser";
-import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
-import { useForm } from "react-hook-form";
-import {
-  editProfileSchema,
-  editProfileType,
-} from "../validations/editProfileSchema";
-import Button from "../components/ui/Button";
-import { editUser } from "../store/user/act/actEditUser";
-import { uploadToCloudinary } from "../utils/cloudinary";
+// External libraries
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeClosed, Lock, Mail, Phone, User } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+
+// Internal components
+import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
 import Input from "../components/Form/Input/Input";
-import { Mail, User, Lock, Eye, EyeClosed } from "lucide-react";
-import { addToast } from "../store/toasts/toastsSlice";
+import Breadcrumb from "../components/Products/Breadcrumb";
+import Button from "../components/ui/Button";
+
+// Store and actions
 import { authEditData } from "../store/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { addToast } from "../store/toasts/toastsSlice";
+import { editUser } from "../store/user/act/actEditUser";
+import { getOneUser } from "../store/user/act/actGetOneUser";
 
-const DEFAULT_AVATAR =
-  "https://res.cloudinary.com/dizj9rluo/image/upload/v1744113485/defaultPerson_e7w75t.jpg";
+// Utils and validations
+import { uploadToCloudinary } from "../utils/cloudinary";
+import { editProfileSchema, editProfileType } from "../validations/editProfileSchema";
 
+// Constants
+const DEFAULT_AVATAR = "https://res.cloudinary.com/dizj9rluo/image/upload/v1744113485/defaultPerson_e7w75t.jpg";
+
+// Types
 interface BreadcrumbItem {
   label: string;
   link: string;
 }
 
+interface UpdateData {
+  id: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  image: string;
+  token: string;
+  password?: string;
+}
+
 const Profile = () => {
+  // Hooks and state
   const dispatch = useAppDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const { t } = useTranslation();
 
   const [isEditing, setIsEditing] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(DEFAULT_AVATAR);
@@ -37,16 +54,16 @@ const Profile = () => {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  // Store selectors
   const { user, token } = useAppSelector((state) => state.auth);
-
   const { error, loading } = useAppSelector((state) => state.user);
   const userId = user?.id;
 
   const record = useAppSelector((state) =>
-  userId && state.user.usersById[userId] ? state.user.usersById[userId] : null
-)
-console.log(userId );
+    userId && state.user.usersById[userId] ? state.user.usersById[userId] : null
+  );
 
+  // Form handling
   const {
     register,
     handleSubmit,
@@ -57,6 +74,7 @@ console.log(userId );
     resolver: zodResolver(editProfileSchema),
   });
 
+  // Effects
   useEffect(() => {
     if (record) {
       reset({
@@ -70,7 +88,7 @@ console.log(userId );
   }, [record, reset]);
 
   useEffect(() => {
-    if ( userId && !record ) {
+    if (userId && !record) {
       dispatch(getOneUser({ id: userId }));
     }
   }, [userId, dispatch, record]);
@@ -83,6 +101,7 @@ console.log(userId );
     };
   }, [avatarPreview]);
 
+  // Event handlers
   const handleAvatarChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -97,11 +116,30 @@ console.log(userId );
     [avatarPreview]
   );
 
+  const handleCancel = useCallback(() => {
+    reset({
+      name: record?.fullName || "",
+      email: record?.email || "",
+      phone: record?.phoneNumber || "",
+      password: "",
+    });
+    if (avatarPreview.startsWith("blob:")) {
+      URL.revokeObjectURL(avatarPreview);
+    }
+    setAvatarPreview(record?.image || DEFAULT_AVATAR);
+    setSelectedFile(null);
+    setIsEditing(false);
+    setSubmissionError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [avatarPreview, record, reset]);
+
   const onSubmit = async (data: editProfileType) => {
     if (!userId || !token) {
-      setSubmissionError("User authentication required.");
+      setSubmissionError(t('Profile.userAuthRequired'));
       dispatch(
-        addToast({ message: "User authentication required.", type: "error" })
+        addToast({ message: t('Profile.userAuthRequired'), type: "error" })
       );
       return;
     }
@@ -114,12 +152,12 @@ console.log(userId );
       if (selectedFile) {
         const uploadedUrl = await uploadToCloudinary(selectedFile);
         if (!uploadedUrl) {
-          throw new Error("Failed to upload image");
+          throw new Error(t('Profile.updateError'));
         }
         newAvatarUrl = uploadedUrl.url;
       }
 
-      const updateData: any = {
+      const updateData: UpdateData = {
         id: userId,
         fullName: data.name,
         email: data.email,
@@ -145,7 +183,7 @@ console.log(userId );
 
       await dispatch(getOneUser({ id: userId })).unwrap();
 
-      dispatch(addToast({ message: "تم تحديث بيانات حسابك", type: "success" }));
+      dispatch(addToast({ message: t('Profile.updateSuccess'), type: "success" }));
 
       setIsEditing(false);
       setSelectedFile(null);
@@ -155,7 +193,7 @@ console.log(userId );
       }
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "Failed to update profile.";
+        err instanceof Error ? err.message : t('Profile.updateError');
       setSubmissionError(errorMessage);
       dispatch(addToast({ message: errorMessage, type: "error" }));
     } finally {
@@ -163,33 +201,17 @@ console.log(userId );
     }
   };
 
-  const handleCancel = useCallback(() => {
-    reset({
-      name: record?.fullName || "",
-      email: record?.email || "",
-      phone: record?.phoneNumber || "",
-      password: "",
-    });
-    if (avatarPreview.startsWith("blob:")) {
-      URL.revokeObjectURL(avatarPreview);
-    }
-    setAvatarPreview(record?.image || DEFAULT_AVATAR);
-    setSelectedFile(null);
-    setIsEditing(false);
-    setSubmissionError(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  }, [avatarPreview, record, reset]);
-
-
+  // UI constants
   const breadcrumbItems: BreadcrumbItem[] = [{ label: "Home", link: "/" }];
 
-
+  // Loading and error states
   if (loading === "pending") {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        <LottieHandler type="loading" message="جارٍ تحميل الملف الشخصي..." />
+        <LottieHandler 
+          type="loading" 
+          message={t('Profile.loadingProfile')} 
+        />
       </div>
     );
   }
@@ -197,28 +219,38 @@ console.log(userId );
   if (error) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        <LottieHandler type="error" message={error} />
+        <LottieHandler 
+          type="error" 
+          message={error} 
+        />
       </div>
     );
   }
-
 
   if (!record) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
-        <LottieHandler type="error" message="لا توجد بيانات للملف الشخصي." />
+        <LottieHandler 
+          type="error" 
+          message={t('Profile.noProfileData')} 
+        />
       </div>
     );
   }
 
-
+  // Main render
   return (
     <div className="bg-section-color min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        <Breadcrumb items={breadcrumbItems} itemNow="Profile" />
+        <Breadcrumb 
+          items={breadcrumbItems} 
+          itemNow={t('Profile.title')} 
+        />
+        
         <h1 className="text-3xl font-bold text-color-text-1 text-center py-6">
-          ملفك الشخصي
+          {t('Profile.title')}
         </h1>
+        
         <div className="flex justify-center">
           <div className="bg-main-color-background rounded-xl shadow-lg p-8 w-full max-w-2xl">
             {submissionError && (
@@ -226,27 +258,28 @@ console.log(userId );
                 {submissionError}
               </div>
             )}
+            
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold text-color-text-2 border-b border-color-border pb-4">
-                  إعدادات الحساب
+                  {t('Profile.accountSettings')}
                 </h2>
 
                 <div className="flex flex-col items-center gap-6">
                   <div className="relative group">
                     <img
                       src={avatarPreview}
-                      alt="User avatar"
-                      className="w-32 h-32 rounded-full object-cover border-4 border-color-border"
+                      alt={t('Profile.changeProfilePicture')}
+                      className="w-32 h-32 flex items-center justify-center rounded-full object-cover border-4 border-color-border"
                     />
                     {isEditing && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute inset-0  bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                         <label
                           htmlFor="avatar-upload"
-                          className="cursor-pointer text-white text-sm font-medium"
-                          aria-label="Change profile picture"
+                          className="cursor-pointer flex flex-col items-center justify-center w-full h-full  text-center text-white text-sm font-medium"
+                          aria-label={t('Profile.changeProfilePicture')}
                         >
-                          تغيير
+                          {t('Profile.changeProfilePicture')}
                           <input
                             id="avatar-upload"
                             type="file"
@@ -265,19 +298,17 @@ console.log(userId );
                     <div>
                       {isEditing ? (
                         <Input
-                          label="اسمك"
+                          label={t('Profile.name')}
                           name="name"
                           type="text"
-                          placeholder="أدخل اسمك الجديد"
+                          placeholder={t('Profile.name')}
                           register={register}
-                          icon={
-                            <User size={16} className="text-color-text-2" />
-                          }
+                          icon={<User size={16} className="text-color-text-2" />}
                           error={errors?.name?.message}
                         />
                       ) : (
                         <p className="px-4 py-2.5 bg-section-color rounded-lg text-color-text-1 border border-transparent">
-                          {record.fullName || "غير متوفر"}
+                          {record.fullName || t('Profile.notAvailable')}
                         </p>
                       )}
                     </div>
@@ -285,19 +316,17 @@ console.log(userId );
                     <div>
                       {isEditing ? (
                         <Input
-                          label="بريدك الإلكتروني"
+                          label={t('Profile.email')}
                           name="email"
                           type="email"
-                          placeholder="أدخل بريدك الإلكتروني الجديد"
+                          placeholder={t('Profile.email')}
                           register={register}
-                          icon={
-                            <Mail size={16} className="text-color-text-2" />
-                          }
+                          icon={<Mail size={16} className="text-color-text-2" />}
                           error={errors?.email?.message}
                         />
                       ) : (
                         <p className="px-4 py-2.5 bg-section-color rounded-lg text-color-text-1">
-                          {record.email || "غير متوفر"}
+                          {record.email || t('Profile.notAvailable')}
                         </p>
                       )}
                     </div>
@@ -305,19 +334,17 @@ console.log(userId );
                     <div>
                       {isEditing ? (
                         <Input
-                          label="رقم هاتفك"
+                          label={t('Profile.phone')}
                           name="phone"
                           type="tel"
-                          placeholder="أدخل رقم هاتفك"
+                          placeholder={t('Profile.phone')}
                           register={register}
-                          icon={
-                            <User size={16} className="text-color-text-2" />
-                          }
+                          icon={<Phone size={16} className="text-color-text-2" />}
                           error={errors?.phone?.message}
                         />
                       ) : (
                         <p className="px-4 py-2.5 bg-section-color rounded-lg text-color-text-1">
-                          {record.phoneNumber || "غير متوفر"}
+                          {record.phoneNumber || t('Profile.notAvailable')}
                         </p>
                       )}
                     </div>
@@ -326,25 +353,19 @@ console.log(userId );
                       {isEditing && (
                         <div>
                           <Input
-                            label="كلمة المرور الجديدة (اختياري)"
+                            label={t('Profile.password')}
                             name="password"
                             type={showPassword ? "text" : "password"}
-                            placeholder="أدخل كلمة المرور الجديدة (اختياري)"
+                            placeholder={t('Profile.password')}
                             register={register}
-                            icon={
-                              <Lock size={16} className="text-color-text-2" />
-                            }
+                            icon={<Lock size={16} className="text-color-text-2" />}
                             error={errors?.password?.message}
                           />
                           <div
                             className="show-password absolute top-9 end-2 w-fit cursor-pointer text-color-text-2"
                             onClick={() => setShowPassword((prev) => !prev)}
                           >
-                            {showPassword ? (
-                              <Eye size={18} />
-                            ) : (
-                              <EyeClosed size={18} />
-                            )}
+                            {showPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
                           </div>
                         </div>
                       )}
@@ -362,7 +383,7 @@ console.log(userId );
                       }}
                       className="w-full sm:w-auto bg-button-color hover:bg-button-hover-color text-main-color-background px-8 py-2.5"
                     >
-                      تعديل الملف الشخصي
+                      {t('Profile.editProfile')}
                     </Button>
                   ) : (
                     <div className="flex flex-col sm:flex-row gap-4">
@@ -375,7 +396,7 @@ console.log(userId );
                             : ""
                         }`}
                       >
-                        {isUploading ? "جارٍ التحميل..." : "حفظ التغييرات"}
+                        {isUploading ? t('Profile.uploading') : t('Profile.saveChanges')}
                       </Button>
                       <Button
                         type="button"
@@ -383,7 +404,7 @@ console.log(userId );
                         disabled={isUploading || isSubmitting}
                         className="w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-black px-8 py-2.5"
                       >
-                        إلغاء
+                        {t('Profile.cancel')}
                       </Button>
                     </div>
                   )}

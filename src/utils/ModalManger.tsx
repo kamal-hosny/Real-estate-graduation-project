@@ -2,7 +2,7 @@
 import { useDispatch } from "react-redux";
 import { closeModal } from "../store/modal/modalSlice";
 
-import Modal from "../layouts/modal/Modal";
+import { Modal } from "../layouts";
 import { useAppSelector } from "../store/hooks";
 import { ComponentType } from "react";
 import DeleteOrder from "../components/Dashboard/modalDialog/DeleteOrder";

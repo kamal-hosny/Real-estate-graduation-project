@@ -1,36 +1,97 @@
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+// External libraries
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
-  FaMoneyBillAlt,
-  FaHome,
-  FaRulerCombined,
-  FaBed,
   FaBath,
-  FaDoorOpen,
+  FaBed,
   FaBuilding,
-  FaMapMarkerAlt,
   FaCity,
+  FaDoorOpen,
+  FaHome,
   FaMapMarkedAlt,
+  FaMapMarkerAlt,
+  FaMoneyBillAlt,
+  FaRulerCombined,
   FaTimes,
 } from "react-icons/fa";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Internal imports
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { closeModal } from "../../../store/modal/modalSlice";
+
+// Styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { ReactNode, useCallback } from "react";
-import { closeModal } from "../../../store/modal/modalSlice";
-import { useTranslation } from "react-i18next";
 
-type PropertyType =
-  | "Townhouse"
-  | "Villa"
-  | "Private House"
-  | "Apartment"
-  | "Office"
-  | "Shop";
+// Types
+// type PropertyType =
+//   | "Townhouse"
+//   | "Villa"
+//   | "Private House"
+//   | "Apartment"
+//   | "Office"
+//   | "Shop";
 
+// Components
+const SectionHeading = ({ title }: { title: string }) => (
+  <h3 className="text-xl font-semibold text-blue-900 flex items-center gap-3 pb-2 border-b border-blue-100">
+    <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
+    {title}
+  </h3>
+);
+
+const DetailItem = ({
+  icon,
+  title,
+  value,
+  accent,
+  compact,
+  fullWidth,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value: string | number;
+  accent?: string;
+  compact?: boolean;
+  fullWidth?: boolean;
+}) => (
+  <div
+    className={`${fullWidth ? "w-full" : "w-auto"} ${
+      compact ? "p-2.5" : "p-3.5"
+    } flex items-center gap-4 bg-white rounded-lg border border-blue-50 hover:border-blue-100 transition-colors`}
+  >
+    <span
+      className={`text-blue-600 ${
+        compact ? "text-lg p-2" : "text-xl p-2.5"
+      } bg-blue-25 rounded-lg`}
+    >
+      {icon}
+    </span>
+    <div className="flex-1">
+      <span
+        className={`${
+          compact ? "text-sm" : "text-base"
+        } font-medium text-blue-500/90`}
+      >
+        {title}
+      </span>
+      <span
+        className={`block ${
+          compact ? "text-lg" : "text-xl"
+        } ${accent || "text-blue-900"} font-semibold mt-0.5`}
+      >
+        {value}
+      </span>
+    </div>
+  </div>
+);
+
+// Main Component
 const ShowPropertyDetails = () => {
-  const { t } = useTranslation(""); // Use default namespace
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const { property } = useAppSelector((state) => state?.modal?.product);
 
@@ -40,7 +101,6 @@ const ShowPropertyDetails = () => {
 
   if (!property) return null;
 
-  // Map propertyType to translation key
   const propertyTypeKey = property.propertyType
     .toLowerCase()
     .replace(/\s+/g, "_") as
@@ -51,13 +111,11 @@ const ShowPropertyDetails = () => {
     | "office"
     | "shop";
 
-  // Helper function to get translated propertyType with fallback
   const getPropertyTypeTranslation = (
     key: string,
     fallback: string
   ): string => {
     const translation = t(`ShowPropertyDetails.propertyType.${key}`);
-    // If translation is the key itself (i.e., missing), use fallback
     return translation.startsWith("ShowPropertyDetails.propertyType.")
       ? fallback
       : translation;
@@ -73,7 +131,7 @@ const ShowPropertyDetails = () => {
     >
       <div
         className="bg-white rounded-2xl shadow-xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden border border-blue-50"
-        onClick={(e: any) => e.stopPropagation()}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
         {/* Header Section */}
         <div className="flex justify-between items-center px-8 py-6 bg-blue-25 border-b border-blue-100">
@@ -115,25 +173,24 @@ const ShowPropertyDetails = () => {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-             
                     </div>
                   </SwiperSlide>
                 ))}
-                         <span className="absolute z-10 top-4 right-4 bg-blue-600 text-white py-1 px-3 text-sm rounded-full shadow-sm">
-                        {getPropertyTypeTranslation(
-                          propertyTypeKey,
-                          property.propertyType
-                        )}
-                      </span>
-                      <span
-                        className={`absolute z-10 top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                          property.status === "For Sale"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-amber-100 text-amber-800"
-                        }`}
-                      >
-                        {t(`ShowPropertyDetails.status.${propertyStatusKey}`)}
-                      </span>
+                <span className="absolute z-10 top-4 right-4 bg-blue-600 text-white py-1 px-3 text-sm rounded-full shadow-sm">
+                  {getPropertyTypeTranslation(
+                    propertyTypeKey,
+                    property.propertyType
+                  )}
+                </span>
+                <span
+                  className={`absolute z-10 top-[50px] right-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                    property.status === "For Sale"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-amber-100 text-amber-800"
+                  }`}
+                >
+                  {t(`ShowPropertyDetails.status.${propertyStatusKey}`)}
+                </span>
               </Swiper>
             </div>
           )}
@@ -276,60 +333,5 @@ const ShowPropertyDetails = () => {
     </div>
   );
 };
-
-// Section Heading Component
-const SectionHeading = ({ title }: { title: string }) => (
-  <h3 className="text-xl font-semibold text-blue-900 flex items-center gap-3 pb-2 border-b border-blue-100">
-    <div className="w-1.5 h-6 bg-blue-600 rounded-full" />
-    {title}
-  </h3>
-);
-
-// Detail Item Component
-const DetailItem = ({
-  icon,
-  title,
-  value,
-  accent,
-  compact,
-  fullWidth,
-}: {
-  icon: ReactNode;
-  title: string;
-  value: string | number;
-  accent?: string;
-  compact?: boolean;
-  fullWidth?: boolean;
-}) => (
-  <div
-    className={`${fullWidth ? "w-full" : "w-auto"} ${
-      compact ? "p-2.5" : "p-3.5"
-    } flex items-center gap-4 bg-white rounded-lg border border-blue-50 hover:border-blue-100 transition-colors`}
-  >
-    <span
-      className={`text-blue-600 ${
-        compact ? "text-lg p-2" : "text-xl p-2.5"
-      } bg-blue-25 rounded-lg`}
-    >
-      {icon}
-    </span>
-    <div className="flex-1">
-      <span
-        className={`${
-          compact ? "text-sm" : "text-base"
-        } font-medium text-blue-500/90`}
-      >
-        {title}
-      </span>
-      <span
-        className={`block ${
-          compact ? "text-lg" : "text-xl"
-        } ${accent || "text-blue-900"} font-semibold mt-0.5`}
-      >
-        {value}
-      </span>
-    </div>
-  </div>
-);
 
 export default ShowPropertyDetails;

@@ -1,9 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleDarkMode } from "../../../../store/features/darkMode/darkModeSlice";
-import { Sun, Moon } from "lucide-react";
-import Button from "../../../ui/Button";
+// External imports
 import { memo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Sun, Moon } from "lucide-react";
+
+// Internal imports
 import { RootState } from "../../../../store/rootReducer";
+import { toggleDarkMode } from "../../../../store/features/darkMode/darkModeSlice";
+import Button from "../../../ui/Button";
 
 const DarkMode = memo(() => {
   const dispatch = useDispatch();

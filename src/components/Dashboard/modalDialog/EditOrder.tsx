@@ -1,13 +1,18 @@
+// External imports
 import { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
+// Internal imports
 import { RealProperty } from '../../../types';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useForm } from 'react-hook-form';
 import { supabase } from '../../../config/supabaseClient';
 import { closeModal } from '../../../store/modal/modalSlice';
 import { addToast } from '../../../store/toasts/toastsSlice';
-import { useTranslation } from 'react-i18next';
 
+// Types
 type TTypeOrder = 'PurchaseOrders' | 'RentOrders' | 'SalesOrders' | null;
+
 type FormData = {
   TypeOrder: 'Rejected' | 'Success' | 'Pending';
 };
@@ -22,20 +27,14 @@ interface DataP {
 }
 
 const EditOrder = () => {
-  const { t } = useTranslation(""); // Use default namespace
+  // Hooks
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const { id, property, TypeOrder } = useAppSelector(
     (state) => state.modal.product as DataP
   );
 
-  let TypeOrderSupa: TTypeOrder = null;
-
-  if (property?.status === 'For Sale') {
-    TypeOrderSupa = 'PurchaseOrders';
-  } else if (property?.status === 'For Rent') {
-    TypeOrderSupa = 'RentOrders';
-  }
-
+  // Form setup
   const {
     register,
     handleSubmit,
@@ -49,13 +48,30 @@ const EditOrder = () => {
     mode: 'onChange',
   });
 
+  // Derived values
+  const TypeOrderSupa: TTypeOrder = property?.status === 'For Sale' 
+    ? 'PurchaseOrders' 
+    : property?.status === 'For Rent' 
+      ? 'RentOrders' 
+      : null;
+
+  const currentTypeOrder = watch('TypeOrder');
+
+  // Event handlers
+  const cancel = useCallback(() => {
+    dispatch(closeModal());
+  }, [dispatch]);
+
   const supabaseDeleteOrderSale = async () => {
     try {
       if (!TypeOrderSupa || !id) {
         throw new Error('Missing TypeOrder or id');
       }
 
-      const { error } = await supabase.from(TypeOrderSupa).delete().eq('id', id);
+      const { error } = await supabase
+        .from(TypeOrderSupa)
+        .delete()
+        .eq('id', id);
 
       if (error) {
         throw new Error(`Failed to delete order: ${error.message}`);
@@ -149,19 +165,15 @@ const EditOrder = () => {
     }
   };
 
-  const cancel = useCallback(() => {
-    dispatch(closeModal());
-  }, [dispatch]);
-
-  const currentTypeOrder = watch('TypeOrder');
-
   return (
     <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6">
       <div className="text-center mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           {t("editOrder.title")}
         </h3>
-        <p className="text-gray-500">{t("editOrder.description")}</p>
+        <p className="text-gray-500">
+          {t("editOrder.description")}
+        </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -175,9 +187,15 @@ const EditOrder = () => {
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="Pending">{t("editOrder.typeOrderOptions.pending")}</option>
-            <option value="Success">{t("editOrder.typeOrderOptions.success")}</option>
-            <option value="Rejected">{t("editOrder.typeOrderOptions.rejected")}</option>
+            <option value="Pending">
+              {t("editOrder.typeOrderOptions.pending")}
+            </option>
+            <option value="Success">
+              {t("editOrder.typeOrderOptions.success")}
+            </option>
+            <option value="Rejected">
+              {t("editOrder.typeOrderOptions.rejected")}
+            </option>
           </select>
           {errors.TypeOrder && (
             <p className="text-red-500 text-sm mt-1">

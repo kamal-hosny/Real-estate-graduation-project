@@ -1,7 +1,11 @@
-import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
-import PurchaseTableBody from "./SalesTableBody";
+// External imports
 import { useTranslation } from "react-i18next";
 
+// Internal imports
+import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
+import PurchaseTableBody from "./SalesTableBody";
+
+// Types
 interface DataP {
   id: number;
   TypeOrder: string;
@@ -33,7 +37,7 @@ interface SalesTableRequestsProps {
 }
 
 const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
-  const { t } = useTranslation(""); // Use default namespace
+  const { t } = useTranslation("");
   const propertiesArray = Array.isArray(properties)
     ? properties
     : properties?.$values || [];
@@ -72,9 +76,14 @@ const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
             </th>
           </tr>
         </thead>
+
         <tbody className="divide-y divide-gray-200">
           {propertiesArray.map((item: DataP, index: number) => (
-            <PurchaseTableBody key={item.id} item={item} index={index} />
+            <PurchaseTableBody
+              key={item.id}
+              item={item}
+              index={index}
+            />
           ))}
         </tbody>
       </table>
@@ -85,7 +94,9 @@ const SalesTableRequests = ({ properties }: SalesTableRequestsProps) => {
             className="scale-75"
             type="empty"
             message={
-              <p className="text-gray-500">{t("salesTableRequests.emptyMessage")}</p>
+              <p className="text-gray-500">
+                {t("salesTableRequests.emptyMessage")}
+              </p>
             }
           />
         </div>

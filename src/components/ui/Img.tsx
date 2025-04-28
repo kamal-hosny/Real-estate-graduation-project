@@ -1,8 +1,6 @@
-import { ImgHTMLAttributes, forwardRef } from "react"
+import { ImgHTMLAttributes, forwardRef } from "react";
 
-interface IProps extends ImgHTMLAttributes<HTMLImageElement> { }
-
-const Img = forwardRef<HTMLImageElement, IProps>(({ ...rest }, ref) => {
+const Img = forwardRef<HTMLImageElement, ImgHTMLAttributes<HTMLImageElement>>(({ ...rest }, ref) => {
     return <img ref={ref} loading="lazy" {...rest} />
 });
 

@@ -1,4 +1,7 @@
+// External imports
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
+// Internal imports
 import Button from "../ui/Button";
 
 interface IProps {
@@ -8,7 +11,6 @@ interface IProps {
 }
 
 const Pagination = ({ lastPage, currentPage, setCurrentPage }: IProps) => {
-
   const next = () => {
     if (currentPage === null || currentPage === lastPage) return;
     setCurrentPage(currentPage + 1);

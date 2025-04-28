@@ -1,45 +1,53 @@
+// External imports
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Eye, Pencil, Trash2, User, UserRound } from "lucide-react";
+
+// Internal imports
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { getOneUser } from "../../../store/user/act/actGetOneUser";
-import { formatCurrency, textSlicer } from "../../../utils";
-import { Eye, Pencil, Trash2, User, UserRound } from "lucide-react";
 import { openModal } from "../../../store/modal/modalSlice";
+import { formatCurrency, textSlicer } from "../../../utils";
 import Images from "../../ui/Images";
-import { Link } from "react-router-dom";
 
-interface dataP {
-  item: {
-    id: number;
-    TypeOrder: string;
-    created_at: string;
-    clientId: string;
-    property: {
-      propertyId: number;
-      propertyTitle: string;
-      propertyType: string;
-      price: string;
-      status: string;
-      city: string;
-      address: string;
-      googleMapsLink: string;
-      totalRooms: string;
-      bathrooms: string;
-      bedrooms: string;
-      floorNumber: string;
-      area: string;
-      furnished: boolean;
-      description: string;
-      createdAt: number;
-      propertyImages: string[];
-      userId: string;
-    };
-  };
+// Types
+interface Property {
+  propertyId: number;
+  propertyTitle: string;
+  propertyType: string;
+  price: string;
+  status: string;
+  city: string;
+  address: string;
+  googleMapsLink: string;
+  totalRooms: string;
+  bathrooms: string;
+  bedrooms: string;
+  floorNumber: string;
+  area: string;
+  furnished: boolean;
+  description: string;
+  createdAt: number;
+  propertyImages: string[];
+  userId: string;
+}
+
+interface TableItem {
+  id: number;
+  TypeOrder: string;
+  created_at: string;
+  clientId: string;
+  property: Property;
+}
+
+interface TableBodyProps {
+  item: TableItem;
   index: number;
 }
 
-const TableBody = ({ item, index }: dataP) => {
+const TableBody = ({ item, index }: TableBodyProps) => {
   const dispatch = useAppDispatch();
-  const usersById = useAppSelector((state) => state.user.usersById); 
+  const usersById = useAppSelector((state) => state.user.usersById);
   const user = usersById[item.clientId];
 
   useEffect(() => {
@@ -49,7 +57,7 @@ const TableBody = ({ item, index }: dataP) => {
   }, [item?.clientId, usersById, dispatch]);
 
   const property = item.property;
-  const images = (item?.property?.propertyImages as any).$values;
+  const images = property.propertyImages || [];
 
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">
@@ -100,7 +108,7 @@ const TableBody = ({ item, index }: dataP) => {
         </div>
       </td>
       <td className="px-6 py-4 text-sm text-gray-600">
-        {item?.property?.propertyImages ? (
+        {images.length > 0 ? (
           <Images images={images} />
         ) : (
           <span>لا يوجد صور</span>
@@ -134,19 +142,18 @@ const TableBody = ({ item, index }: dataP) => {
       </td>
       <td className="px-6 py-4">
         <div className="flex justify-center items-center gap-3">
-          <button className="text-gray-400 cursor-pointer hover:text-purple-600 transition-colors">
-            <User
-              onClick={() => {
-                dispatch(
-                  openModal({
-                    name: "ShowUserDetails",
-                    product: user,
-                  })
-                );
-              }}
-              size={20}
-              className="stroke-current"
-            />
+          <button
+            className="text-gray-400 cursor-pointer hover:text-purple-600 transition-colors"
+            onClick={() => {
+              dispatch(
+                openModal({
+                  name: "ShowUserDetails",
+                  product: user,
+                })
+              );
+            }}
+          >
+            <User size={20} className="stroke-current" />
           </button>
 
           <Link
@@ -169,7 +176,9 @@ const TableBody = ({ item, index }: dataP) => {
           >
             <Pencil size={20} className="stroke-current" />
           </button>
+
           <button
+            className="text-gray-400 cursor-pointer hover:text-red-600 transition-colors"
             onClick={() =>
               dispatch(
                 openModal({
@@ -181,7 +190,6 @@ const TableBody = ({ item, index }: dataP) => {
                 })
               )
             }
-            className="text-gray-400 cursor-pointer hover:text-red-600 transition-colors"
           >
             <Trash2 size={20} className="stroke-current" />
           </button>

@@ -7,12 +7,11 @@ import i18n from "../language";
 // Internal components
 import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
 import PageSuspenseFallback from "../components/common/feedback/PageSuspenseFallback/PageSuspenseFallback";
-import { MainLayout } from "../layouts";
-import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import { MainLayout, DashboardLayout } from "../layouts";
+
 
 // Pages
 import About from "../pages/About";
-import Users from "../pages/Dashboard/Users";
 import Error from "../pages/Error";
 
 // Lazy-loaded pages
@@ -33,6 +32,7 @@ const HomeD = lazy(() => import("../pages/Dashboard/HomeD"));
 const PurchaseRequests = lazy(() => import("../pages/Dashboard/PurchaseRequests"));
 const SalesRequests = lazy(() => import("../pages/Dashboard/SalesRequests"));
 const RentalRequests = lazy(() => import("../pages/Dashboard/RentalRequests"));
+const Users = lazy(() => import("../pages/Dashboard/Users"));
 
 // Store
 import { AppDispatch } from "../store";

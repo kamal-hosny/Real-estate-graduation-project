@@ -1,23 +1,31 @@
+// External imports
 import { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { closeModal } from "../../../store/modal/modalSlice";
-import { supabase } from "../../../config/supabaseClient";
-import { addToast } from "../../../store/toasts/toastsSlice";
 import { useTranslation } from "react-i18next";
 
+// Internal imports
+import { supabase } from "../../../config/supabaseClient";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { closeModal } from "../../../store/modal/modalSlice";
+import { addToast } from "../../../store/toasts/toastsSlice";
+
+// Types
 type TTypeOrder = "PurchaseOrders" | "RentOrders" | "SalesOrders";
 
 const DeleteOrder = () => {
-  const { t } = useTranslation(""); // Use default namespace
+  // Hooks
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const { id, property } = useAppSelector((state) => state?.modal?.product);
+  const [isDeleting, setIsDeleting] = useState(false);
 
+  // Derived values
   const TypeOrder: TTypeOrder | null = property?.status === "For Sale"
     ? "PurchaseOrders"
     : property?.status === "For Rent"
     ? "RentOrders"
     : null;
 
+  // Event handlers
   const confirmLog = useCallback(async () => {
     try {
       if (!TypeOrder || !id) {
@@ -33,10 +41,16 @@ const DeleteOrder = () => {
         throw error;
       }
 
-      dispatch(addToast({ message: t("deleteOrder.successMessage"), type: "success" }));
+      dispatch(addToast({ 
+        message: t("deleteOrder.successMessage"), 
+        type: "success" 
+      }));
     } catch (err) {
       dispatch(
-        addToast({ message: t("deleteOrder.errorMessage"), type: "error" })
+        addToast({ 
+          message: t("deleteOrder.errorMessage"), 
+          type: "error" 
+        })
       );
       console.error(err);
     } finally {
@@ -47,8 +61,6 @@ const DeleteOrder = () => {
   const cancel = useCallback(() => {
     dispatch(closeModal());
   }, [dispatch]);
-
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleConfirm = async () => {
     setIsDeleting(true);
@@ -77,8 +89,12 @@ const DeleteOrder = () => {
       </div>
 
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("deleteOrder.title")}</h3>
-        <p className="text-gray-500">{t("deleteOrder.confirmMessage")}</p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {t("deleteOrder.title")}
+        </h3>
+        <p className="text-gray-500">
+          {t("deleteOrder.confirmMessage")}
+        </p>
       </div>
 
       <div className="flex justify-end gap-3">

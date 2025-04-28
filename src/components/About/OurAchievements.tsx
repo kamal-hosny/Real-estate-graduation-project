@@ -1,7 +1,11 @@
+// External imports
 import React from "react";
 import { useTranslation } from "react-i18next";
+
+// Internal imports
 import MainTitle from "../common/main/MainTitle";
 
+// Types
 type Achievement = {
   titleKey: string;
   descriptionKey: string;

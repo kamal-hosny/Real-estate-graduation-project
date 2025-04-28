@@ -1,14 +1,19 @@
+// External imports
 import { useTranslation } from "react-i18next";
-import Img from "../ui/Img";
-import MainTitle from "../common/main/MainTitle";
-import realEstateImg from "../../assets/about/about2.jpeg";
 
+// Internal imports
+import realEstateImg from "../../assets/about/about2.jpeg";
+import MainTitle from "../common/main/MainTitle";
+import Img from "../ui/Img";
+
+// Types
 type MilestoneCard = {
     id: number;
     nameKey: string; 
     number: number;
 };
 
+// Constants
 const milestoneCards: MilestoneCard[] = [
     {
         id: 1,

@@ -1,11 +1,15 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { Bot, Send, Loader2, X, RefreshCw, Undo2 } from 'lucide-react';
+// External imports
+import { Bot, Loader2, RefreshCw, Send, Undo2, X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+// Internal imports
+import { sendMessageToDeepSeek } from '../../../store/AIModleDeepSeek/act/actSendMassageToDeepSeek';
+import { reset } from '../../../store/AIModleDeepSeek/deepSeekSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { closeModal } from '../../../store/modal/modalSlice';
-import { sendMessageToDeepSeek } from '../../../store/AIModleDeepSeek/act/actSendMassageToDeepSeek';
 import { TLoading } from '../../../types';
-import { reset } from '../../../store/AIModleDeepSeek/deepSeekSlice';
 
+// Types
 interface Message {
   id: number;
   content: string;
@@ -20,7 +24,7 @@ interface Answers {
   finishing?: string;
   delivery?: string;
   amenities?: string;
-  [key: string]: string | undefined; // Added index signature
+  [key: string]: string | undefined;
 }
 
 interface DeepSeekState {
@@ -51,6 +55,7 @@ interface Property {
   amenities?: string;
 }
 
+// Constants
 const questions = [
   {
     id: 1,
@@ -89,8 +94,13 @@ const questions = [
   },
 ];
 
+// Component
 const AssistantBotDialog = () => {
+  // Hooks
   const dispatch = useAppDispatch();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // State
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, content: 'مرحبًا! كيف يمكنني مساعدتك اليوم؟', isBot: true },
     {
@@ -105,13 +115,17 @@ const AssistantBotDialog = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
   const [answers, setAnswers] = useState<Answers>({});
   const [isChatCompleted, setIsChatCompleted] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Selectors
   const { record, loading, error: deepSeekError } = useAppSelector(
-    (state: { deepSeek?: DeepSeekState }) => state.deepSeek || { record: null, loading: 'idle' as TLoading, error: null }
+    (state: { deepSeek?: DeepSeekState }) => 
+      state.deepSeek || { record: null, loading: 'idle' as TLoading, error: null }
   );
-  const data = useAppSelector((state: { modal?: { product?: Property } }) => state.modal?.product);
+  const data = useAppSelector(
+    (state: { modal?: { product?: Property } }) => state.modal?.product
+  );
 
+  // Handlers
   const processUserInput = async (message: string) => {
     if (!message.trim() || message.length < 3) {
       setError('يرجى إدخال إجابة صالحة (أكثر من 3 أحرف).');
@@ -187,7 +201,7 @@ const AssistantBotDialog = () => {
                 property.propertyImages?.$values
                   ? JSON.stringify(property.propertyImages.$values)
                   : '[]'
-              } (Assume images reflect the property’s condition, layout, and finishing as described)
+              } (Assume images reflect the property's condition, layout, and finishing as described)
               - Finishing: ${property.finishing || 'N/A'}
               - Delivery: ${property.delivery || 'N/A'}
               - Amenities: ${property.amenities || 'N/A'}
@@ -207,10 +221,10 @@ const AssistantBotDialog = () => {
               2. For each response:
                  - Evaluate the sentiment (positive, negative, or neutral) and relevance to the question.
                  - Compare the response to the relevant property attribute (e.g., price for budget, area for space needs).
-                 - If the response indicates satisfaction or alignment with the property’s attributes (e.g., positive sentiment, phrases like "suitable," "good," or "ناسب"), assign a score of +1.
+                 - If the response indicates satisfaction or alignment with the property's attributes (e.g., positive sentiment, phrases like "suitable," "good," or "ناسب"), assign a score of +1.
                  - If the response indicates dissatisfaction or mismatch (e.g., negative sentiment, phrases like "too expensive," "غير مناسب"), assign a score of -1.
                  - If the response is vague, unrelated, or neutral, assign a score of 0.
-              3. Consider the property’s images as a reflection of its condition and finishing. Assume the images align with the text descriptions (e.g., finishing, layout) unless contradicted by user responses.
+              3. Consider the property's images as a reflection of its condition and finishing. Assume the images align with the text descriptions (e.g., finishing, layout) unless contradicted by user responses.
               4. Sum the scores across all responses to determine overall suitability.
               5. Return:
                  - "true" if the total score is positive (indicating the property is likely suitable).
@@ -221,8 +235,8 @@ const AssistantBotDialog = () => {
           );
         }
       }
-    } catch (err: any) {
-      setError(err.message || 'حدث خطأ أثناء معالجة ردك. حاول مرة أخرى.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'حدث خطأ أثناء معالجة ردك. حاول مرة أخرى.');
     } finally {
       setIsLoading(false);
     }
@@ -254,6 +268,11 @@ const AssistantBotDialog = () => {
     setIsChatCompleted(false);
   };
 
+  const cancel = useCallback(() => {
+    dispatch(closeModal());
+  }, [dispatch]);
+
+  // Effects
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -278,10 +297,7 @@ const AssistantBotDialog = () => {
     }
   }, [record]);
 
-  const cancel = useCallback(() => {
-    dispatch(closeModal());
-  }, [dispatch]);
-
+  // Render
   return (
     <div
       className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
@@ -366,24 +382,22 @@ const AssistantBotDialog = () => {
                   aria-label="إدخال رسالة"
                   rows={3}
                 />
-               <div className='flex flex-col justify-between'>
-               <button
-                  type="submit"
-                  disabled={isLoading || loading === 'pending' || isChatCompleted || !inputMessage.trim()}
-                  className="flex justify-center items-center w-14 h-12 bg-[#828282] text-white rounded-xl hover:bg-[#767676] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
-                  aria-label="إرسال الرسالة"
-                >
-                  <Send className="w-5 h-5 text-white" />
-                </button>
-               <button
-                  
-                  
-                  className="flex justify-center items-center w-14 h-10 bg-gray-700 text-white rounded-xl hover:bg-gray-700/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
-                  onClick={cancel}
-                >
-                  <Undo2 className="w-5 h-5" />
-                </button>
-               </div>
+                <div className="flex flex-col justify-between">
+                  <button
+                    type="submit"
+                    disabled={isLoading || loading === 'pending' || isChatCompleted || !inputMessage.trim()}
+                    className="flex justify-center items-center w-14 h-12 bg-[#828282] text-white rounded-xl hover:bg-[#767676] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
+                    aria-label="إرسال الرسالة"
+                  >
+                    <Send className="w-5 h-5 text-white" />
+                  </button>
+                  <button
+                    className="flex justify-center items-center w-14 h-10 bg-gray-700 text-white rounded-xl hover:bg-gray-700/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
+                    onClick={cancel}
+                  >
+                    <Undo2 className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             </form>
           )}

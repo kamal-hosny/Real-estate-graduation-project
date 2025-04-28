@@ -1,37 +1,39 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../config/supabaseClient";
 
-interface dataTable {
+interface Property {
+  propertyId: number;
+  propertyTitle: string;
+  propertyType: string;
+  price: string;
+  status: string;
+  city: string;
+  address: string;
+  googleMapsLink: string;
+  totalRooms: string;
+  bathrooms: string;
+  bedrooms: string;
+  floorNumber: string;
+  area: string;
+  furnished: boolean;
+  description: string;
+  createdAt: number;
+  propertyImages: string[];
+  userId: string;
+}
+
+interface PurchaseOrder {
   id: number;
   TypeOrder: string;
   created_at: string;
   userToken: string;
   clientId: string;
-  property: {
-    propertyId: number;
-    propertyTitle: string;
-    propertyType: string;
-    price: string;
-    status: string;
-    city: string;
-    address: string;
-    googleMapsLink: string;
-    totalRooms: string;
-    bathrooms: string;
-    bedrooms: string;
-    floorNumber: string;
-    area: string;
-    furnished: boolean;
-    description: string;
-    createdAt: number;
-    propertyImages: string[];
-    userId: string;
-  };
+  property: Property;
 }
 
 export const useGetPurchaseOrders = () => {
   const [loading, setLoading] = useState(true);
-  const [properties, setProperties] = useState<dataTable[]>([]);
+  const [properties, setProperties] = useState<PurchaseOrder[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchProperties = async () => {
@@ -40,7 +42,7 @@ export const useGetPurchaseOrders = () => {
       console.error("حدث خطأ أثناء جلب بيانات العقارات:", error.message);
       setError("فشل في جلب بيانات العقارات.");
     } else {
-      setProperties(data as dataTable[]);
+      setProperties(data as PurchaseOrder[]);
     }
     setLoading(false);
   };
@@ -57,11 +59,11 @@ export const useGetPurchaseOrders = () => {
           console.log("تغيير في PurchaseOrders:", payload);
 
           if (payload.eventType === "INSERT") {
-            setProperties((prev) => [...prev, payload.new as dataTable]);
+            setProperties((prev) => [...prev, payload.new as PurchaseOrder]);
           } else if (payload.eventType === "UPDATE") {
             setProperties((prev) =>
               prev.map((item) =>
-                item.id === payload.new.id ? (payload.new as dataTable) : item
+                item.id === payload.new.id ? (payload.new as PurchaseOrder) : item
               )
             );
           } else if (payload.eventType === "DELETE") {

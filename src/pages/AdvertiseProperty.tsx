@@ -1,5 +1,10 @@
+// External libraries
 import { useTranslation } from 'react-i18next';
+
+// Assets
 import mainImage from '../assets/advertiseProperty/advertiseProperty.avif';
+
+// Components
 import AdvertiseForm from '../components/AdvertiseProperty/AdvertiseForm';
 import Breadcrumb from '../components/Products/Breadcrumb';
 import MainTitle from '../components/common/main/MainTitle';
@@ -50,9 +55,9 @@ const AdvertiseProperty = () => {
             </p>
             
             <ul className="list-disc pl-6 space-y-2 text-gray-600">
-            {(t('advertiseProperty.content.listItems', { returnObjects: true }) as string[])?.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
+              {(t('advertiseProperty.content.listItems', { returnObjects: true }) as string[])?.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </div>
         </MainTitle>
@@ -60,7 +65,7 @@ const AdvertiseProperty = () => {
         <AdvertiseForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AdvertiseProperty;

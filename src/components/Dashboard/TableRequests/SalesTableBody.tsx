@@ -1,12 +1,16 @@
+// External libraries
 import { Eye, Pencil, Trash2, UserRound } from "lucide-react";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
+// Internal imports
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { openModal } from "../../../store/modal/modalSlice";
 import { getOneUser } from "../../../store/user/act/actGetOneUser";
 import { formatCurrency, textSlicer } from "../../../utils";
-import { useEffect } from "react";
 import Images from "../../ui/Images";
-import { useTranslation } from "react-i18next";
 
+// Types
 interface dataP {
   item: {
     id: number;
@@ -37,10 +41,11 @@ interface dataP {
 }
 
 const SalesTableBody = ({ item, index }: dataP) => {
-  const { t } = useTranslation(""); // Use default namespace
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const usersById = useAppSelector((state) => state.user.usersById);
   const user = usersById[item.property.userId];
+  const property = item.property;
 
   useEffect(() => {
     if (item.property.userId && !usersById[item.property.userId]) {
@@ -48,9 +53,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
     }
   }, [item.property.userId, usersById, dispatch]);
 
-  const property = item.property;
-
-  // Fallback for dynamic translations
+  // Helper functions for translations
   const getStatusTranslation = (status: string) => {
     return t(`salesTableBody.status.${status}`, t("salesTableBody.status.Other"));
   };
@@ -60,10 +63,14 @@ const SalesTableBody = ({ item, index }: dataP) => {
   };
 
   return (
-    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+    <tr 
+      key={item.id} 
+      className="hover:bg-gray-50 transition-colors"
+    >
       <td className="px-6 py-4 text-sm font-medium text-gray-700">
         {index + 1}
       </td>
+
       <td className="px-6 py-4">
         <div className="flex flex-col gap-1">
           <span className="font-medium text-gray-900 text-left">
@@ -74,12 +81,15 @@ const SalesTableBody = ({ item, index }: dataP) => {
           </span>
         </div>
       </td>
+
       <td className="px-6 py-4 text-sm text-gray-600">
         {property.propertyType}
       </td>
+
       <td className="px-6 py-4 text-sm font-semibold text-gray-900">
         {formatCurrency(parseFloat(property.price) || 0)}
       </td>
+
       <td className="px-6 py-4">
         <div className="flex items-center gap-3">
           <div className="flex-shrink-0">
@@ -105,6 +115,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           </div>
         </div>
       </td>
+
       <td className="px-6 py-4 text-sm text-gray-600">
         {item?.property?.propertyImages ? (
           <Images images={item?.property?.propertyImages} />
@@ -112,6 +123,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           <span>{t("salesTableBody.noImages")}</span>
         )}
       </td>
+
       <td className="px-6 py-4 text-sm text-gray-600">
         <span
           className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
@@ -123,6 +135,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           {getStatusTranslation(property.status)}
         </span>
       </td>
+
       <td className="px-6 py-4">
         <span
           className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
@@ -138,6 +151,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           {getOrderTypeTranslation(item.TypeOrder)}
         </span>
       </td>
+
       <td className="px-6 py-4">
         <div className="flex justify-center items-center gap-3">
           <button
@@ -153,6 +167,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           >
             <Eye size={20} className="stroke-current" />
           </button>
+
           <button
             className="text-gray-400 hover:text-blue-600 transition-colors"
             onClick={() => {
@@ -166,6 +181,7 @@ const SalesTableBody = ({ item, index }: dataP) => {
           >
             <Pencil size={20} className="stroke-current" />
           </button>
+
           <button
             onClick={() =>
               dispatch(

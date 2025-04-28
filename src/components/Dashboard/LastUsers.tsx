@@ -1,35 +1,48 @@
+// External libraries
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+
+// Internal imports
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { useEffect } from 'react';
+import { RootState } from '../../store/rootReducer';
 import { getAllUser } from '../../store/user/act/actGetAllUser';
+import { TUser } from '../../types';
 import { convertDate } from '../../utils/dateFun';
-import { useTranslation } from 'react-i18next';
 
 const LastUsers = () => {
+  // Hooks
   const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const { records, loading, error } = useAppSelector((state) => state.user);
-  const { token } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state: RootState) => state.auth);
 
+  // Effects
   useEffect(() => {
     dispatch(getAllUser(token || ""));
   }, [dispatch]);
 
-  const lastFiveUsers: any[] = records
-    ? records.slice(-5)
-    : [];
+  // Derived state
+  const lastFiveUsers: TUser[] = records ? records.slice(-5) : [];
 
+  // Loading state
   if (loading === "pending") {
     return <div className="text-center p-6"></div>;
   }
 
+  // Error state
   if (error) {
-    return <div className="text-center p-6 text-red-500">{t("lastUsers.error", { error })}</div>;
+    return (
+      <div className="text-center p-6 text-red-500">
+        {t("lastUsers.error", { error })}
+      </div>
+    );
   }
 
   return (
     <div className="bg-[#f4f7fa] p-6 rounded-lg shadow-md border border-gray-200 h-fit">
+      {/* Header section */}
       <div className="flex items-center justify-between mb-4">
         <span className="flex gap-2 items-center">
           <FaUsers className="text-gray-800 text-xl" />
@@ -45,6 +58,8 @@ const LastUsers = () => {
           {t("lastUsers.viewMore")}
         </Link>
       </div>
+
+      {/* Users list */}
       <div className="space-y-4">
         {lastFiveUsers.length > 0 ? (
           lastFiveUsers.map((user) => (
@@ -69,7 +84,9 @@ const LastUsers = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">{t("lastUsers.noUsers")}</p>
+          <p className="text-center text-gray-500">
+            {t("lastUsers.noUsers")}
+          </p>
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@ import { RiImageCircleLine } from "react-icons/ri";
 import Img from "./Img";
 
 const Images = ({ images }: { images: string[] }) => {
-  let fiveImage =  Array.isArray(images) ? images.slice(0, 4) : [];
+  const fiveImage = Array.isArray(images) ? images.slice(0, 4) : [];
 
   return (
     <div className="flex items-center justify-center">

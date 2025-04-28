@@ -1,9 +1,13 @@
-import { Heart } from "lucide-react"
-import Button from "../../../ui/Button"
-import { NavLink } from "react-router-dom"
+import { Heart } from "lucide-react";
+import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../../../store/hooks";
+import Button from "../../../ui/Button";
 
-const Favorite = () => {
+/**
+ * Favorite component that displays a heart icon with a counter for wishlist items
+ * @returns {JSX.Element} Favorite button with wishlist counter
+ */
+const Favorite = (): JSX.Element => {
   const wishlist = useAppSelector((state) => state.wishlist?.items?.length) || 0;
     
   return (

@@ -1,37 +1,47 @@
-import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
-import TableBody from "./TableBody";
+// External imports
 import { useTranslation } from "react-i18next";
 
-interface dataTable {
+// Internal imports
+import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
+import TableBody from "./TableBody";
+
+// Types
+interface Property {
+  propertyId: number;
+  propertyTitle: string;
+  propertyType: string;
+  price: string;
+  status: string;
+  city: string;
+  address: string;
+  googleMapsLink: string;
+  totalRooms: string;
+  bathrooms: string;
+  bedrooms: string;
+  floorNumber: string;
+  area: string;
+  furnished: boolean;
+  description: string;
+  createdAt: number;
+  propertyImages: string[];
+  userId: string;
+}
+
+interface DataTable {
   id: number;
   TypeOrder: string;
   created_at: string;
   userToken: string;
   clientId: string;
-  property: {
-    propertyId: number;
-    propertyTitle: string;
-    propertyType: string;
-    price: string;
-    status: string;
-    city: string;
-    address: string;
-    googleMapsLink: string;
-    totalRooms: string;
-    bathrooms: string;
-    bedrooms: string;
-    floorNumber: string;
-    area: string;
-    furnished: boolean;
-    description: string;
-    createdAt: number;
-    propertyImages: string[];
-    userId: string;
-  };
+  property: Property;
 }
 
-const TableRequests = ({ data }: { data: dataTable[] }) => {
-  const { t } = useTranslation(""); // Use default namespace
+interface TableRequestsProps {
+  data: DataTable[];
+}
+
+const TableRequests = ({ data }: TableRequestsProps) => {
+  const { t } = useTranslation("");
 
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -70,7 +80,11 @@ const TableRequests = ({ data }: { data: dataTable[] }) => {
 
         <tbody className="divide-y divide-gray-200">
           {data.map((property, index) => (
-            <TableBody key={property.id} item={property} index={index} />
+            <TableBody
+              key={property.id}
+              item={property}
+              index={index}
+            />
           ))}
         </tbody>
       </table>
@@ -81,7 +95,9 @@ const TableRequests = ({ data }: { data: dataTable[] }) => {
             className="scale-75"
             type="empty"
             message={
-              <p className="text-gray-500">{t("tableRequests.emptyMessage")}</p>
+              <p className="text-gray-500">
+                {t("tableRequests.emptyMessage")}
+              </p>
             }
           />
         </div>

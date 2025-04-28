@@ -1,4 +1,7 @@
+// External libraries
 import { Link, useRouteError } from "react-router-dom";
+
+// Components
 import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
 import Button from "../components/ui/Button";
 

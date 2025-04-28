@@ -1,3 +1,4 @@
+// External libraries
 import { useTranslation } from 'react-i18next';
 
 type PrivacyPolicyTranslations = {
@@ -52,44 +53,48 @@ const PrivacyPolicy = () => {
             {t(`privacy.section${section}.heading`)}
           </h2>
           
+          {/* Section 2: Bullet Points */}
           {section === 2 && (
             <ul className="list-disc pr-6 space-y-3 text-color-text-2">
-              {(t(`privacy.section${section}.items`, { returnObjects: true }) as any).map((item : any, index: any) => (
+              {(t(`privacy.section${section}.items`, { returnObjects: true }) as string[]).map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ul>
           )}
 
+          {/* Section 3: Numbered List */}
           {section === 3 && (
             <ol className="list-decimal pr-6 space-y-3 text-color-text-2">
-              {(t(`privacy.section${section}.items`, { returnObjects: true }) as any).map((item: any, index: any) => (
+              {(t(`privacy.section${section}.items`, { returnObjects: true }) as string[]).map((item, index) => (
                 <li key={index}>{item}</li>
               ))}
             </ol>
           )}
 
+          {/* Section 4: Description with Bullet Points */}
           {section === 4 && (
             <>
-              {/* Fixed translation key for description */}
-              <p className="text-color-text-2 mb-3">{t(`privacy.section${section}.description`)}</p>
+              <p className="text-color-text-2 mb-3">
+                {t(`privacy.section${section}.description`)}
+              </p>
               <ul className="list-disc pr-6 space-y-3 text-color-text-2">
-                {(t(`privacy.section${section}.items`, { returnObjects: true }) as any).map((item: any, index: any) => (
+                {(t(`privacy.section${section}.items`, { returnObjects: true }) as string[]).map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
             </>
           )}
 
-          {/* Fixed: Only apply to section 5 */}
+          {/* Section 5: Paragraph Items */}
           {section === 5 && (
             <div className="text-color-text-2 space-y-3">
-              {(t(`privacy.section${section}.items`, { returnObjects: true }) as any).map((item: any, index: any) => (
+              {(t(`privacy.section${section}.items`, { returnObjects: true }) as string[]).map((item, index) => (
                 <p key={index}>{item}</p>
               ))}
             </div>
           )}
 
-          {/* Fixed: Include section 7 in content sections */}
+          {/* Sections 1, 6, 7, 8: Content Paragraphs */}
           {[1, 6, 7, 8].includes(section) && (
             <p className="text-color-text-2 leading-relaxed">
               {t(`privacy.section${section}.content`)}

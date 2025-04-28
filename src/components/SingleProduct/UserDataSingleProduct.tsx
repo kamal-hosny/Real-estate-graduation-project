@@ -1,15 +1,19 @@
-import { useNavigate } from "react-router-dom";
-import Img from "../ui/Img";
+// External libraries
 import { ChevronRight } from "lucide-react";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { useEffect } from "react";
-import { getOneUser } from "../../store/user/act/actGetOneUser";
-
-import defaultPerson from "../../assets/defaultImages/defaultPerson.jpeg"; 
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+// Internal components and utilities
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getOneUser } from "../../store/user/act/actGetOneUser";
+import Img from "../ui/Img";
+
+// Assets
+import defaultPerson from "../../assets/defaultImages/defaultPerson.jpeg";
 
 interface UserDataSingleProductProps {
-  userId: string | null;
+    userId: string | null;
 }
 
 const UserDataSingleProduct = ({ userId }: UserDataSingleProductProps) => {
@@ -31,7 +35,9 @@ const UserDataSingleProduct = ({ userId }: UserDataSingleProductProps) => {
         return (
             <div className="company flex flex-col gap-4">
                 <div className="head flex items-center justify-between">
-                    <h2 className="text-2xl font-medium text-color-text-1">{t("singlePropertyPage.publisher")}</h2>
+                    <h2 className="text-2xl font-medium text-color-text-1">
+                        {t("singlePropertyPage.publisher")}
+                    </h2>
                     <p className="text-color-text-2">{t("singlePropertyPage.loading")}</p>
                 </div>
             </div>
@@ -41,14 +47,18 @@ const UserDataSingleProduct = ({ userId }: UserDataSingleProductProps) => {
     return (
         <div className="company flex flex-col gap-4">
             <div className="head flex items-center justify-between">
-                <h2 className="text-2xl font-medium text-color-text-1">{t("singlePropertyPage.publisher")}</h2>
+                <h2 className="text-2xl font-medium text-color-text-1">
+                    {t("singlePropertyPage.publisher")}
+                </h2>
                 <p
                     onClick={() => navigate(`/properties?companyId=${userId}`)}
                     className="text-color-text-2 cursor-pointer transition-all hover:text-color-text-1 flex items-end"
                 >
-                    <span>{t("singlePropertyPage.view_more")}</span> <ChevronRight size={20} />
+                    <span>{t("singlePropertyPage.view_more")}</span>
+                    <ChevronRight size={20} />
                 </p>
             </div>
+
             <div className="card flex items-center gap-4">
                 <div>
                     <Img
@@ -58,7 +68,9 @@ const UserDataSingleProduct = ({ userId }: UserDataSingleProductProps) => {
                     />
                 </div>
                 <div className="space-y-1">
-                    <p className="text-color-text-1 font-medium capitalize">{user.fullName || "User"}</p>
+                    <p className="text-color-text-1 font-medium capitalize">
+                        {user.fullName || "User"}
+                    </p>
                     <p className="text-color-text-2">{user.email || "email"}</p>
                 </div>
             </div>

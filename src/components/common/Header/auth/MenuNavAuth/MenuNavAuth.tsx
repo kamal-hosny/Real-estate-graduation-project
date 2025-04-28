@@ -1,28 +1,33 @@
+// External imports
 import { ChevronDown, ChevronUp, Heart, HousePlus, Languages, LogOut, User, UserRound } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+// Internal imports
 import { authLogout } from "../../../../../store/auth/authSlice";
 import { useAppSelector } from "../../../../../store/hooks";
 import Button from "../../../../ui/Button";
 import i18n from "../../../../../language";
-import { useTranslation } from "react-i18next";
 
 const MenuNavAuth = () => {
-    const dispatch = useDispatch()
+  // Hooks
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { token } = useAppSelector((state) => state.auth);
+  const wishlist = useAppSelector((state) => state.wishlist?.items?.length) || 0;
+
+  // State
   const [open, setOpen] = useState<boolean>(false);
+  const [direction, setDirection] = useState(document.dir || "ltr");
+
+  // Refs
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
 
-  const { t } = useTranslation();
-
-  const [direction, setDirection] = useState(document.dir || "ltr");
-
-
-  const wishlist =
-    useAppSelector((state) => state.wishlist?.items?.length) || 0;
-
+  // Handlers
   const handleLogin = useCallback(() => {
     navigate("/login");
     setOpen(false);
@@ -38,10 +43,15 @@ const MenuNavAuth = () => {
     setOpen(false);
   }, [navigate]);
 
-  const { token } = useAppSelector((state ) => state.auth);
-console.log("token", token);
+  const handleLogout = () => {
+    dispatch(authLogout());
+  };
 
+  const handleGotoProfile = () => {
+    navigate("/Profile");
+  };
 
+  // Effects
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -62,29 +72,18 @@ console.log("token", token);
     };
   }, [open]);
 
-  const handleLogout = () => {
-        
-    dispatch(authLogout())
-    
-    
-}
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setDirection(document.dir || "ltr");
+    });
 
-const handleGotoProfile = () => {
-  navigate("/Profile")
-}
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["dir"],
+    });
 
-useEffect(() => {
-  const observer = new MutationObserver(() => {
-    setDirection(document.dir || "ltr");
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["dir"],
-  });
-
-  return () => observer.disconnect();
-}, []);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="relative">
@@ -114,45 +113,64 @@ useEffect(() => {
         }`}
       >
         <div className="head">
-          {token ? (<><p className="text-color-text-1 text-lg font-medium">  {t("auth_menu.profile")}</p></>) : (<><p className="text-color-text-1 text-lg font-medium">  {t("auth_menu.sign_in")}</p></>) }
+          {token ? (
+            <p className="text-color-text-1 text-lg font-medium">
+              {t("auth_menu.profile")}
+            </p>
+          ) : (
+            <p className="text-color-text-1 text-lg font-medium">
+              {t("auth_menu.sign_in")}
+            </p>
+          )}
           <p className="text-color-text-2 text-sm">
             {t("auth_menu.description")}
           </p>
         </div>
-        <div>{token && (
-            <ul
-            className={`text-color-text-1 text-sm  `}
-            >
-            <li onClick={handleGotoProfile} className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4">
+
+        <div>
+          {token && (
+            <ul className="text-color-text-1 text-sm">
+              <li
+                onClick={handleGotoProfile}
+                className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4"
+              >
                 <User size={20} />
                 <p>{t("auth_menu.profile")}</p>
-            </li>
-            <li onClick={handleLogout} className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4">
+              </li>
+              <li
+                onClick={handleLogout}
+                className="flex border-color-border items-center gap-2 p-3 hover:bg-main-color-background transition-all cursor-pointer rounded hover:ps-4"
+              >
                 <LogOut size={20} />
                 <p>{t("auth_menu.sign_out")}</p>
-            </li>
+              </li>
             </ul>
-        )}</div>
+          )}
+        </div>
+
         {!token && (
           <div className="btn flex flex-col gap-1.5 justify-center items-center">
             <Button
               onClick={handleLogin}
               className="bg-transparent hover:bg-section-color border-border border-2 w-full !text-color-text-1"
             >
-            {t("auth_menu.login")}
+              {t("auth_menu.login")}
             </Button>
             <Button
               onClick={handleRegister}
               className="bg-button-color hover:bg-button-hover-color border-border border-2 w-full text-main-color-background"
             >
-   {t("auth_menu.register")}
+              {t("auth_menu.register")}
             </Button>
           </div>
         )}
 
-        <span className="inline-block bg-color-text-2 w-full h-[1px]"></span>
+        <span className="inline-block bg-color-text-2 w-full h-[1px]" />
 
-        <p className="text-color-text-2 text-sm font-medium ">{t("auth_menu.my_activities")}</p>
+        <p className="text-color-text-2 text-sm font-medium">
+          {t("auth_menu.my_activities")}
+        </p>
+
         <ul className="p-1 text-color-text-1">
           <li
             onClick={handleWishlist}
@@ -168,27 +186,31 @@ useEffect(() => {
             </div>
             <span>{t("auth_menu.my_favorites")}</span>
           </li>
-{direction === "rtl" ? (
-  <li    onClick={() => i18n.changeLanguage("en")} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
-          <Languages size={20} />
-          <span>تحويل اللغة إلي الانجليزية</span>
-          </li>
 
-) : (
+          {direction === "rtl" ? (
+            <li
+              onClick={() => i18n.changeLanguage("en")}
+              className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded"
+            >
+              <Languages size={20} />
+              <span>تحويل اللغة إلي الانجليزية</span>
+            </li>
+          ) : (
+            <li
+              onClick={() => i18n.changeLanguage("ar")}
+              className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded"
+            >
+              <Languages size={20} />
+              <span>Converting the language to Arabic</span>
+            </li>
+          )}
 
-  <li   onClick={() => i18n.changeLanguage("ar")} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
-  <Languages size={20} />
-  <span>Converting the language to Arabic</span>
-  </li>
-)}
-         
-          
-
-
-
-          <li onClick={()=>{navigate("/advertise-property")}} className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded">
-          <HousePlus size={20} />
-          <span>{t("auth_menu.advertise_property")}</span>
+          <li
+            onClick={() => navigate("/advertise-property")}
+            className="flex items-center gap-3 p-2 hover:bg-main-color-background transition-all cursor-pointer rounded"
+          >
+            <HousePlus size={20} />
+            <span>{t("auth_menu.advertise_property")}</span>
           </li>
         </ul>
       </div>

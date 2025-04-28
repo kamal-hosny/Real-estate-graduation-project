@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { useCallback } from "react";
-import { closeModal } from "../../../store/modal/modalSlice";
-import { supabase } from "../../../config/supabaseClient";
-import { addToast } from "../../../store/toasts/toastsSlice";
-import { createProperty } from "../../../store/property/act/actCreateProperty";
-import { RealProperty } from "../../../types";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { supabase } from "../../../config/supabaseClient";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { closeModal } from "../../../store/modal/modalSlice";
+import { createProperty } from "../../../store/property/act/actCreateProperty";
+import { addToast } from "../../../store/toasts/toastsSlice";
+import { RealProperty } from "../../../types";
 
 type FormData = {
   TypeOrder: "Rejected" | "Success" | "Pending";
@@ -21,7 +21,7 @@ interface DataP {
 }
 
 const EditOrderSales = () => {
-  const { t } = useTranslation(""); // Use default namespace
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.modal.product as DataP);
 
@@ -33,65 +33,62 @@ const EditOrderSales = () => {
     getValues,
   } = useForm<FormData>({
     defaultValues: {
-      TypeOrder:
-        (data?.TypeOrder as "Rejected" | "Success" | "Pending") || "Rejected",
+      TypeOrder: (data?.TypeOrder as "Rejected" | "Success" | "Pending") || "Rejected",
     },
     mode: "onChange",
   });
 
   const supabaseEditOrderSale = async (typeOrder: FormData["TypeOrder"]) => {
-    try {
-      if (!data?.id) {
-        throw new Error("No order ID provided");
-      }
-
-      const { data: responseData, error } = await supabase
-        .from("SalesOrders")
-        .update({
-          userToken: data?.userToken,
-          property: { ...data.property, status: data?.property?.status },
-          TypeOrder: typeOrder,
-        })
-        .eq("id", data.id)
-        .select()
-        .single();
-
-      if (error) {
-        throw new Error(`Failed to update order: ${error.message}`);
-      }
-
-      return responseData;
-    } catch (error) {
-      throw error;
+    if (!data?.id) {
+      throw new Error("No order ID provided");
     }
+
+    const { data: responseData, error } = await supabase
+      .from("SalesOrders")
+      .update({
+        userToken: data?.userToken,
+        property: { ...data.property, status: data?.property?.status },
+        TypeOrder: typeOrder,
+      })
+      .eq("id", data.id)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to update order: ${error.message}`);
+    }
+
+    return responseData;
   };
 
   const supabaseDeleteOrderSale = async () => {
-    try {
-      if (!data?.id) {
-        throw new Error("No order ID provided for deletion");
-      }
+    if (!data?.id) {
+      throw new Error("No order ID provided for deletion");
+    }
 
-      const { error } = await supabase
-        .from("SalesOrders")
-        .delete()
-        .eq("id", data?.id);
+    const { error } = await supabase
+      .from("SalesOrders")
+      .delete()
+      .eq("id", data?.id);
 
-      if (error) {
-        throw new Error(`Failed to delete order: ${error.message}`);
-      }
-    } catch (error) {
-      throw error;
+    if (error) {
+      throw new Error(`Failed to delete order: ${error.message}`);
     }
   };
 
   const onSubmit = async (formData: FormData) => {
     try {
       await supabaseEditOrderSale(formData.TypeOrder);
-      dispatch(addToast({ message: t("editOrderSales.updateSuccess"), type: "success" }));
+      dispatch(addToast({ 
+        message: t("editOrderSales.updateSuccess"), 
+        type: "success" 
+      }));
       dispatch(closeModal());
-    } catch (error) {
-      dispatch(addToast({ message: t("editOrderSales.updateError"), type: "error" }));
+    } catch {
+      dispatch(addToast({ 
+        message: t("editOrderSales.updateError"), 
+        type: "error" 
+      }));
     }
   };
 
@@ -108,10 +105,8 @@ const EditOrderSales = () => {
     }
 
     try {
-      // Step 1: Update the order status to "Success"
       await supabaseEditOrderSale("Success");
 
-      // Step 2: Publish the property via API
       await dispatch(
         createProperty({
           property: {
@@ -130,9 +125,7 @@ const EditOrderSales = () => {
             area: data.property.area,
             furnished: data.property.furnished,
             description: data.property.description,
-            createdAt:
-              new Date().toISOString().replace("Z", "+00:00").split(".")[0] +
-              "+00:00",
+            createdAt: new Date().toISOString().replace("Z", "+00:00").split(".")[0] + "+00:00",
             propertyImages: data.property.propertyImages,
             userId: data.property.userId,
           },
@@ -142,12 +135,18 @@ const EditOrderSales = () => {
         .unwrap()
         .then(async () => {
           await supabaseDeleteOrderSale();
-          dispatch(addToast({ message: t("editOrderSales.publishSuccess"), type: "success" }));
+          dispatch(addToast({ 
+            message: t("editOrderSales.publishSuccess"), 
+            type: "success" 
+          }));
           dispatch(closeModal());
         });
-    } catch (error) {
+    } catch {
       dispatch(
-        addToast({ message: t("editOrderSales.publishError"), type: "error" })
+        addToast({ 
+          message: t("editOrderSales.publishError"), 
+          type: "error" 
+        })
       );
     }
   };
@@ -164,7 +163,9 @@ const EditOrderSales = () => {
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           {t("editOrderSales.title")}
         </h3>
-        <p className="text-gray-500">{t("editOrderSales.description")}</p>
+        <p className="text-gray-500">
+          {t("editOrderSales.description")}
+        </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -178,10 +179,18 @@ const EditOrderSales = () => {
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">{t("editOrderSales.typeOrderPlaceholder")}</option>
-            <option value="Pending">{t("editOrderSales.typeOrderOptions.pending")}</option>
-            <option value="Success">{t("editOrderSales.typeOrderOptions.success")}</option>
-            <option value="Rejected">{t("editOrderSales.typeOrderOptions.rejected")}</option>
+            <option value="">
+              {t("editOrderSales.typeOrderPlaceholder")}
+            </option>
+            <option value="Pending">
+              {t("editOrderSales.typeOrderOptions.pending")}
+            </option>
+            <option value="Success">
+              {t("editOrderSales.typeOrderOptions.success")}
+            </option>
+            <option value="Rejected">
+              {t("editOrderSales.typeOrderOptions.rejected")}
+            </option>
           </select>
           {errors.TypeOrder && (
             <p className="text-red-500 text-sm mt-1">

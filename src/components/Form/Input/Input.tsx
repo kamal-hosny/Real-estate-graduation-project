@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Path, FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 type TInput<TFieldValue extends FieldValues> = {
   label: string;
@@ -36,7 +36,7 @@ const Input = <TFieldValue extends FieldValues>({
         <input
           id={name}
           type={type}
-          className="ps-8 p-2 bg-section-color text-sm w-full border border-color-border rounded placeholder-color-text-2 text-color-text-1 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
+          className={`ps-8 p-2 bg-section-color text-sm w-full border border-color-border rounded placeholder-color-text-2 text-color-text-1 focus:ring-2 focus:ring-cyan-500 focus:outline-none ${className || ''}`}
           placeholder={placeholder}
           {...register(name)}
           {...rest}

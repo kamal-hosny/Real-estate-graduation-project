@@ -1,8 +1,6 @@
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
-interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
-
-const Button = forwardRef<HTMLButtonElement, IProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
   ({ className = "", ...rest }, ref) => {
     return (
       <button

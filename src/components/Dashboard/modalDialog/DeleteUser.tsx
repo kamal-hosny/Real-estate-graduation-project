@@ -1,17 +1,22 @@
+// External imports
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// Internal imports
 import { closeModal } from "../../../store/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteUser } from "../../../store/user/act/actDeleteUser";
 import { addToast } from "../../../store/toasts/toastsSlice";
-import { useTranslation } from "react-i18next";
 
 const DeleteUser = () => {
-  const { t } = useTranslation(""); // Use default namespace
+  // Hooks
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state?.modal?.product);
   const { token } = useAppSelector((state) => state?.auth);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Handlers
   const handleConfirm = async () => {
     setIsDeleting(true);
     try {
@@ -23,15 +28,19 @@ const DeleteUser = () => {
       ).unwrap();
 
       dispatch(closeModal());
-      dispatch(addToast({
-        message: t("deleteUser.successMessage"),
-        type: "success",
-      }));
+      dispatch(
+        addToast({
+          message: t("deleteUser.successMessage"),
+          type: "success",
+        })
+      );
     } catch (err) {
-      dispatch(addToast({
-        message: t("deleteUser.errorMessage"),
-        type: "error"
-      }));
+      dispatch(
+        addToast({
+          message: t("deleteUser.errorMessage"),
+          type: "error",
+        })
+      );
       console.error(err);
     } finally {
       setIsDeleting(false);
@@ -42,6 +51,7 @@ const DeleteUser = () => {
     dispatch(closeModal());
   }, [dispatch]);
 
+  // Render
   return (
     <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-8 mx-4">
       {/* Header Section */}
@@ -65,33 +75,49 @@ const DeleteUser = () => {
         <h3 className="text-2xl font-bold text-gray-900 mb-2">
           {t("deleteUser.title")}
         </h3>
-        <p className="text-red-600 font-medium">{t("deleteUser.warning")}</p>
+        <p className="text-red-600 font-medium">
+          {t("deleteUser.warning")}
+        </p>
       </div>
 
-      {/* User Details */}
+      {/* User Details Section */}
       <div className="bg-gray-50 p-4 rounded-lg mb-6">
         <div className="space-y-3 text-right">
           <div className="flex justify-between items-center border-b pb-2">
-            <span className="text-gray-500 font-medium">{t("deleteUser.fullNameLabel")}</span>
-            <span className="text-gray-800">{user?.fullName}</span>
+            <span className="text-gray-500 font-medium">
+              {t("deleteUser.fullNameLabel")}
+            </span>
+            <span className="text-gray-800">
+              {user?.fullName}
+            </span>
           </div>
           <div className="flex justify-between items-center border-b pb-2">
-            <span className="text-gray-500 font-medium">{t("deleteUser.emailLabel")}</span>
-            <span className="text-gray-800 break-all">{user?.email}</span>
+            <span className="text-gray-500 font-medium">
+              {t("deleteUser.emailLabel")}
+            </span>
+            <span className="text-gray-800 break-all">
+              {user?.email}
+            </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-500 font-medium">{t("deleteUser.phoneNumberLabel")}</span>
-            <span className="text-gray-800">{user?.phoneNumber}</span>
+            <span className="text-gray-500 font-medium">
+              {t("deleteUser.phoneNumberLabel")}
+            </span>
+            <span className="text-gray-800">
+              {user?.phoneNumber}
+            </span>
           </div>
         </div>
       </div>
 
+      {/* Confirmation Message */}
       <div className="text-center mb-8">
         <p className="text-gray-600 leading-relaxed text-sm">
           {t("deleteUser.confirmMessage")}
         </p>
       </div>
 
+      {/* Action Buttons */}
       <div className="flex justify-start gap-4">
         <button
           onClick={handleConfirm}
@@ -104,8 +130,19 @@ const DeleteUser = () => {
               fill="none"
               viewBox="0 0 24 24"
             >
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
             </svg>
           )}
           {isDeleting ? t("deleteUser.deleting") : t("deleteUser.confirmButton")}

@@ -1,30 +1,29 @@
+// External libraries
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeClosed, Lock, Mail } from "lucide-react";
 import { useState } from "react";
-import Button from "../components/ui/Button";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { loginSchema, loginType } from "../validations/loginSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../components/Form/Input/Input";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { actAuthLogin } from "../store/auth/authSlice";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+// Store
+import { actAuthLogin } from "../store/auth/authSlice";
+import { useAppDispatch } from "../store/hooks";
 import { addToast } from "../store/toasts/toastsSlice";
 
-const Login = () => {
+// Components
+import Input from "../components/Form/Input/Input";
+import Button from "../components/ui/Button";
 
+// Validations
+import { loginSchema, loginType } from "../validations/loginSchema";
+
+const Login = () => {
   const location = useLocation();
   const { email } = location.state || {};
-
-
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const sttt = useAppSelector((state) => state.auth);
-
-  console.log(sttt);
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
@@ -44,19 +43,26 @@ const Login = () => {
     dispatch(
       actAuthLogin({
         email: data.email,
-        password: data.password}))
+        password: data.password
+      })
+    )
       .unwrap()
       .then(() => {
         dispatch(
-          addToast({ message: "تم تسجيل الدخول", type: "success" })
+          addToast({ 
+            message: "تم تسجيل الدخول", 
+            type: "success" 
+          })
         );
         navigate("/");
-      }).catch((err) =>{
-        addToast({ message: "من فضلك راجع البيانات واعد التسجيل", type: "error" })
-        console.log(err);
       })
-    
-
+      .catch((err) => {
+        addToast({ 
+          message: "من فضلك راجع البيانات واعد التسجيل", 
+          type: "error" 
+        });
+        console.log(err);
+      });
   };
 
   return (
@@ -65,47 +71,49 @@ const Login = () => {
         {/* Header */}
         <div className="space-y-2">
           <p className="text-lg font-semibold text-color-text-1">
-          {t("login.title")}
+            {t("login.title")}
           </p>
           <p className="text-xs text-color-text-2">
-          {t("login.subtitle")}
+            {t("login.subtitle")}
           </p>
         </div>
+
         {/* Form */}
-        <form className="text-color-text-1 space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form 
+          className="text-color-text-1 space-y-4" 
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* Email Field */}
           <div className="email relative">
-          <Input
-            label={t("login.email_label")}
-            name="email"
-            type="email"
-            placeholder={t("login.email_placeholder")}
-            register={register}
-            icon={<Mail size={16} className="text-color-text-2" />}
-            error={errors.email?.message}
-          />
+            <Input
+              label={t("login.email_label")}
+              name="email"
+              type="email"
+              placeholder={t("login.email_placeholder")}
+              register={register}
+              icon={<Mail size={16} className="text-color-text-2" />}
+              error={errors.email?.message}
+            />
           </div>
 
           {/* Password Field */}
           <div className="password relative">
-          <Input
-            label={t("login.password_label")}
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder={t("login.password_placeholder")}
-            register={register}
-            icon={<Lock size={16} className="text-color-text-2" />}
-            error={errors.password?.message}
-          />
-          <div
-            className="show-password absolute top-9 end-2 w-fit cursor-pointer text-color-text-2"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
+            <Input
+              label={t("login.password_label")}
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={t("login.password_placeholder")}
+              register={register}
+              icon={<Lock size={16} className="text-color-text-2" />}
+              error={errors.password?.message}
+            />
+            <div
+              className="show-password absolute top-9 end-2 w-fit cursor-pointer text-color-text-2"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <Eye size={18} /> : <EyeClosed size={18} />}
+            </div>
           </div>
-          </div>
-
-
 
           {/* Login Button */}
           <div className="btn">
@@ -122,9 +130,11 @@ const Login = () => {
 
           {/* Sign Up Link */}
           <div className="dont-account text-center text-sm">
-          {t("login.no_account")}{" "}
+            {t("login.no_account")}{" "}
             <span className="font-medium text-cyan-500 cursor-pointer">
-              <Link to="/register">  {t("login.signup")}</Link>
+              <Link to="/register">
+                {t("login.signup")}
+              </Link>
             </span>
           </div>
         </form>

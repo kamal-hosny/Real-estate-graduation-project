@@ -1,3 +1,5 @@
+import DashboardLayout from "./DashboardLayout/DashboardLayout";
 import MainLayout from "./MainLayout/MainLayout";
+import Modal from "./modal/Modal";
 
-export { MainLayout }
+export { DashboardLayout, MainLayout, Modal };

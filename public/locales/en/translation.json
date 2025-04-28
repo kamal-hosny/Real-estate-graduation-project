@@ -155,7 +155,7 @@
     "cards": {
       "years_excellence": {
         "title": "5+ Years of Real Estate Excellence",
-        "description": "With over five years in the real estate industry, we’ve built a reputation for trust, quality service, and successful property transactions."
+        "description": "With over five years in the real estate industry, we've built a reputation for trust, quality service, and successful property transactions."
       },
       "happy_clients": {
         "title": "Hundreds of Happy Clients",
@@ -189,12 +189,9 @@
       "call": "Call",
       "email": "Email"
     },
-
-
     "All_Status": "All Status",
     "For_Sale": "For Sale",
     "For_Rent": "For Rent",
-    
     "All_Property_Types": "All Property Types",
     "Townhouse": "Townhouse",
     "Villa": "Villa",
@@ -202,7 +199,6 @@
     "Apartment": "Apartment",
     "Office": "Office",
     "Shop": "Shop",
-
     "Show 5 Products": "Show 5 Products",
     "Show 10 Products": "Show 10 Products",
     "Show 20 Products": "Show 20 Products",
@@ -210,9 +206,6 @@
     "Show 40 Products": "Show 40 Products",
     "Show 50 Products": "Show 50 Products",
     "All": "All"
-
-
-
   },
   "login": {
     "title": "Login Your Account",
@@ -322,7 +315,6 @@
     "submitSuccess": "Property submitted successfully!",
     "submitError": "Failed to submit the property. Please try again.",
     "imageUploadError": "Error uploading images. Please try again."
-    
   },
   "wishlistPage": {
     "wishlist": "Wishlist",
@@ -350,15 +342,12 @@
     "sold": "Sold",
     "rented": "Rented",
     "unauthenticatedError": "You must be logged in to perform this action",
-
     "purchaseSuccess": "Purchase request submitted successfully!",
     "purchaseError": "Failed to submit purchase request. Please try again.",
     "rentSuccess": "Rent request submitted successfully!",
     "rentError": "Failed to submit rent request. Please try again.",
-
     "loading": "Loading...",
-  "view_more": "View More"
-
+    "view_more": "View More"
   },
   "tableDetails": {
     "general": "General",
@@ -532,18 +521,17 @@
     "Furnished": "Furnished",
     "addedToWishlist": "The property has been successfully added to the favorites",
     "removedFromWishlist": "The property has been successfully removed from the favorites"
-    
   },
   "SettingsForProperty": {
     "advanced_settings_title": "Advanced Property Settings",
-      "advanced_settings_description": "You can manage sensitive settings and important actions for the property",
-      "delete_property_title": "Permanently Delete Property",
-      "delete_property_description": "All data and images associated with the property will be permanently deleted",
-      "delete_property_warning": "This data cannot be recovered later",
-      "confirm_delete_button": "Confirm Permanent Deletion",
-      "auto_save_note": "Changes are automatically saved upon executing any action",
-      "delete_success_message": "Property deleted successfully",
-      "delete_error_message": "Failed to delete property, please try again"
+    "advanced_settings_description": "You can manage sensitive settings and important actions for the property",
+    "delete_property_title": "Permanently Delete Property",
+    "delete_property_description": "All data and images associated with the property will be permanently deleted",
+    "delete_property_warning": "This data cannot be recovered later",
+    "confirm_delete_button": "Confirm Permanent Deletion",
+    "auto_save_note": "Changes are automatically saved upon executing any action",
+    "delete_success_message": "Property deleted successfully",
+    "delete_error_message": "Failed to delete property, please try again"
   },
   "homeD": {
     "welcomeTitle": "Welcome to the Dashboard",
@@ -675,7 +663,6 @@
     "whatsappAriaLabel": "Message via WhatsApp",
     "emailAriaLabel": "Send an email"
   },
-
   "getSalesOrders": {
     "title": "Sales Orders",
     "searchPlaceholder": "Search for an order...",
@@ -725,7 +712,6 @@
     "successMessage": "User deleted successfully",
     "errorMessage": "Deletion failed, please try again"
   },
-
   "editOrder": {
     "title": "Edit Order",
     "description": "Modify the order type",
@@ -823,8 +809,24 @@
     "unknown": "Unknown",
     "imageAlt": "User avatar",
     "noData": "No data available"
+  },
+  "Profile": {
+    "title": "Your Profile",
+    "accountSettings": "Account Settings",
+    "changeProfilePicture": "Change Profile Picture",
+    "name": "Your Name",
+    "email": "Your Email",
+    "phone": "Your Phone Number",
+    "password": "New Password (Optional)",
+    "editProfile": "Edit Profile",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "uploading": "Uploading...",
+    "loadingProfile": "Loading Profile...",
+    "noProfileData": "No profile data available.",
+    "userAuthRequired": "User authentication required.",
+    "updateSuccess": "Your account has been updated",
+    "updateError": "Failed to update profile",
+    "notAvailable": "Not Available"
   }
-
-
-
 }

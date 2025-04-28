@@ -1,33 +1,38 @@
-import {
-  Eye,
-  EyeClosed,
-  Lock,
-  Mail,
-  Phone,
-  User,
-} from "lucide-react";
-import { useState } from "react";
-import Button from "../components/ui/Button";
-import { Link, useNavigate } from "react-router-dom";
-import Input from "../components/Form/Input/Input";
-import { registerSchema, registerType } from "../validations/registerSchema";
-import { SubmitHandler, useForm } from "react-hook-form";
+// External libraries
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeClosed, Lock, Mail, Phone, User } from "lucide-react";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+
+// Internal components
+import Input from "../components/Form/Input/Input";
+import Button from "../components/ui/Button";
+
+// Store and hooks
 import { actAuthRegister } from "../store/auth/authSlice";
 import { useAppDispatch } from "../store/hooks";
-import { useTranslation } from "react-i18next";
 import { addToast } from "../store/toasts/toastsSlice";
 
+// Validations
+import { registerSchema, registerType } from "../validations/registerSchema";
 
-
+// Constants
+const DEFAULT_AVATAR =
+  "https://res.cloudinary.com/dizj9rluo/image/upload/v1744113485/defaultPerson_e7w75t.jpg";
 
 const Register = () => {
+  // Hooks
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
+  // State
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
+  // Form handling
   const {
     register,
     handleSubmit,
@@ -37,65 +42,67 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { t } = useTranslation();
-
+  // Form submission
   const onSubmit: SubmitHandler<registerType> = (data) => {
-    console.log(data);
-
     dispatch(
       actAuthRegister({
         fullName: data.name,
         email: data.email,
         phoneNumber: data.phoneNumber,
         password: data.password,
-        image: "https://res.cloudinary.com/dizj9rluo/image/upload/v1744113485/defaultPerson_e7w75t.jpg",
+        image: DEFAULT_AVATAR,
       })
-    ).unwrap()
-    .then(() => {
-      navigate("/login", {
-        state: {email: data.email}
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/login", {
+          state: { email: data.email },
+        });
+        dispatch(addToast({ message: "تم إنشاء حساب بنجاح", type: "success" }));
+      })
+      .catch((err) => {
+        dispatch(
+          addToast({
+            message: "من فضلك راجع البيانات واعد التسجيل",
+            type: "error",
+          })
+        );
+        console.error(err);
       });
-      addToast({ message: "تم إنشاء حساب بنجاح", type: "success" })
-    }).catch((err) => {
-      addToast({ message: "من فضلك راجع البيانات واعد التسجيل", type: "error" })
-      console.log(err);
-    })
-
   };
 
   return (
     <div className="relative bg-section-color w-screen py-10 flex justify-center items-center">
       <div className="p-6 bg-main-color-background rounded space-y-6 w-96 shadow-md">
-        {/* Header */}
+        {/* Header Section */}
         <div className="space-y-2">
           <p className="text-lg font-semibold text-color-text-1">
-          {t("register.title")}
+            {t("register.title")}
           </p>
           <p className="text-xs text-color-text-2">
-          {t("register.subtitle")}
+            {t("register.subtitle")}
           </p>
         </div>
-        {/* Form */}
+
+        {/* Form Section */}
         <form onSubmit={handleSubmit(onSubmit)} className="text-color-text-1 space-y-4">
-          {/* First Name and Last Name */}
-          <div className="">
-            {/* First Name */}
-            <div className="name">
-              <Input
-                 label={t("register.name")}
-                name="name"
-                type={"text"}
-                placeholder={t("register.name_placeholder")}
-                register={register}
-                icon={<User size={16} className="text-color-text-2" />}
-                error={errors.name?.message && t(errors.name.message)}
-              />
-            </div>
+          {/* Name Input */}
+          <div className="name">
+            <Input
+              label={t("register.name")}
+              name="name"
+              type="text"
+              placeholder={t("register.name_placeholder")}
+              register={register}
+              icon={<User size={16} className="text-color-text-2" />}
+              error={errors.name?.message && t(errors.name.message)}
+            />
           </div>
-          {/* Email */}
+
+          {/* Email Input */}
           <div className="Email">
             <Input
-             label={t("register.email")}
+              label={t("register.email")}
               name="email"
               type="Email"
               placeholder={t("register.email_placeholder")}
@@ -105,12 +112,10 @@ const Register = () => {
             />
           </div>
 
-
-
-          {/* Phone Number */}
+          {/* Phone Number Input */}
           <div className="phoneNumber">
             <Input
-                label={t("register.phone")}
+              label={t("register.phone")}
               name="phoneNumber"
               type="text"
               placeholder={t("register.phone_placeholder")}
@@ -120,9 +125,7 @@ const Register = () => {
             />
           </div>
 
-
-
-          {/* Password Field */}
+          {/* Password Input */}
           <div className="password relative">
             <Input
               label={t("register.password")}
@@ -141,7 +144,7 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Confirm Password Field */}
+          {/* Confirm Password Input */}
           <div className="confirmPassword relative">
             <Input
               label={t("register.confirm_password")}
@@ -160,7 +163,7 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Register Button */}
+          {/* Submit Button */}
           <div className="btn">
             <Button
               type="submit"
@@ -169,16 +172,15 @@ const Register = () => {
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isSubmitting ? "Registering..." :  t("register.button")}
+              {isSubmitting ? "Registering..." : t("register.button")}
             </Button>
           </div>
 
+          {/* Login Link */}
           <div className="text-center text-sm">
-          {t("register.have_account")}{" "}
+            {t("register.have_account")}{" "}
             <span className="font-medium text-cyan-500 cursor-pointer">
-              <Link to={"/login"}>
-              {t("register.login")}
-              </Link>
+              <Link to="/login">{t("register.login")}</Link>
             </span>
           </div>
         </form>

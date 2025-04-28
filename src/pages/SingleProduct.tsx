@@ -1,4 +1,10 @@
+// External libraries
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 import {
   ArrowBigLeftDash,
   ArrowBigRightDash,
@@ -7,29 +13,29 @@ import {
   MapPinned,
   Settings,
 } from "lucide-react";
-import { Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
+
+// Internal components
 import Breadcrumb from "../components/Products/Breadcrumb";
 import Button from "../components/ui/Button";
-import { formatCurrency } from "../utils";
+import Img from "../components/ui/Img";
 import TableDetails from "../components/SingleProduct/TableDetails";
+import UserDataSingleProduct from "../components/SingleProduct/UserDataSingleProduct";
+import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
+
+// Store and utilities
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addToast } from "../store/toasts/toastsSlice";
+import { openModal } from "../store/modal/modalSlice";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../store/wishlist/wishlistActions";
-import Img from "../components/ui/Img";
-import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { getOneProperty } from "../store/property/act/actGetOneProperty";
-import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
+import { formatCurrency } from "../utils";
 import { getTimeSincePost } from "../utils/dateFun";
 import { supabase } from "../config/supabaseClient";
-import UserDataSingleProduct from "../components/SingleProduct/UserDataSingleProduct";
-import { openModal } from "../store/modal/modalSlice";
 
+// Types
 interface PropertyImages {
   $id: string;
   $values: string[];
@@ -61,28 +67,31 @@ interface WishlistItem {
 }
 
 const SingleProperty = () => {
+  // Hooks and state
   const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const direction = i18n.dir();
-
   const defaultImg = "https://dummyimage.com/300x300";
+
+  // Selectors
   const { record, loading, error } = useAppSelector((state) => state?.property);
   const property = record as RealProperty | null;
   const wishlist = useAppSelector(
     (state) => state?.wishlist?.items ?? []
   ) as WishlistItem[];
   const { token, user } = useAppSelector((state) => state?.auth);
+  const isAdmin = useAppSelector(
+    (state) => state?.auth?.user?.roles?.$values[0]
+  );
 
+  // State
   const isProductInWishlist = wishlist.some(
     (item) => item.propertyId === property?.propertyId
   );
   const [isHeartFilled, setIsHeartFilled] = useState(isProductInWishlist);
 
-  const isAdmin = useAppSelector(
-    (state) => state?.auth?.user?.roles?.$values[0]
-  );
-
+  // Effects
   useEffect(() => {
     setIsHeartFilled(isProductInWishlist);
   }, [isProductInWishlist]);
@@ -93,6 +102,18 @@ const SingleProperty = () => {
     }
   }, [dispatch, id, i18n.language]);
 
+  // Helper functions
+  const getEmbeddableMapUrl = (url: string): string => {
+    if (url.includes("maps.app.goo.gl")) {
+      console.warn(
+        "Short URL detected. Please use an embeddable Google Maps URL."
+      );
+      return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.123456789!3d29.987654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z2YXYrdin2YHYuNipINin2YTZhdi52Kkg2KPZh9mE2YjZhA!5e0!3m2!1sar!2seg!4v1698765432100!5m2!1sar!2seg";
+    }
+    return url;
+  };
+
+  // Event handlers
   const toggleHeart = () => {
     if (!property) return;
     if (isHeartFilled) {
@@ -107,16 +128,6 @@ const SingleProperty = () => {
       );
     }
     setIsHeartFilled((prev) => !prev);
-  };
-
-  const getEmbeddableMapUrl = (url: string): string => {
-    if (url.includes("maps.app.goo.gl")) {
-      console.warn(
-        "Short URL detected. Please use an embeddable Google Maps URL."
-      );
-      return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.123456789!3d29.987654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z2YXYrdin2YHYuNipINin2YTZhdi52Kkg2KPZh9mE2YjZhA!5e0!3m2!1sar!2seg!4v1698765432100!5m2!1sar!2seg";
-    }
-    return url;
   };
 
   const purchaseOrder = async () => {
@@ -215,6 +226,7 @@ const SingleProperty = () => {
     }
   };
 
+  // Loading and error states
   if (error) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -222,6 +234,7 @@ const SingleProperty = () => {
       </div>
     );
   }
+
   if (loading === "pending") {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -229,6 +242,7 @@ const SingleProperty = () => {
       </div>
     );
   }
+
   if (!property) {
     return (
       <div className="w-screen h-screen flex justify-center items-center">
@@ -240,6 +254,7 @@ const SingleProperty = () => {
     );
   }
 
+  // Main render
   return (
     <>
       <div className="container mx-auto px-2 py-4 space-y-5 bg-section-color md:max-w-[70%]">
@@ -250,7 +265,9 @@ const SingleProperty = () => {
           ]}
           itemNow={property.propertyTitle || t("singlePropertyPage.property")}
         />
+
         <div className="productPage flex flex-col gap-y-4">
+          {/* Image Section */}
           <div className="relative imageSection rounded-t border-color-border border bg-main-color-background max-w-full">
             <Swiper
               className="swiper relative custom-pagination"
@@ -275,6 +292,7 @@ const SingleProperty = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+
             <Heart
               onClick={toggleHeart}
               className={`cursor-pointer absolute top-4 left-4 z-10 opacity-70 hover:opacity-100 p-2 w-10 h-10 border-color-border border-2 rounded-full transition-all ${
@@ -284,13 +302,14 @@ const SingleProperty = () => {
               }`}
               fill={isHeartFilled ? "red" : "none"}
             />
+
             {property.propertyImages.$values.length > 1 && (
               <div
                 className={`absolute top-1/2 -translate-y-1/2 flex justify-between w-full z-10 p-1 ${
                   direction === "rtl" ? "flex-row-reverse" : "flex-row"
                 }`}
               >
-                <div className=" swiper-prev-singleProduct opacity-70 hover:opacity-100 transition-all bg-section-color border-2 border-color-border p-1.5 text-color-text-2 hover:text-color-text-1 rounded-full cursor-pointer">
+                <div className="swiper-prev-singleProduct opacity-70 hover:opacity-100 transition-all bg-section-color border-2 border-color-border p-1.5 text-color-text-2 hover:text-color-text-1 rounded-full cursor-pointer">
                   <ArrowBigLeftDash size={20} />
                 </div>
                 <div className="swiper-next-singleProduct opacity-70 hover:opacity-100 transition-all bg-section-color border-2 border-color-border p-1.5 text-color-text-2 hover:text-color-text-1 rounded-full cursor-pointer">
@@ -300,6 +319,7 @@ const SingleProperty = () => {
             )}
           </div>
 
+          {/* Details Section */}
           <div className="details">
             <div className="head flex flex-col gap-3 w-full">
               <div className="date-type text-color-text-2 text-xs font-medium">
@@ -348,17 +368,23 @@ const SingleProperty = () => {
           </div>
 
           <hr className="border-color-border border-2" />
+
+          {/* Description Section */}
           <div className="description flex flex-col gap-2">
             <h2 className="text-2xl font-medium text-color-text-1">
               {t("singlePropertyPage.description")}
             </h2>
             <p className="text-color-text-1">{property.description}</p>
           </div>
+
           <hr className="border-color-border border-2" />
 
+          {/* User Data Section */}
           <UserDataSingleProduct userId={property?.userId || null} />
+
           <hr className="border-color-border border-2" />
 
+          {/* Property Details Section */}
           <div className="property-details flex flex-col gap-2">
             <h2 className="text-2xl font-medium text-color-text-1">
               {t("singlePropertyPage.propertyDetails")}
@@ -376,7 +402,10 @@ const SingleProperty = () => {
               verification={property.furnished}
             />
           </div>
+
           <hr className="border-color-border border-2" />
+
+          {/* Location Map Section */}
           <div className="location-map flex flex-col gap-2">
             <h2 className="text-2xl font-semibold text-color-text-1">
               {t("singlePropertyPage.locationOnMap")}
@@ -395,50 +424,50 @@ const SingleProperty = () => {
         </div>
       </div>
 
-{/* AssistantBotDialog */}
-<div
-  className="rounded-full p-[2px] fixed bottom-[85px] end-6 
-  bg-[rgb(var(--section-color))] 
-  shadow-[0_0_15px_-3px_rgba(var(--button-color),0.3)]
-  hover:shadow-[0_0_25px_-5px_rgba(var(--button-color),0.5)]
-  transition-all duration-500 group border border-[rgb(var(--color-border))]"
-  onClick={() => {
-    dispatch(openModal({ name: "AssistantBotDialog", product: property }));
-  }}
->
-  <div className="relative bg-[rgba(var(--main-color-background),0.8)] backdrop-blur-sm rounded-full p-2 transition-colors duration-300 cursor-pointer">
-    <Bot className="w-7 h-7 
-      text-[rgb(var(--button-color))] 
-      animate-[pulse-glow_2s_ease-in-out_infinite] 
-      group-hover:animate-[color-change_3s_linear_infinite,glow_1.5s_ease-in-out_infinite]" />
-    
-    <div className="absolute inset-0 rounded-full 
-      bg-[rgba(var(--button-color),0.1)] 
-      blur-[12px] group-hover:blur-[15px] 
-      transition-all duration-1000" />
-  </div>
-</div>
+      {/* Assistant Bot Dialog */}
+      <div
+        className="rounded-full p-[2px] fixed bottom-[85px] end-6 
+        bg-[rgb(var(--section-color))] 
+        shadow-[0_0_15px_-3px_rgba(var(--button-color),0.3)]
+        hover:shadow-[0_0_25px_-5px_rgba(var(--button-color),0.5)]
+        transition-all duration-500 group border border-[rgb(var(--color-border))]"
+        onClick={() => {
+          dispatch(openModal({ name: "AssistantBotDialog", product: property }));
+        }}
+      >
+        <div className="relative bg-[rgba(var(--main-color-background),0.8)] backdrop-blur-sm rounded-full p-2 transition-colors duration-300 cursor-pointer">
+          <Bot
+            className="w-7 h-7 
+            text-[rgb(var(--button-color))] 
+            animate-[pulse-glow_2s_ease-in-out_infinite] 
+            group-hover:animate-[color-change_3s_linear_infinite,glow_1.5s_ease-in-out_infinite]"
+          />
+          <div className="absolute inset-0 rounded-full 
+            bg-[rgba(var(--button-color),0.1)] 
+            blur-[12px] group-hover:blur-[15px] 
+            transition-all duration-1000"
+          />
+        </div>
+      </div>
 
-{/* SettingsForProperty */}
-{isAdmin && (
-  <div
-    className="bg-section-color border-color-border border-2 p-2 rounded-full 
-    fixed bottom-8 end-6 cursor-pointer flex items-center justify-center text-color-text-2 hover:text-color-text-1"
-    style={{ width: '46px', height: '46px' }} 
-         
-    onClick={() => {
-      dispatch(
-        openModal({
-          name: "SettingsForProperty",
-          product: property,
-        })
-      );
-    }}
-         >
-    <Settings className="w-7 h-7  mx-auto" /> 
-  </div>
-)}
-      
+      {/* Settings For Property */}
+      {isAdmin && (
+        <div
+          className="bg-section-color border-color-border border-2 p-2 rounded-full 
+          fixed bottom-8 end-6 cursor-pointer flex items-center justify-center text-color-text-2 hover:text-color-text-1"
+          style={{ width: "46px", height: "46px" }}
+          onClick={() => {
+            dispatch(
+              openModal({
+                name: "SettingsForProperty",
+                product: property,
+              })
+            );
+          }}
+        >
+          <Settings className="w-7 h-7 mx-auto" />
+        </div>
+      )}
     </>
   );
 };

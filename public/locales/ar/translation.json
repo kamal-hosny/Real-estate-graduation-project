@@ -687,7 +687,8 @@
         "oldestFirst": "الأقدم أولاً"
       },
       "exportToExcel": "تصدير إلى Excel"
-    },"salesRequests": {
+    },
+    "salesRequests": {
       "title": "طلبات الإيجار",
       "searchPlaceholder": "ابحث عن طلب...",
       "searchAriaLabel": "البحث عن طلب إيجار",
@@ -825,6 +826,25 @@
       "unknown": "غير معروف",
       "imageAlt": "صورة المستخدم",
       "noData": "لا توجد بيانات متاحة"
+    },
+    "Profile": {
+      "title": "ملفك الشخصي",
+      "accountSettings": "إعدادات الحساب",
+      "changeProfilePicture": "تغيير صورة الملف الشخصي",
+      "name": "اسمك",
+      "email": "بريدك الإلكتروني",
+      "phone": "رقم هاتفك",
+      "password": "كلمة المرور الجديدة (اختياري)",
+      "editProfile": "تعديل الملف الشخصي",
+      "saveChanges": "حفظ التغييرات",
+      "cancel": "إلغاء",
+      "uploading": "جارٍ التحميل...",
+      "loadingProfile": "جارٍ تحميل الملف الشخصي...",
+      "noProfileData": "لا توجد بيانات للملف الشخصي.",
+      "userAuthRequired": "مطلوب مصادقة المستخدم.",
+      "updateSuccess": "تم تحديث بيانات حسابك",
+      "updateError": "فشل تحديث الملف الشخصي",
+      "notAvailable": "غير متوفر"
     }
     
 

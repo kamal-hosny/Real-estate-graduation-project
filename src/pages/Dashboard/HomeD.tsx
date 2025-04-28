@@ -1,39 +1,50 @@
+// External libraries
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
 import {
-  FaShoppingCart,
-  FaDollarSign,
-  FaKey,
-  FaUser,
   FaBuilding,
   FaChartPie,
+  FaDollarSign,
+  FaKey,
+  FaShoppingCart,
+  FaUser,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import LastUsers from "../../components/Dashboard/LastUsers";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect } from "react";
-import { getAllProperties } from "../../store/property/act/actGetAllProperties";
-import { useGetSalesOrders } from "../../Hooks/Dashboard/useGetSalesOrders.ts";
-import { useGetPurchaseOrders } from "../../Hooks/Dashboard/useGetPurchaseOrders.ts";
-import { useGetRentalOrders } from "../../Hooks/Dashboard/useGetRentalOrders.ts";
-import { useTranslation } from "react-i18next";
 
+// Internal components
+import LastUsers from "../../components/Dashboard/LastUsers";
+
+// Store hooks and actions
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getAllProperties } from "../../store/property/act/actGetAllProperties";
+
+// Custom hooks
+import { useGetPurchaseOrders } from "../../Hooks/Dashboard/useGetPurchaseOrders";
+import { useGetRentalOrders } from "../../Hooks/Dashboard/useGetRentalOrders";
+import { useGetSalesOrders } from "../../Hooks/Dashboard/useGetSalesOrders";
+
+// Register ChartJS components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomeD = () => {
-  const { t } = useTranslation(""); 
-
-  
+  // Hooks and state
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
+  
+  // Selectors
   const userLength = useAppSelector((state) => state?.user?.records?.length);
   const propertyLength = useAppSelector(
     (state) => state?.property?.records?.$values?.length
   );
 
+  // Custom hooks for data fetching
   const { properties: SalesOrders } = useGetSalesOrders();
   const { properties: PurchaseOrders } = useGetPurchaseOrders();
   const { properties: RentalOrders } = useGetRentalOrders();
 
+  // Stats data configuration
   const statsData = [
     {
       id: 1,
@@ -102,6 +113,7 @@ const HomeD = () => {
     },
   ];
 
+  // Chart data configuration
   const chartData = {
     labels: [
       t("homeD.chart.labels.purchaseOrders"),
@@ -122,11 +134,35 @@ const HomeD = () => {
     ],
   };
 
+  // Chart options configuration
+  const centerText = {
+    id: "centerText",
+    beforeDatasetsDraw(chart: ChartJS<"doughnut">) {
+      const { ctx, data } = chart;
+      ctx.save();
+      ctx.font = "bolder 20px Tajawal";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#4B5563";
+      ctx.fillText(
+        t("homeD.chart.centerText.totalOrders"),
+        chart.getDatasetMeta(0).data[0].x,
+        chart.getDatasetMeta(0).data[0].y - 10
+      );
+      ctx.font = "20px Tajawal";
+      const total = data.datasets[0].data.reduce((a: number, b: number | null) => a + (b || 0), 0);
+      ctx.fillText(
+        total.toString(),
+        chart.getDatasetMeta(0).data[0].x,
+        chart.getDatasetMeta(0).data[0].y + 10
+      );
+    },
+  };
+
   const options = {
     cutout: "70%",
     plugins: {
       legend: {
-        position: "bottom",
+        position: "bottom" as const,
         rtl: true,
         labels: {
           font: {
@@ -141,36 +177,16 @@ const HomeD = () => {
         },
       },
     },
-  };
+  } as const;
 
-  const centerText = {
-    id: "centerText",
-    beforeDatasetsDraw(chart: any) {
-      const { ctx, data } = chart;
-      ctx.save();
-      ctx.font = "bolder 20px Tajawal";
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#4B5563";
-      ctx.fillText(
-        t("homeD.chart.centerText.totalOrders"),
-        chart.getDatasetMeta(0).data[0].x,
-        chart.getDatasetMeta(0).data[0].y - 10
-      );
-      ctx.font = "20px Tajawal";
-      ctx.fillText(
-        data.datasets[0].data.reduce((a: any, b: any) => a + b, 0),
-        chart.getDatasetMeta(0).data[0].x,
-        chart.getDatasetMeta(0).data[0].y + 10
-      );
-    },
-  };
-
+  // Fetch properties on component mount
   useEffect(() => {
     dispatch(getAllProperties());
   }, [dispatch]);
 
   return (
     <div className="p-6 w-full h-full bg-gray-50">
+      {/* Header Section */}
       <div className="mb-8 text-start">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
           {t("homeD.welcomeTitle")}
@@ -178,6 +194,7 @@ const HomeD = () => {
         <p className="text-gray-600">{t("homeD.welcomeDescription")}</p>
       </div>
 
+      {/* Stats Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {statsData.map((item) => (
           <div
@@ -208,8 +225,9 @@ const HomeD = () => {
         ))}
       </div>
 
+      {/* Chart and Last Users Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-        {/* Chart */}
+        {/* Chart Component */}
         <div className="bg-[#f4f7fa] p-6 rounded-lg shadow-md border border-gray-200 h-full">
           <div className="flex items-center gap-2 mb-4">
             <FaChartPie className="text-gray-800 text-xl" />
@@ -221,14 +239,14 @@ const HomeD = () => {
             <div className="max-w-96">
               <Doughnut
                 data={chartData}
-                options={options as any}
+                options={options}
                 plugins={[centerText]}
               />
             </div>
           </div>
         </div>
 
-        {/* Last users */}
+        {/* Last Users Component */}
         <LastUsers />
       </div>
     </div>

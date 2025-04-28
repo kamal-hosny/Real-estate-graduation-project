@@ -9,7 +9,10 @@ const About = () => {
   return (
     <div className="about">
       <div className="container mx-auto py-6 px-2 space-y-20">
-      <Breadcrumb items={breadcrumbItems} itemNow={"About"} />
+        <Breadcrumb 
+          items={breadcrumbItems} 
+          itemNow="About" 
+        />
         <OurJourney />
         <OurValues />
         <OurAchievements />

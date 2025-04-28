@@ -1,3 +1,4 @@
+// External libraries
 import { useTranslation } from 'react-i18next';
 
 type TranslationKeys = {
@@ -44,6 +45,7 @@ const TermsOfService = () => {
         {t('terms.title')}
       </h1>
 
+      {/* Introduction Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4">
           {t('terms.introduction.heading')}
@@ -53,6 +55,7 @@ const TermsOfService = () => {
         </p>
       </div>
 
+      {/* Acceptance Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.acceptance.heading')}
@@ -64,6 +67,7 @@ const TermsOfService = () => {
         </ul>
       </div>
 
+      {/* Services Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.services.heading')}
@@ -78,6 +82,7 @@ const TermsOfService = () => {
         </div>
       </div>
 
+      {/* Responsibilities Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.responsibilities.heading')}
@@ -89,6 +94,7 @@ const TermsOfService = () => {
         </ul>
       </div>
 
+      {/* Financial Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.financial.heading')}
@@ -100,6 +106,7 @@ const TermsOfService = () => {
         </div>
       </div>
 
+      {/* Privacy Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.privacy.heading')}
@@ -109,6 +116,7 @@ const TermsOfService = () => {
         </p>
       </div>
 
+      {/* Modifications Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-color-text-1 mb-4 border-b-2 border-blue-600 pb-2">
           {t('terms.modifications.heading')}

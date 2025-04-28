@@ -1,21 +1,29 @@
+// External dependencies
 import { createRoot } from "react-dom/client";
-import AppRouter from "./routes/AppRouter";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import store, { persistor } from "./store";
-
-import "./language";
-
-// Styles
-import "./index.css";
 import { HelmetProvider } from "react-helmet-async";
 
+// Internal imports
+import AppRouter from "./routes/AppRouter";
+import store, { persistor } from "./store";
 
-createRoot(document.getElementById("root")!).render(
+// Styles and configurations
+import "./language";
+import "./index.css";
+
+// Root element
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error("Root element not found");
+}
+
+createRoot(rootElement).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <HelmetProvider>
-      <AppRouter />
+        <AppRouter />
       </HelmetProvider>
     </PersistGate>
   </Provider>

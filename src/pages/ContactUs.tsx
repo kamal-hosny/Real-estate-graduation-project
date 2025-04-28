@@ -1,9 +1,12 @@
+// External libraries
 import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+
+// Store
 import { addToast } from "../store/toasts/toastsSlice";
 import { useAppDispatch } from "../store/hooks";
-import { useTranslation } from "react-i18next";
 
 interface ContactUsData {
   name: string;
@@ -32,27 +35,36 @@ const ContactUs = () => {
         const result = await emailjs.sendForm(
           "service_bet01au",
           "template_q25l7nr",
-          form.current, 
+          form.current,
           "SbM6lp_8WtqxEQPLm"
         );
         console.log("SUCCESS!", result.text);
         dispatch(
-          addToast({ message: "تم أرسال الاستفسار بنجاح", type: "success" })
+          addToast({ 
+            message: "تم أرسال الاستفسار بنجاح", 
+            type: "success" 
+          })
         );
       } catch (error) {
         console.log("FAILED...", error);
         dispatch(
-          addToast({ message: "من فضلك راجع البيانات أو عد تحميل الصفحه", type: "error" })
+          addToast({ 
+            message: "من فضلك راجع البيانات أو عد تحميل الصفحه", 
+            type: "error" 
+          })
         );
       }
     }
   };
 
   return (
-    <div className="min-h-screen bg-section-color py-12 px-4 sm:px-6 lg:px-8" dir={i18n.dir()}>
+    <div 
+      className="min-h-screen bg-section-color py-12 px-4 sm:px-6 lg:px-8" 
+      dir={i18n.dir()}
+    >
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-color-text-1 text-center mb-8">
-        {t('contact.title')}
+          {t('contact.title')}
         </h1>
 
         <form
@@ -60,9 +72,10 @@ const ContactUs = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-6 bg-main-color-background p-8 rounded-lg shadow-md border-color-border border"
         >
+          {/* Name Field */}
           <div>
             <label className="block text-sm font-medium text-color-text-1 mb-2">
-            {t('contact.name_label')}
+              {t('contact.name_label')}
             </label>
             <input
               {...register("name", { required: "الاسم مطلوب" })}
@@ -72,13 +85,16 @@ const ContactUs = () => {
               placeholder={t('contact.name_placeholder')}
             />
             {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.name.message}
+              </p>
             )}
           </div>
 
+          {/* Email Field */}
           <div>
             <label className="block text-sm font-medium text-color-text-1 mb-2">
-            {t('contact.email_label')}
+              {t('contact.email_label')}
             </label>
             <input
               type="email"
@@ -95,13 +111,16 @@ const ContactUs = () => {
               placeholder={t('contact.email_placeholder')}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
 
+          {/* Phone Field */}
           <div>
             <label className="block text-sm font-medium text-color-text-1 mb-2">
-            {t('contact.phone_label')}
+              {t('contact.phone_label')}
             </label>
             <input
               type="tel"
@@ -118,13 +137,16 @@ const ContactUs = () => {
               placeholder={t('contact.phone_placeholder')}
             />
             {errors.phone && (
-              <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.phone.message}
+              </p>
             )}
           </div>
 
+          {/* Inquiry Type Field */}
           <div>
             <label className="block text-sm font-medium text-color-text-1 mb-2">
-            {t('contact.inquiry_label')}
+              {t('contact.inquiry_label')}
             </label>
             <select
               {...register("inquiry_type", { 
@@ -134,11 +156,21 @@ const ContactUs = () => {
                 errors.inquiry_type ? "border-red-500" : "border-color-border"
               }`}
             >
-              <option value="">{t('contact.inquiry_placeholder')}</option>
-              <option value="technical">{t('contact.inquiry_technical')}</option>
-              <option value="sales">{t('contact.inquiry_sales')}</option>
-              <option value="partnership">{t('contact.inquiry_partnership')}</option>
-              <option value="other">{t('contact.inquiry_other')}</option>
+              <option value="">
+                {t('contact.inquiry_placeholder')}
+              </option>
+              <option value="technical">
+                {t('contact.inquiry_technical')}
+              </option>
+              <option value="sales">
+                {t('contact.inquiry_sales')}
+              </option>
+              <option value="partnership">
+                {t('contact.inquiry_partnership')}
+              </option>
+              <option value="other">
+                {t('contact.inquiry_other')}
+              </option>
             </select>
             {errors.inquiry_type && (
               <p className="text-red-500 text-sm mt-1">
@@ -147,9 +179,10 @@ const ContactUs = () => {
             )}
           </div>
 
+          {/* Message Field */}
           <div>
             <label className="block text-sm font-medium text-color-text-1 mb-2">
-            {t('contact.message_label')}
+              {t('contact.message_label')}
             </label>
             <textarea
               {...register("message", {
@@ -163,18 +196,21 @@ const ContactUs = () => {
                 errors.message ? "border-red-500" : "border-color-border"
               }`}
               placeholder={t('contact.message_placeholder')}
-            ></textarea>
+            />
             {errors.message && (
-              <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.message.message}
+              </p>
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300"
           >
-               {isSubmitting ? t('contact.sending') : t('contact.send_button')}
+            {isSubmitting ? t('contact.sending') : t('contact.send_button')}
           </button>
         </form>
       </div>

@@ -1,40 +1,44 @@
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+// External libraries
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import {
+  FaBath,
+  FaBed,
+  FaBuilding,
+  FaCity,
+  FaDollarSign,
+  FaDoorOpen,
+  FaHome,
+  FaLink,
+  FaMapMarkerAlt,
+  FaRulerCombined,
+  FaTag,
+} from "react-icons/fa";
+import { FaStairs } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+
+// Internal components
+import Input from "../Form/Input/Input";
+import Select from "../Form/Select/Select";
+import Img from "../ui/Img";
+
+// Internal utilities and config
+import { supabase } from "../../config/supabaseClient";
+import { useAppSelector } from "../../store/hooks";
+import { addToast } from "../../store/toasts/toastsSlice";
+import { uploadToCloudinary } from "../../utils/cloudinary";
 import {
   createPropertySchema,
   createPropertyType,
 } from "../../validations/CreatePropertySchema";
-import Input from "../Form/Input/Input";
-import Select from "../Form/Select/Select";
-import Img from "../ui/Img";
-import { useTranslation } from "react-i18next";
-
-import {
-  FaBuilding,
-  FaHome,
-  FaTag,
-  FaDollarSign,
-  FaMapMarkerAlt,
-  FaCity,
-  FaLink,
-  FaBed,
-  FaBath,
-  FaDoorOpen,
-  FaRulerCombined,
-} from "react-icons/fa";
-import { FaStairs } from "react-icons/fa6";
-import { uploadToCloudinary } from "../../utils/cloudinary";
-import { supabase } from "../../config/supabaseClient";
-import { useAppSelector } from "../../store/hooks";
-import { addToast } from "../../store/toasts/toastsSlice";
-import { useDispatch } from "react-redux";
 
 const AdvertiseForm = () => {
-      const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
   const { user, token } = useAppSelector((state) => state.auth);
   const userId = user?.id;
   const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -47,8 +51,7 @@ const AdvertiseForm = () => {
       company: {
         name: "kamal hosny",
         email: "kamal@gmail.com",
-        avatar:
-          "https://scontent.fcai20-5.fna.fbcdn.net/v/t39.30808-6/471173919_604173548811444_6873304816673987611_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=2wDOodDY5x4Q7kNvgEJIi23&_nc_oc=AdhmnqFQ1HYafpCeU64_F14ipvKQauXrrKwfPpO8hHnTpG5fz4WPjJW2cn_-TK2hTnY&_nc_zt=23&_nc_ht=scontent.fcai20-5.fna&_nc_gid=Ast2SjxgtoOMKRfCCZZXOhw&oh=00_AYDMq0awBCHpHlKUbG31_N02e7Cknu2vqn-CGCPjtdIucg&oe=67BD74B3",
+        avatar: "https://scontent.fcai20-5.fna.fbcdn.net/v/t39.30808-6/471173919_604173548811444_6873304816673987611_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=2wDOodDY5x4Q7kNvgEJIi23&_nc_oc=AdhmnqFQ1HYafpCeU64_F14ipvKQauXrrKwfPpO8hHnTpG5fz4WPjJW2cn_-TK2hTnY&_nc_zt=23&_nc_ht=scontent.fcai20-5.fna&_nc_gid=Ast2SjxgtoOMKRfCCZZXOhw&oh=00_AYDMq0awBCHpHlKUbG31_N02e7Cknu2vqn-CGCPjtdIucg&oe=67BD74B3",
         phone: "01013655708",
       },
     },
@@ -62,10 +65,10 @@ const AdvertiseForm = () => {
           message: t("formPropertyDetails.noTokenError"),
           type: "error",
         })
-      )
-
+      );
       return;
     }
+
     try {
       const files = data.location.images as FileList;
       if (!files || files.length === 0) {
@@ -74,10 +77,10 @@ const AdvertiseForm = () => {
             message: t("formPropertyDetails.selectImagesRequired"),
             type: "error",
           })
-        )
-        
+        );
         return;
       }
+
       console.log("Uploading files...");
       const uploadPromises = Array.from(files).map((file) =>
         uploadToCloudinary(file)
@@ -92,7 +95,9 @@ const AdvertiseForm = () => {
           images: imageUrls,
         },
       };
+
       console.log("Final Form Data:", formData);
+
       // Send data to Supabase
       const { data: salesOrderData, error } = await supabase
         .from("SalesOrders")
@@ -124,34 +129,33 @@ const AdvertiseForm = () => {
         ]);
 
       if (error) {
-
         dispatch(
           addToast({
             message: t("formPropertyDetails.submitError"),
             type: "error",
           })
-        )
-        
+        );
         console.error("Error inserting data into Supabase:", error);
         return;
       }
+
       dispatch(
         addToast({
           message: t("formPropertyDetails.submitSuccess"),
           type: "success",
         })
-      )
+      );
       
       console.log("Data inserted successfully:", salesOrderData);
-
       reset();
-    } catch (error) {
+    } catch (err: unknown) {
+      console.error("Error:", err);
       dispatch(
         addToast({
           message: t("formPropertyDetails.imageUploadError"),
           type: "error",
         })
-      )
+      );
     }
   };
 
@@ -398,6 +402,7 @@ const AdvertiseForm = () => {
             )}
           </div>
         </div>
+
         {/* Description & Photos */}
         <div className="space-y-6">
           <div>
@@ -405,7 +410,7 @@ const AdvertiseForm = () => {
               name="location.images"
               control={control}
               rules={{
-                required: t("formPropertyDetails.selectImagesRequired"), // Fixed to use selectImagesRequired
+                required: t("formPropertyDetails.selectImagesRequired"),
                 validate: {
                   maxFiles: (files) =>
                     files.length <= 10 ||

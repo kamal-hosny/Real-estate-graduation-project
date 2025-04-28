@@ -1,5 +1,7 @@
+// External imports
 import { useEffect, useState } from "react";
 
+// Types
 interface IProps {
   filterPrice: {
     from: string;
@@ -15,8 +17,10 @@ interface IProps {
 }
 
 const FilterByPrice = ({ filterPrice, onPriceChange }: IProps) => {
+  // State
   const [localPrice, setLocalPrice] = useState(filterPrice);
 
+  // Effects
   useEffect(() => {
     setLocalPrice(filterPrice);
   }, [filterPrice]);
@@ -26,11 +30,10 @@ const FilterByPrice = ({ filterPrice, onPriceChange }: IProps) => {
       onPriceChange(localPrice);
     }, 500);
 
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [localPrice, onPriceChange]);
 
+  // Handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setLocalPrice((prev) => ({
@@ -39,10 +42,14 @@ const FilterByPrice = ({ filterPrice, onPriceChange }: IProps) => {
     }));
   };
 
+  // Render
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="from flex flex-col gap-1">
-        <label htmlFor="from" className="text-color-text-2">
+        <label 
+          htmlFor="from" 
+          className="text-color-text-2"
+        >
           Min
         </label>
         <input
@@ -55,8 +62,12 @@ const FilterByPrice = ({ filterPrice, onPriceChange }: IProps) => {
           className="p-2 bg-section-color text-sm w-full border border-color-border rounded placeholder-color-text-2 text-color-text-1 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
         />
       </div>
+
       <div className="to flex flex-col gap-1">
-        <label htmlFor="to" className="text-color-text-2">
+        <label 
+          htmlFor="to" 
+          className="text-color-text-2"
+        >
           Max
         </label>
         <input
