@@ -22,9 +22,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { closeModal } from "../../../store/modal/modalSlice";
 
 // Styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/swiper-bundle.min.css';
 
 // Types
 // type PropertyType =
