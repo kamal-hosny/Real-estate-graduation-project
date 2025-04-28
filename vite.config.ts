@@ -18,7 +18,7 @@ export default defineConfig({
         target: 'http://mohamedtahoon.runasp.net',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
