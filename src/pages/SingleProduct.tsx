@@ -1,10 +1,4 @@
 // External libraries
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
 import {
   ArrowBigLeftDash,
   ArrowBigRightDash,
@@ -13,27 +7,35 @@ import {
   MapPinned,
   Settings,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Internal components
 import Breadcrumb from "../components/Products/Breadcrumb";
-import Button from "../components/ui/Button";
-import Img from "../components/ui/Img";
 import TableDetails from "../components/SingleProduct/TableDetails";
 import UserDataSingleProduct from "../components/SingleProduct/UserDataSingleProduct";
 import LottieHandler from "../components/common/feedback/LottieHandler/LottieHandler";
+import Button from "../components/ui/Button";
+import Img from "../components/ui/Img";
 
 // Store and utilities
+import { supabase } from "../config/supabaseClient";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { addToast } from "../store/toasts/toastsSlice";
 import { openModal } from "../store/modal/modalSlice";
+import { getOneProperty } from "../store/property/act/actGetOneProperty";
+import { addToast } from "../store/toasts/toastsSlice";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../store/wishlist/wishlistActions";
-import { getOneProperty } from "../store/property/act/actGetOneProperty";
 import { formatCurrency } from "../utils";
 import { getTimeSincePost } from "../utils/dateFun";
-import { supabase } from "../config/supabaseClient";
 
 // Types
 interface PropertyImages {

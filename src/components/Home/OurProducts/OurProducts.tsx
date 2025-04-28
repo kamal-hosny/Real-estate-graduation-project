@@ -1,22 +1,23 @@
 // External libraries
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Internal components
-import Button from "../../ui/Button";
-import ProductCard from "../../common/ProductCard/ProductCard";
 import LottieHandler from "../../common/feedback/LottieHandler/LottieHandler";
+import ProductCard from "../../common/ProductCard/ProductCard";
 import ProductCardSkeleton from "../../SkeletonsUi/ProductCardSkeleton";
+import Button from "../../ui/Button";
 
 // Store hooks
 import { useAppSelector } from "../../../store/hooks";
 
 // Styles
-import "swiper/swiper-bundle.css";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const OurProducts = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
