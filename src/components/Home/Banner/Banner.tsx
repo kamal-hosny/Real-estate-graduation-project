@@ -1,6 +1,7 @@
 import { Trans, useTranslation } from "react-i18next";
 import bannerImg from "../../../assets/banner/banner.jpg";
 import Button from "../../ui/Button";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const { t, i18n } = useTranslation();
@@ -28,12 +29,13 @@ const Banner = () => {
             <p className="description text-gray-300 font-semibold text-sm leading-[25px] max-w-sm">
               {t("banner.description", { brand: "Aqarek" })}
             </p>
-            
+            <Link to="/Properties">
             <Button 
               className="transition-all duration-300 px-4 py-2 bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#0a0a0a] font-semibold rounded-md cursor-pointer w-fit"
             >
               {t("banner.exploreNow")}
             </Button>
+            </Link>
           </div>
         </div>
       </div>

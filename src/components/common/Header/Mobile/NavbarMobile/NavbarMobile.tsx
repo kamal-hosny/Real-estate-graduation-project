@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { useTranslation } from 'react-i18next';
 import { NavLink } from "react-router-dom";
 
 interface INavbarMobile {
@@ -7,6 +8,8 @@ interface INavbarMobile {
 }
 
 const NavbarMobile = memo(({ open, closeMenu }: INavbarMobile) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={`
@@ -25,22 +28,22 @@ const NavbarMobile = memo(({ open, closeMenu }: INavbarMobile) => {
       `}
     >
       <ul className="flex flex-col gap-4">
-        <li>
+      <li>
           <NavLink
             to="/"
             onClick={closeMenu}
             className="bg-section-color w-full px-3 py-2 block font-medium"
           >
-            Home
+            {t('navigation.home')}
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/products"
+            to="/Properties"
             onClick={closeMenu}
             className="bg-section-color w-full px-3 py-2 block font-medium"
           >
-            Products
+            {t('navigation.properties')}
           </NavLink>
         </li>
         <li>
@@ -49,7 +52,7 @@ const NavbarMobile = memo(({ open, closeMenu }: INavbarMobile) => {
             onClick={closeMenu}
             className="bg-section-color w-full px-3 py-2 block font-medium"
           >
-            About
+            {t('navigation.about')}
           </NavLink>
         </li>
         <li>
@@ -58,7 +61,7 @@ const NavbarMobile = memo(({ open, closeMenu }: INavbarMobile) => {
             onClick={closeMenu}
             className="bg-section-color w-full px-3 py-2 block font-medium"
           >
-            Contact
+            {t('navigation.contact')}
           </NavLink>
         </li>
       </ul>

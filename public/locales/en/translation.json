@@ -828,5 +828,11 @@
     "updateSuccess": "Your account has been updated",
     "updateError": "Failed to update profile",
     "notAvailable": "Not Available"
+  },
+  "navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "about": "About",
+    "contact": "Contact"
   }
 }

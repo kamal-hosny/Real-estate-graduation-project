@@ -55,7 +55,7 @@ const OurProducts = () => {
           <p className="main-title text-2xl font-bold text-color-text-1">
             {t("ourProducts.featuredProperty")}
           </p>
-          <Link to="/products">
+          <Link to="/Properties">
             <Button 
               className="border-button-color border-2 text-color-text-1 hover:bg-button-hover-color hover:text-main-color-background"
             >
