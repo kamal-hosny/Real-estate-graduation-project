@@ -7,6 +7,7 @@ import { closeModal } from "../../../store/modal/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { deleteUser } from "../../../store/user/act/actDeleteUser";
 import { addToast } from "../../../store/toasts/toastsSlice";
+import { getAllUser } from "../../../store/user/act/actGetAllUser";
 
 const DeleteUser = () => {
   // Hooks
@@ -15,6 +16,7 @@ const DeleteUser = () => {
   const { user } = useAppSelector((state) => state?.modal?.product);
   const { token } = useAppSelector((state) => state?.auth);
   const [isDeleting, setIsDeleting] = useState(false);
+  
 
   // Handlers
   const handleConfirm = async () => {
@@ -25,7 +27,14 @@ const DeleteUser = () => {
           id: user?.id,
           token: token || "",
         })
-      ).unwrap();
+      ).unwrap().then(() => {
+        dispatch(
+          getAllUser(token)
+        )
+      }).catch((error) =>{ 
+        console.log(error);
+        
+      });
 
       dispatch(closeModal());
       dispatch(

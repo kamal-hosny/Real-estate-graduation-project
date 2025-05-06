@@ -12,7 +12,7 @@ export const deleteUser = createAsyncThunk(
   async (data: TUserData, thunk) => {
     const { rejectWithValue } = thunk;
     try {
-      const res = await axiosConfig.get(`/api/users/${data.id}`, {
+      const res = await axiosConfig.delete(`/api/users/${data.id}`, {
         headers: {
           Authorization: `Bearer ${data.token}`,
         },

@@ -6,7 +6,7 @@ type TResponse = any[]
 
 export const getAllUser = createAsyncThunk(
     "users/getAllUser",
-    async(adminToken: string, thunk) =>{
+    async(adminToken: string | null, thunk) =>{
         const { rejectWithValue } = thunk;
         try{
             const res = await axiosConfig.get<TResponse>(`/api/users/` ,

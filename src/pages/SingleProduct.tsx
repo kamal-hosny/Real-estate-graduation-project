@@ -83,9 +83,16 @@ const SingleProperty = () => {
     (state) => state?.wishlist?.items ?? []
   ) as WishlistItem[];
   const { token, user } = useAppSelector((state) => state?.auth);
-  const isAdmin = useAppSelector(
+  const admin = useAppSelector(
     (state) => state?.auth?.user?.roles?.$values[0]
   );
+  const data = useAppSelector(
+    (state) => state?.auth?.user?.roles?.$values[0]
+  );
+
+    console.log(data);
+    
+    const isAdmin = data === "Admin" ? true : false
 
   // State
   const isProductInWishlist = wishlist.some(
@@ -432,7 +439,9 @@ const SingleProperty = () => {
         bg-[rgb(var(--section-color))] 
         shadow-[0_0_15px_-3px_rgba(var(--button-color),0.3)]
         hover:shadow-[0_0_25px_-5px_rgba(var(--button-color),0.5)]
-        transition-all duration-500 group border border-[rgb(var(--color-border))]"
+        transition-all duration-500 group border border-[rgb(var(--color-border))]
+        z-10
+        "
         onClick={() => {
           dispatch(openModal({ name: "AssistantBotDialog", product: property }));
         }}
@@ -447,7 +456,9 @@ const SingleProperty = () => {
           <div className="absolute inset-0 rounded-full 
             bg-[rgba(var(--button-color),0.1)] 
             blur-[12px] group-hover:blur-[15px] 
-            transition-all duration-1000"
+            transition-all duration-1000
+            z-10
+            "
           />
         </div>
       </div>
