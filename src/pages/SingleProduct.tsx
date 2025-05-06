@@ -83,16 +83,13 @@ const SingleProperty = () => {
     (state) => state?.wishlist?.items ?? []
   ) as WishlistItem[];
   const { token, user } = useAppSelector((state) => state?.auth);
-  const admin = useAppSelector(
-    (state) => state?.auth?.user?.roles?.$values[0]
-  );
   const data = useAppSelector(
     (state) => state?.auth?.user?.roles?.$values[0]
   );
 
-    console.log(data);
-    
-    const isAdmin = data === "Admin" ? true : false
+  console.log(data);
+  
+  const isAdmin = data === "Admin" ? true : false
 
   // State
   const isProductInWishlist = wishlist.some(
