@@ -226,7 +226,7 @@ const AssistantBotDialog = () => {
                  - If the response is vague, unrelated, or neutral, assign a score of 0.
               3. Consider the property's images as a reflection of its condition and finishing. Assume the images align with the text descriptions (e.g., finishing, layout) unless contradicted by user responses.
               4. Sum the scores across all responses to determine overall suitability.
-              5. Return:
+              5. Return: 
                  - "true" if the total score is positive (indicating the property is likely suitable).
                  - "false" if the total score is zero or negative (indicating the property is not suitable).
               6. Output ONLY the string "true" or "false" with no additional text, explanations, JSON, or formatting.
