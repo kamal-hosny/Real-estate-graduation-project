@@ -57,7 +57,7 @@ const TableBody = ({ item, index }: TableBodyProps) => {
   }, [item?.clientId, usersById, dispatch]);
 
   const property = item.property;
-  const images = property.propertyImages || [];
+  const images = (property.propertyImages as any).$values || [];
 
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">

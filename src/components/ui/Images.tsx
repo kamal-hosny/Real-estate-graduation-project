@@ -4,6 +4,9 @@ import Img from "./Img";
 const Images = ({ images }: { images: string[] }) => {
   const fiveImage = Array.isArray(images) ? images.slice(0, 4) : [];
 
+  console.log(images);
+  
+
   return (
     <div className="flex items-center justify-center">
       {images ? (
