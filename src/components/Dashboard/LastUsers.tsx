@@ -21,10 +21,10 @@ const LastUsers = () => {
   // Effects
   useEffect(() => {
     dispatch(getAllUser(token || ""));
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   // Derived state
-  const lastFiveUsers: TUser[] = records ? records.slice(-5) : [];
+  const lastFiveUsers: TUser[] = records ? [...records].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 5) : [];
 
   // Loading state
   if (loading === "pending") {

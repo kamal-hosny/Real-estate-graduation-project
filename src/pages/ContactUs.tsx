@@ -29,6 +29,7 @@ const ContactUs = () => {
 
   const onSubmit = async (data: ContactUsData) => {
     console.log(data);
+    console.log(form.current);
 
     if (form.current) {
       try {

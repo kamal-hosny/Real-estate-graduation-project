@@ -1,15 +1,15 @@
 // External imports
 import { ChevronDown, ChevronUp, Heart, HousePlus, Languages, LogOut, User, UserRound } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 // Internal imports
+import i18n from "../../../../../language";
 import { authLogout } from "../../../../../store/auth/authSlice";
 import { useAppSelector } from "../../../../../store/hooks";
 import Button from "../../../../ui/Button";
-import i18n from "../../../../../language";
 
 const MenuNavAuth = () => {
   // Hooks
@@ -45,6 +45,7 @@ const MenuNavAuth = () => {
 
   const handleLogout = () => {
     dispatch(authLogout());
+    navigate("/");
   };
 
   const handleGotoProfile = () => {

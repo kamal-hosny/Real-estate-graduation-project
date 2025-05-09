@@ -37,6 +37,7 @@ const Users = lazy(() => import("../pages/Dashboard/Users"));
 // Store
 import { AppDispatch } from "../store";
 import { checkMobileWidth } from "../store/features/mobileWidth/mobileWidthThunk";
+import Support from "../pages/Support";
 
 const AppRouter = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -186,6 +187,14 @@ const AppRouter = () => {
           element: (
             <PageSuspenseFallback>
               <Register />
+            </PageSuspenseFallback>
+          ),
+        },
+        {
+          path: "support",
+          element: (
+            <PageSuspenseFallback>
+              <Support />
             </PageSuspenseFallback>
           ),
         },

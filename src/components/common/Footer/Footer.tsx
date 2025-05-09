@@ -11,6 +11,10 @@ const FOOTER_LINKS = [
   {
     key: "legal",
     items: ["privacy", "terms"]
+  },
+  {
+    key: "Our Services",
+    items: ["support"]
   }
 ];
 

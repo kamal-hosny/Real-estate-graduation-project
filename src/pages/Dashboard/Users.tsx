@@ -153,7 +153,7 @@ const Users = () => {
                   </div>
                 )}
 
-                <div className="flex-1 text-right">
+                <div className="flex-1 text-right relative">
                   <h2 className="text-xl capitalize font-semibold text-gray-800">{user.fullName}</h2>
                   <p className="text-gray-600 mt-1">{user.email}</p>
                   <p className="text-gray-600">{user.phoneNumber}</p>
