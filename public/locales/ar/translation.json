@@ -649,7 +649,7 @@
       "noImages": "لا يوجد صور",
       "status": {
         "For Sale": "للبيع",
-        "Other": "أخرى"
+        "For Rent": "للإيجار"
       },
       "orderType": {
         "Pending": "قيد الانتظار",
@@ -890,6 +890,21 @@
           "submit_button": "إرسال طلب الدعم",
           "success_message": "تم استلام طلبك، سيقوم الفريق بالرد عليك في أسرع وقت ممكن!"
         }
+      }
+    },
+    "tableBody": {
+      "unknownUser": "غير معروف",
+      "noPhone": "غير متوفر",
+      "noImages": "لا يوجد صور",
+      "status": {
+        "For Sale": "للبيع",
+        "For Rent": "للإيجار"
+      },
+      "orderType": {
+        "Pending": "قيد الانتظار",
+        "Success": "ناجح",
+        "Rejected": "مرفوض",
+        "Other": "أخرى"
       }
     }
   }

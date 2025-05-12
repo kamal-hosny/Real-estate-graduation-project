@@ -55,7 +55,9 @@ const SalesTableBody = ({ item, index }: dataP) => {
 
   // Helper functions for translations
   const getStatusTranslation = (status: string) => {
-    return t(`salesTableBody.status.${status}`, t("salesTableBody.status.Other"));
+    return status === "For Sale" 
+      ? t("salesTableBody.status.For Sale", "For Sale") 
+      : t("salesTableBody.status.For Rent", "For Rent");
   };
 
   const getOrderTypeTranslation = (orderType: string) => {

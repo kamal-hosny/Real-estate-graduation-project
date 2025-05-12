@@ -1,12 +1,13 @@
 // External imports
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Eye, Pencil, Trash2, User, UserRound } from "lucide-react";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 // Internal imports
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { getOneUser } from "../../../store/user/act/actGetOneUser";
 import { openModal } from "../../../store/modal/modalSlice";
+import { getOneUser } from "../../../store/user/act/actGetOneUser";
 import { formatCurrency, textSlicer } from "../../../utils";
 import Images from "../../ui/Images";
 
@@ -28,7 +29,7 @@ interface Property {
   furnished: boolean;
   description: string;
   createdAt: number;
-  propertyImages: string[];
+  propertyImages: { $values: string[] };
   userId: string;
 }
 
@@ -46,6 +47,7 @@ interface TableBodyProps {
 }
 
 const TableBody = ({ item, index }: TableBodyProps) => {
+  const { t } = useTranslation("");
   const dispatch = useAppDispatch();
   const usersById = useAppSelector((state) => state.user.usersById);
   const user = usersById[item.clientId];
@@ -57,7 +59,18 @@ const TableBody = ({ item, index }: TableBodyProps) => {
   }, [item?.clientId, usersById, dispatch]);
 
   const property = item.property;
-  const images = (property.propertyImages as any).$values || [];
+  const images = property.propertyImages.$values || [];
+
+  // Helper functions for translations
+  const getStatusTranslation = (status: string) => {
+    return status === "For Sale" 
+      ? t("tableBody.status.For Sale", "For Sale") 
+      : t("tableBody.status.For Rent", "For Rent");
+  };
+
+  const getOrderTypeTranslation = (orderType: string) => {
+    return t(`tableBody.orderType.${orderType}`, t("tableBody.orderType.Other"));
+  };
 
   return (
     <tr key={item.id} className="hover:bg-gray-50 transition-colors">
@@ -87,7 +100,7 @@ const TableBody = ({ item, index }: TableBodyProps) => {
               <img
                 src={user.image}
                 className="w-10 h-10 rounded-full object-cover"
-                alt={user.fullName}
+                alt={user.fullName || t("tableBody.unknownUser")}
               />
             ) : (
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
@@ -99,10 +112,10 @@ const TableBody = ({ item, index }: TableBodyProps) => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">
-              {user?.fullName || "غير معروف"}
+              {user?.fullName || t("tableBody.unknownUser")}
             </span>
             <span className="text-xs text-gray-500">
-              {user?.phoneNumber || "غير متوفر"}
+              {user?.phoneNumber || t("tableBody.noPhone")}
             </span>
           </div>
         </div>
@@ -111,7 +124,7 @@ const TableBody = ({ item, index }: TableBodyProps) => {
         {images.length > 0 ? (
           <Images images={images} />
         ) : (
-          <span>لا يوجد صور</span>
+          <span>{t("tableBody.noImages")}</span>
         )}
       </td>
       <td className="px-6 py-4 text-sm text-gray-600">
@@ -122,7 +135,7 @@ const TableBody = ({ item, index }: TableBodyProps) => {
               : "bg-[#ffedd5] text-[#ea580c]"
           }`}
         >
-          {property.status}
+          {getStatusTranslation(property.status)}
         </span>
       </td>
       <td className="px-6 py-4">
@@ -137,7 +150,7 @@ const TableBody = ({ item, index }: TableBodyProps) => {
               : "bg-gray-100 text-gray-800"
           }`}
         >
-          {item.TypeOrder}
+          {getOrderTypeTranslation(item.TypeOrder)}
         </span>
       </td>
       <td className="px-6 py-4">
