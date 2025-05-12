@@ -627,6 +627,21 @@
     },
     "emptyMessage": "No sales requests currently available"
   },
+  "tableBody": {
+    "unknownUser": "Unknown",
+    "noPhone": "Not Available",
+    "noImages": "No Images",
+    "status": {
+      "For Sale": "For Sale",
+      "For Rent": "For Rent"
+    },
+    "orderType": {
+      "Pending": "Pending",
+      "Success": "Success",
+      "Rejected": "Rejected",
+      "Other": "Other"
+    }
+  },
   "salesTableBody": {
     "unknownUser": "Unknown",
     "noPhone": "Not Available",
