@@ -431,7 +431,7 @@ const SingleProperty = () => {
       </div>
 
       {/* Assistant Bot Dialog */}
-      {/* <div
+      <div
         className="rounded-full p-[2px] fixed bottom-[85px] end-6 
         bg-[rgb(var(--section-color))] 
         shadow-[0_0_15px_-3px_rgba(var(--button-color),0.3)]
@@ -458,7 +458,7 @@ const SingleProperty = () => {
             "
           />
         </div>
-      </div> */}
+      </div>
 
       {/* Settings For Property */}
       {isAdmin && (
